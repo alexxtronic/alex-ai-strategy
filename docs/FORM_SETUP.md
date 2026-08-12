@@ -4,9 +4,16 @@ Updated: 2026-08-12
 
 The Work with me page is designed to post directly into a standard Google Form without exposing credentials. The Form remains the intake source of truth and may link responses to a private Google Sheet.
 
+## Current connection
+
+- Dedicated Form created and published on 2026-08-12.
+- Responses are linked to the private **AI Strategy Inquiries** Google Sheet.
+- The public `/formResponse` endpoint and all seven `entry.*` field identifiers are mapped in `assets/js/config.js`.
+- A live QA submission succeeded with company, title, and help request left blank. The test response was deleted after verification.
+
 ## Create the Form
 
-Create a Google Form titled **Alexander D'Amore | Work with me** with these questions in this exact order:
+The connected Google Form is titled **Alexander D'Amore | Work with me** and uses these questions in this exact order:
 
 | Key | Question | Type | Required |
 |---|---|---|---|
@@ -20,9 +27,9 @@ Create a Google Form titled **Alexander D'Amore | Work with me** with these ques
 
 Turn off quiz mode. Do not force Google sign-in or Google-native email collection because the custom page already includes an email field.
 
-## Link responses
+## Linked responses
 
-In the Form's **Responses** tab, create a linked Sheet named **AI Strategy Inquiries**. Restrict it to Alex and anyone directly responsible for responding to inquiries.
+The Form's **Responses** tab is linked to a Sheet named **AI Strategy Inquiries**. Keep access restricted to Alex and anyone directly responsible for responding to inquiries.
 
 ## Get the endpoint and entry IDs
 

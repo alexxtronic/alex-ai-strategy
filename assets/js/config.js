@@ -1,21 +1,19 @@
 /**
  * Google Forms contact bridge.
  *
- * Replace the placeholder endpoint and `entry.*` IDs after creating the form
- * described in docs/FORM_SETUP.md. Public Form identifiers are safe to expose;
+ * Public Google Form endpoint and `entry.*` IDs. These identifiers are safe to expose;
  * do not put Google credentials in this repository.
  */
 window.ALEX_CONTACT_CONFIG = {
-  googleFormEndpoint: "",
-  googleFormViewUrl: "",
+  googleFormEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSfeXTvyDUjaNBY9tyUvV_4jh7W9jpE5lJWBuqCftt3BIBV4pA/formResponse",
+  googleFormViewUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfeXTvyDUjaNBY9tyUvV_4jh7W9jpE5lJWBuqCftt3BIBV4pA/viewform",
   fields: {
-    fullName: "",
-    email: "",
-    phone: "",
-    company: "",
-    title: "",
-    helpRequest: "",
-    consentRecord: ""
+    fullName: "entry.371626239",
+    email: "entry.768625099",
+    phone: "entry.118140999",
+    company: "entry.1397589940",
+    title: "entry.543189963",
+    helpRequest: "entry.269626038",
+    consentRecord: "entry.1647873135"
   }
 };
-
