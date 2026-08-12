@@ -63,7 +63,7 @@
 
     if (!isConnected) {
       event.preventDefault();
-      formStatus.innerHTML = 'The private intake is being connected. For now, email <a href="mailto:alexdamore2@gmail.com">alexdamore2@gmail.com</a> and I’ll reply personally.';
+      formStatus.textContent = "The private intake is being connected. Please check back shortly.";
       return;
     }
 
@@ -81,4 +81,3 @@
     successPanel.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 })();
-
