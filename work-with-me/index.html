@@ -36,24 +36,23 @@
 
         <section class="contact-panel" aria-labelledby="form-title">
           <h2 id="form-title">Start a conversation</h2>
-          <p class="form-intro">Required fields are marked. Company, title, and your help request are optional.</p>
 
           <form id="contact-form" class="contact-form" method="post" target="contact-sink" novalidate>
             <div class="form-grid">
               <div class="field">
-                <label for="full-name">Name</label>
+                <label for="full-name">Name <span class="required-mark" aria-hidden="true">*</span><span class="sr-only">required</span></label>
                 <input id="full-name" data-google-field="fullName" type="text" autocomplete="name" required />
                 <span class="field__error">Please add your name.</span>
               </div>
 
               <div class="form-grid form-grid--two">
                 <div class="field">
-                  <label for="email">Email</label>
+                  <label for="email">Email <span class="required-mark" aria-hidden="true">*</span><span class="sr-only">required</span></label>
                   <input id="email" data-google-field="email" type="email" autocomplete="email" required />
                   <span class="field__error">Please use a valid email address.</span>
                 </div>
                 <div class="field">
-                  <label for="phone">Phone number</label>
+                  <label for="phone">Phone number <span class="required-mark" aria-hidden="true">*</span><span class="sr-only">required</span></label>
                   <input id="phone" data-google-field="phone" type="tel" autocomplete="tel" required />
                   <span class="field__error">Please add a phone number.</span>
                 </div>
