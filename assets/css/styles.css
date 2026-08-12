@@ -228,8 +228,8 @@ svg {
 
 .hero {
   position: relative;
-  overflow: hidden;
-  padding: clamp(76px, 9vw, 138px) 24px 34px;
+  overflow: visible;
+  padding: clamp(76px, 9vw, 138px) 24px clamp(76px, 8vw, 118px);
   text-align: center;
 }
 
@@ -266,16 +266,19 @@ svg {
 
 .rotator-window {
   display: inline-block;
-  min-width: 4ch;
+  width: 15ch;
   height: 1.45em;
   overflow: hidden;
   color: var(--ink);
   font-weight: 600;
+  text-align: center;
   vertical-align: bottom;
+  white-space: nowrap;
 }
 
 [data-business-rotator] {
   display: inline-block;
+  width: 100%;
   transition: opacity 280ms ease, transform 280ms ease;
 }
 
@@ -791,6 +794,8 @@ svg {
 }
 
 .section {
+  position: relative;
+  z-index: 1;
   padding: clamp(92px, 11vw, 160px) 24px;
 }
 
@@ -800,9 +805,8 @@ svg {
 }
 
 .section--soft {
-  background: var(--paper-soft);
-  border-top: 1px solid #eef1f5;
-  border-bottom: 1px solid #eef1f5;
+  background: transparent;
+  border: 0;
 }
 
 .section-head {
@@ -1201,7 +1205,6 @@ svg {
   justify-content: space-between;
   gap: 24px;
   color: var(--ink-soft);
-  border-top: 1px solid var(--line);
   font-size: 0.88rem;
 }
 
@@ -1618,7 +1621,8 @@ svg {
 
   .rotator-window {
     display: block;
-    min-width: 0;
+    width: 15ch;
+    max-width: 100%;
     margin: 0 auto -0.15em;
   }
 
