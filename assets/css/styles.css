@@ -2058,11 +2058,16 @@ svg {
   }
 
   .rotator-window {
-    display: block;
-    width: min(220px, 100%);
+    display: flex;
+    width: min(260px, 100%);
     max-width: 100%;
-    flex-basis: min(220px, 100%);
+    flex-basis: min(260px, 100%);
     margin: 0 auto;
+  }
+
+  .split-flap-text {
+    gap: 2px;
+    font-size: clamp(1rem, 5.2vw, 1.25rem);
   }
 
   .subtitle-copy,
