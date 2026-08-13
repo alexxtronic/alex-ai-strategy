@@ -28,21 +28,30 @@
   });
 
   const rotator = document.querySelector("[data-business-rotator]");
-  if (rotator) {
+  const currentFace = rotator?.querySelector("[data-rotator-current]");
+  const nextFace = rotator?.querySelector("[data-rotator-next]");
+  if (rotator && currentFace && nextFace) {
     const words = ["SaaS", "enterprise B2B", "scale-up"];
     let index = 0;
     let intervalId;
 
+    const sizeFor = (word) => (word.length <= 5 ? "short" : word.length <= 9 ? "medium" : "long");
+
     const rotate = () => {
       if (document.hidden || reducedMotion.matches) return;
-      rotator.classList.add("is-leaving");
+      const nextIndex = (index + 1) % words.length;
+      nextFace.textContent = words[nextIndex];
+      nextFace.dataset.size = sizeFor(words[nextIndex]);
+      rotator.classList.add("is-flipping");
       window.setTimeout(() => {
-        index = (index + 1) % words.length;
-        rotator.textContent = words[index];
-        rotator.classList.remove("is-leaving");
-        rotator.classList.add("is-entering");
-        requestAnimationFrame(() => rotator.classList.remove("is-entering"));
-      }, 280);
+        index = nextIndex;
+        currentFace.textContent = words[index];
+        currentFace.dataset.size = sizeFor(words[index]);
+        nextFace.textContent = "";
+        rotator.classList.add("is-resetting");
+        rotator.classList.remove("is-flipping");
+        requestAnimationFrame(() => requestAnimationFrame(() => rotator.classList.remove("is-resetting")));
+      }, 620);
     };
 
     const startRotator = () => {
@@ -112,4 +121,3 @@
     activateSystem();
   }
 })();
-
