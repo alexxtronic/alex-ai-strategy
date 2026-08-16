@@ -3,7 +3,7 @@ import { extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
-const ignored = new Set([".git"]);
+const ignored = new Set([".git", "node_modules"]);
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -52,6 +52,8 @@ for (const id of ["how-i-work", "specialties", "past-projects"]) {
   if (!homeHtml.includes(`id="${id}"`)) failures.push(`Homepage is missing ${id}`);
 }
 if (!homeHtml.includes("Hi, I'm Alex,")) failures.push("Homepage headline is missing");
+if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is missing the 3D capability experience");
+if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
 
 if (failures.length) {
   console.error(failures.join("\n"));

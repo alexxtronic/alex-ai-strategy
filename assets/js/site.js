@@ -285,4 +285,30 @@
   } else {
     activateSystem();
   }
+
+  const threeExperience = document.querySelector("[data-three-experience]");
+  if (threeExperience) {
+    let requested = false;
+    const loadExperience = () => {
+      if (requested) return;
+      requested = true;
+      import("./three-capability.bundle.js?v=20260816-1").catch(() => {
+        threeExperience.classList.add("has-three-error");
+      });
+    };
+
+    if ("IntersectionObserver" in window) {
+      const threeObserver = new IntersectionObserver(
+        (entries, observer) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          loadExperience();
+          observer.disconnect();
+        },
+        { rootMargin: "600px 0px", threshold: 0.01 }
+      );
+      threeObserver.observe(threeExperience);
+    } else {
+      loadExperience();
+    }
+  }
 })();

@@ -2,6 +2,8 @@
 
 Static, responsive consulting website built for GitHub Pages.
 
+The interactive capability model is built with React Three Fiber and committed as a browser-ready bundle, so GitHub Pages remains a static deployment.
+
 ## Local preview
 
 ```bash
@@ -9,6 +11,13 @@ python3 -m http.server 4173
 ```
 
 Then open `http://127.0.0.1:4173/`.
+
+## Rebuild the 3D experience
+
+```bash
+npm install
+npm run build:3d
+```
 
 ## Contact form connection
 
