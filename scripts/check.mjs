@@ -74,7 +74,7 @@ for (const phrase of ["Investigate", "We find where AI makes the biggest impact.
 for (const phrase of ["bespoke system catered to your needs", "as technology evolves so do we"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Process card is missing ${phrase}`);
 }
-for (const phrase of ["How we work", "Investigate", "We research your team’s goals", "Work with us", "© <span data-current-year></span> Lithic"]) {
+for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "The business case comes before the build.", "© <span data-current-year></span> Lithic"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Lithic homepage is missing ${phrase}`);
 }
 for (const phrase of ["Alexander D’Amore", "Alexander D'Amore", "Work with me", "How I work", "Prioritize"]) {

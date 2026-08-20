@@ -2,7 +2,7 @@
 
 Updated: 2026-08-12
 
-The Work with us page is designed to post directly into a standard Google Form without exposing credentials. The Form remains the intake source of truth and may link responses to a private Google Sheet.
+The Free Intro Call page is designed to post directly into a standard Google Form without exposing credentials. The Form remains the intake source of truth and may link responses to a private Google Sheet.
 
 ## Current connection
 
@@ -13,7 +13,7 @@ The Work with us page is designed to post directly into a standard Google Form w
 
 ## Create the Form
 
-The connected Google Form should be titled **Lithic | Work with us** and use these questions in this exact order:
+The connected Google Form should be titled **Lithic | Free Intro Call** and use these questions in this exact order:
 
 | Key | Question | Type | Required |
 |---|---|---|---|

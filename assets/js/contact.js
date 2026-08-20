@@ -2,7 +2,7 @@
   const form = document.querySelector("#contact-form");
   if (!form) return;
 
-  const config = window.ALEX_CONTACT_CONFIG || {};
+  const config = window.LITHIC_CONTACT_CONFIG || {};
   const fields = config.fields || {};
   const formStatus = document.querySelector("#form-status");
   const sink = document.querySelector("#contact-sink");

@@ -4,7 +4,7 @@
  * Public Google Form endpoint and `entry.*` IDs. These identifiers are safe to expose;
  * do not put Google credentials in this repository.
  */
-window.ALEX_CONTACT_CONFIG = {
+window.LITHIC_CONTACT_CONFIG = {
   googleFormEndpoint: "https://docs.google.com/forms/d/e/1FAIpQLSfeXTvyDUjaNBY9tyUvV_4jh7W9jpE5lJWBuqCftt3BIBV4pA/formResponse",
   googleFormViewUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfeXTvyDUjaNBY9tyUvV_4jh7W9jpE5lJWBuqCftt3BIBV4pA/viewform",
   fields: {

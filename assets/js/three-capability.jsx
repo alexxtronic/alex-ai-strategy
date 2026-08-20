@@ -9,10 +9,10 @@ const CHARCOAL = "#333127";
 const ALABASTER = "#e4e2de";
 
 const CAPABILITIES = [
-  { label: "Strategy", title: "AI strategy", description: "Choose the right problem, sequence the roadmap, and define what measurable value looks like." },
-  { label: "Systems", title: "Bespoke systems", description: "Turn the priority into a working system shaped around your data, tools, and day-to-day reality." },
-  { label: "Intelligence", title: "Marketing intelligence", description: "Create reliable signals from research, reporting, brand visibility, and the evidence behind each decision." },
-  { label: "Integration", title: "Tool and CRM integration", description: "Connect the system to existing workflows while keeping consequential actions under human control." },
+  { label: "Strategy", title: "Opportunity strategy", description: "Find expensive friction, quantify the economics, and choose the first problem worth solving." },
+  { label: "Systems", title: "Reliable quick wins", description: "Turn the priority into a focused system shaped around your data, tools, team, and human judgment." },
+  { label: "Intelligence", title: "Measurable intelligence", description: "Keep the evidence visible, measure realized value, and improve decisions instead of chasing impressive demos." },
+  { label: "Integration", title: "Embedded integration", description: "Connect the system to real workflows, strengthen adoption, and keep improving it as the business evolves." },
 ];
 
 const ROUTE_POINTS = [
