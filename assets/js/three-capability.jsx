@@ -16,13 +16,13 @@ const CAPABILITIES = [
 ];
 
 const ROUTE_POINTS = [
-  new THREE.Vector3(-0.04, 1.18, 0.34),
-  new THREE.Vector3(-0.58, 0.43, 0.34),
-  new THREE.Vector3(-0.1, -0.24, 0.34),
-  new THREE.Vector3(1.2, -1.05, 0.34),
+  new THREE.Vector3(-0.04, 1.2, 0.47),
+  new THREE.Vector3(-0.6, 0.46, 0.47),
+  new THREE.Vector3(-0.06, -0.18, 0.47),
+  new THREE.Vector3(1.28, -0.96, 0.47),
 ];
 
-function createMountainGeometry(points, depth = 0.34) {
+function createMountainGeometry(points, depth = 0.34, bevel = 0.06) {
   const shape = new THREE.Shape();
   shape.moveTo(points[0][0], points[0][1]);
   points.slice(1).forEach(([x, y]) => shape.lineTo(x, y));
@@ -30,9 +30,9 @@ function createMountainGeometry(points, depth = 0.34) {
   const geometry = new THREE.ExtrudeGeometry(shape, {
     depth,
     bevelEnabled: true,
-    bevelSegments: 5,
-    bevelSize: 0.06,
-    bevelThickness: 0.06,
+    bevelSegments: 4,
+    bevelSize: bevel,
+    bevelThickness: bevel,
     curveSegments: 16,
   });
   geometry.translate(0, 0, -depth / 2);
@@ -130,12 +130,74 @@ function LithicMountain({ activeIndex, onSelect, pointerRef, reducedMotion }) {
   const mountain = useRef();
   const draw = useRef(reducedMotion ? activeIndex : 0);
   const mountainGeometry = useMemo(() => createMountainGeometry([
-    [-2.5, -1.42],
-    [-1.5, -0.62],
+    [-2.58, -1.42],
+    [-1.75, -0.82],
+    [-1.34, -0.66],
+    [-0.66, 0.3],
     [0, 1.52],
-    [0.64, 0.62],
-    [2.5, -1.42],
-  ], 0.48), []);
+    [0.42, 0.82],
+    [0.72, 0.53],
+    [0.96, 0.08],
+    [1.48, -0.36],
+    [2.58, -1.42],
+  ], 0.5), []);
+  const rangeGeometry = useMemo(() => createMountainGeometry([
+    [-3.15, -1.36],
+    [-2.75, -0.72],
+    [-2.18, -0.34],
+    [-1.7, 0.58],
+    [-1.18, -0.18],
+    [-0.74, 0.2],
+    [-0.24, -0.34],
+    [0.34, 0.24],
+    [0.8, -0.28],
+    [1.4, 0.68],
+    [1.92, -0.16],
+    [2.5, 0.06],
+    [3.15, -0.76],
+  ], 0.34, 0.045), []);
+  const foregroundGeometry = useMemo(() => createMountainGeometry([
+    [-3.2, -1.5],
+    [-2.72, -1.08],
+    [-2.2, -0.92],
+    [-1.68, -1.12],
+    [-1.08, -0.72],
+    [-0.46, -1.02],
+    [0.06, -0.8],
+    [0.62, -1.04],
+    [1.28, -0.64],
+    [1.86, -1.02],
+    [2.44, -0.78],
+    [3.2, -1.3],
+  ], 0.26, 0.045), []);
+  const mainSnowGeometry = useMemo(() => createMountainGeometry([
+    [-0.58, 0.7],
+    [-0.34, 1.0],
+    [0, 1.52],
+    [0.28, 1.06],
+    [0.58, 0.72],
+    [0.36, 0.88],
+    [0.16, 0.82],
+    [-0.02, 1.02],
+    [-0.2, 0.82],
+    [-0.4, 0.92],
+  ], 0.12, 0.028), []);
+  const backSnowGeometry = useMemo(() => createMountainGeometry([
+    [-2.02, 0.22],
+    [-1.7, 0.58],
+    [-1.4, 0.2],
+    [-1.55, 0.31],
+    [-1.7, 0.27],
+    [-1.82, 0.42],
+  ], 0.08, 0.02), []);
+  const farSnowGeometry = useMemo(() => createMountainGeometry([
+    [1.14, 0.3],
+    [1.4, 0.68],
+    [1.7, 0.2],
+    [1.54, 0.32],
+    [1.39, 0.27],
+    [1.3, 0.46],
+  ], 0.08, 0.02), []);
 
   useEffect(() => {
     if (reducedMotion) draw.current = activeIndex;
@@ -155,8 +217,23 @@ function LithicMountain({ activeIndex, onSelect, pointerRef, reducedMotion }) {
 
   return (
     <group ref={mountain} rotation={[-0.08, -0.1, 0]} scale={0.92}>
+      <mesh geometry={rangeGeometry} position={[0, 0.08, -0.34]} castShadow receiveShadow>
+        <meshPhysicalMaterial color={CHARCOAL} roughness={0.56} metalness={0.08} clearcoat={0.32} clearcoatRoughness={0.48} />
+      </mesh>
+      <mesh geometry={backSnowGeometry} position={[0, 0.08, -0.12]}>
+        <meshPhysicalMaterial color={ALABASTER} emissive="#f5f3ee" emissiveIntensity={0.06} roughness={0.72} metalness={0.02} clearcoat={0.24} clearcoatRoughness={0.58} />
+      </mesh>
+      <mesh geometry={farSnowGeometry} position={[0, 0.08, -0.12]}>
+        <meshPhysicalMaterial color={ALABASTER} emissive="#f5f3ee" emissiveIntensity={0.06} roughness={0.72} metalness={0.02} clearcoat={0.24} clearcoatRoughness={0.58} />
+      </mesh>
       <mesh geometry={mountainGeometry} castShadow receiveShadow>
-        <meshPhysicalMaterial color={ONYX} roughness={0.24} metalness={0.2} clearcoat={0.9} clearcoatRoughness={0.16} />
+        <meshPhysicalMaterial color={ONYX} roughness={0.34} metalness={0.14} clearcoat={0.7} clearcoatRoughness={0.24} />
+      </mesh>
+      <mesh geometry={mainSnowGeometry} position={[0, 0, 0.31]} castShadow>
+        <meshPhysicalMaterial color={ALABASTER} emissive="#f7f5f0" emissiveIntensity={0.08} roughness={0.68} metalness={0.03} clearcoat={0.36} clearcoatRoughness={0.5} />
+      </mesh>
+      <mesh geometry={foregroundGeometry} position={[0, -0.04, 0.26]} castShadow receiveShadow>
+        <meshPhysicalMaterial color="#242219" roughness={0.5} metalness={0.08} clearcoat={0.26} clearcoatRoughness={0.44} />
       </mesh>
       {ROUTE_POINTS.slice(0, -1).map((point, index) => (
         <RouteSegment key={`route-${index}`} start={point} end={ROUTE_POINTS[index + 1]} index={index} drawRef={draw} reducedMotion={reducedMotion} />
@@ -171,11 +248,12 @@ function LithicMountain({ activeIndex, onSelect, pointerRef, reducedMotion }) {
 function SystemScene({ activeIndex, onSelect, pointerRef, reducedMotion }) {
   return (
     <>
-      <ambientLight intensity={0.95} />
-      <hemisphereLight args={[ALABASTER, ONYX, 1.25]} />
-      <directionalLight position={[4.5, 5.5, 7]} intensity={3.8} color="#ffffff" />
-      <pointLight position={[-3.4, 1.8, 4]} intensity={4.2} distance={10} color={GOLD} />
-      <pointLight position={[3.5, -1.3, 4.5]} intensity={2.4} distance={10} color={ALABASTER} />
+      <ambientLight intensity={0.82} />
+      <hemisphereLight args={[ALABASTER, ONYX, 1.35]} />
+      <directionalLight position={[4.5, 5.5, 7]} intensity={3.6} color="#ffffff" />
+      <directionalLight position={[-4, 2.4, 4]} intensity={1.1} color={ALABASTER} />
+      <pointLight position={[-3.4, 1.8, 4]} intensity={4.4} distance={10} color={GOLD} />
+      <pointLight position={[3.5, -1.3, 4.5]} intensity={2.1} distance={10} color={ALABASTER} />
       <LithicMountain activeIndex={activeIndex} onSelect={onSelect} pointerRef={pointerRef} reducedMotion={reducedMotion} />
     </>
   );

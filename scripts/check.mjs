@@ -77,8 +77,14 @@ for (const phrase of ["Investigate", "We find where AI makes the biggest impact.
 for (const phrase of ["bespoke system catered to your needs", "as technology evolves so do we"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Process card is missing ${phrase}`);
 }
-for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "The business case comes before the build.", "© <span data-current-year></span> Lithic"]) {
+for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "© <span data-current-year></span> Lithic"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Lithic homepage is missing ${phrase}`);
+}
+for (const phrase of ['data-roi-calculator', 'data-roi-use-case="reporting"', 'data-roi-use-case="email"', 'data-roi-use-case="knowledge"', 'data-roi-range="horizon"', 'data-roi-range="hourly"', "data-roi-hours"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`ROI opportunity builder is missing ${phrase}`);
+}
+for (const phrase of ["Illustrative ROI model", "Baseline cost"]) {
+  if (homeHtml.includes(phrase)) failures.push(`Legacy static ROI copy remains: ${phrase}`);
 }
 for (const phrase of ["Alexander D’Amore", "Alexander D'Amore", "Work with me", "How I work", "Prioritize"]) {
   if (homeHtml.includes(phrase)) failures.push(`Legacy personal-site language remains: ${phrase}`);
@@ -86,6 +92,12 @@ for (const phrase of ["Alexander D’Amore", "Alexander D'Amore", "Work with me"
 const cname = await readFile(join(root, "CNAME"), "utf8");
 if (cname.trim() !== "lithic.business") failures.push("CNAME must point to lithic.business");
 if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
+
+const copyExtensions = new Set([".html", ".js", ".jsx"]);
+for (const file of files.filter((candidate) => copyExtensions.has(extname(candidate)) && !candidate.endsWith("three-capability.bundle.js"))) {
+  const source = await readFile(file, "utf8");
+  if (source.includes("—")) failures.push(`${relative(root, file)} contains an em dash`);
+}
 
 if (failures.length) {
   console.error(failures.join("\n"));

@@ -252,13 +252,198 @@
     activateSystem();
   }
 
+  const roiCalculator = document.querySelector("[data-roi-calculator]");
+  if (roiCalculator) {
+    const roiCases = {
+      reporting: {
+        tasks: [
+          { label: "Gathering data", hours: 3.5, rate: 0.65 },
+          { label: "Cleaning spreadsheets", hours: 2, rate: 0.7 },
+          { label: "Drafting summaries", hours: 2.5, rate: 0.55 },
+          { label: "Recurring distribution", hours: 1, rate: 0.75 },
+        ],
+      },
+      email: {
+        tasks: [
+          { label: "Inbox triage", hours: 3, rate: 0.7 },
+          { label: "Looking up context", hours: 2.5, rate: 0.6 },
+          { label: "Drafting responses", hours: 4, rate: 0.55 },
+          { label: "Routing and escalation", hours: 1.5, rate: 0.7 },
+        ],
+      },
+      knowledge: {
+        tasks: [
+          { label: "Searching documents", hours: 4, rate: 0.65 },
+          { label: "Answering repeat questions", hours: 3, rate: 0.6 },
+          { label: "Policy lookup", hours: 2, rate: 0.7 },
+          { label: "Onboarding support", hours: 3, rate: 0.5 },
+        ],
+      },
+    };
+
+    const roiState = {
+      useCase: "reporting",
+      horizon: 12,
+      hourly: 60,
+      selected: {
+        reporting: new Set([0, 1, 2]),
+        email: new Set([0, 1, 2]),
+        knowledge: new Set([0, 1, 2]),
+      },
+    };
+
+    const taskList = roiCalculator.querySelector("[data-roi-task-list]");
+    const useCaseButtons = [...roiCalculator.querySelectorAll("[data-roi-use-case]")];
+    const horizonInput = roiCalculator.querySelector('[data-roi-range="horizon"]');
+    const hourlyInput = roiCalculator.querySelector('[data-roi-range="hourly"]');
+    const horizonOutput = roiCalculator.querySelector("[data-roi-horizon-output]");
+    const hourlyOutput = roiCalculator.querySelector("[data-roi-hourly-output]");
+    const hoursOutput = roiCalculator.querySelector("[data-roi-hours]");
+    const valueOutput = roiCalculator.querySelector("[data-roi-value]");
+    const monthlyOutput = roiCalculator.querySelector("[data-roi-monthly]");
+    const chartHours = roiCalculator.querySelector("[data-roi-chart-hours]");
+    const chartHorizon = roiCalculator.querySelector("[data-roi-horizon-label]");
+    const chartLine = roiCalculator.querySelector("[data-roi-chart-line]");
+    const chartArea = roiCalculator.querySelector("[data-roi-chart-area]");
+    const chartDot = roiCalculator.querySelector("[data-roi-chart-dot]");
+    const chartSvg = roiCalculator.querySelector(".roi-chart svg");
+    const currencyFormatter = new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: "EUR",
+      maximumFractionDigits: 0,
+    });
+
+    const formatHours = (hours) => `${Number.isInteger(hours) ? hours : hours.toFixed(1)}h / week`;
+
+    const setRangeFill = (input) => {
+      if (!input) return;
+      const minimum = Number(input.min);
+      const maximum = Number(input.max);
+      const fill = ((Number(input.value) - minimum) / (maximum - minimum)) * 100;
+      input.style.setProperty("--roi-range-fill", `${fill}%`);
+    };
+
+    const roiLinePath = () => {
+      const points = [];
+      for (let index = 0; index <= roiState.horizon; index += 1) {
+        const x = 20 + (580 * index) / roiState.horizon;
+        const progress = index / roiState.horizon;
+        const y = 190 - 145 * Math.pow(progress, 0.94);
+        points.push([x, y]);
+      }
+      return points
+        .map(([x, y], index) => `${index ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`)
+        .join(" ");
+    };
+
+    const calculateRoi = () => {
+      const selectedTasks = roiState.selected[roiState.useCase];
+      const weeklySaved = roiCases[roiState.useCase].tasks.reduce((total, task, index) => {
+        return selectedTasks.has(index) ? total + task.hours * task.rate : total;
+      }, 0);
+      const monthlySaved = weeklySaved * 4.33;
+      const totalSaved = monthlySaved * roiState.horizon;
+      return {
+        monthly: Math.round(monthlySaved),
+        total: Math.round(totalSaved),
+        value: totalSaved * roiState.hourly,
+      };
+    };
+
+    const renderRoiResults = () => {
+      const result = calculateRoi();
+      const path = roiLinePath();
+
+      horizonOutput.textContent = `${roiState.horizon} months`;
+      hourlyOutput.textContent = currencyFormatter.format(roiState.hourly);
+      hoursOutput.textContent = String(result.total);
+      valueOutput.textContent = currencyFormatter.format(result.value);
+      monthlyOutput.textContent = `${result.monthly} hrs`;
+      chartHours.textContent = `${result.total} hours`;
+      chartHorizon.textContent = `${roiState.horizon} months`;
+      chartLine.setAttribute("d", path);
+      chartArea.setAttribute("d", `${path} L600 190 L20 190 Z`);
+      chartDot.setAttribute("cx", "600");
+      chartDot.setAttribute("cy", "45");
+      chartSvg.setAttribute(
+        "aria-label",
+        `${result.total} cumulative business hours saved over ${roiState.horizon} months`
+      );
+      setRangeFill(horizonInput);
+      setRangeFill(hourlyInput);
+    };
+
+    const renderRoiTasks = () => {
+      const selectedTasks = roiState.selected[roiState.useCase];
+      taskList.replaceChildren(
+        ...roiCases[roiState.useCase].tasks.map((task, index) => {
+          const label = document.createElement("label");
+          label.className = "roi-task";
+
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.dataset.roiTask = String(index);
+          input.checked = selectedTasks.has(index);
+
+          const checkmark = document.createElement("i");
+          checkmark.setAttribute("aria-hidden", "true");
+
+          const name = document.createElement("span");
+          name.textContent = task.label;
+
+          const time = document.createElement("em");
+          time.textContent = formatHours(task.hours);
+
+          label.append(input, checkmark, name, time);
+          return label;
+        })
+      );
+    };
+
+    useCaseButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const nextUseCase = button.dataset.roiUseCase;
+        if (!roiCases[nextUseCase]) return;
+        roiState.useCase = nextUseCase;
+        useCaseButtons.forEach((candidate) => {
+          candidate.setAttribute("aria-pressed", String(candidate === button));
+        });
+        renderRoiTasks();
+        renderRoiResults();
+      });
+    });
+
+    taskList.addEventListener("change", (event) => {
+      const input = event.target.closest("[data-roi-task]");
+      if (!input) return;
+      const index = Number(input.dataset.roiTask);
+      const selectedTasks = roiState.selected[roiState.useCase];
+      if (input.checked) selectedTasks.add(index);
+      else selectedTasks.delete(index);
+      renderRoiResults();
+    });
+
+    horizonInput.addEventListener("input", () => {
+      roiState.horizon = Number(horizonInput.value);
+      renderRoiResults();
+    });
+
+    hourlyInput.addEventListener("input", () => {
+      roiState.hourly = Number(hourlyInput.value);
+      renderRoiResults();
+    });
+
+    renderRoiTasks();
+    renderRoiResults();
+  }
+
   const threeExperience = document.querySelector("[data-three-experience]");
   if (threeExperience) {
     let requested = false;
     const loadExperience = () => {
       if (requested) return;
       requested = true;
-      import("./three-capability.bundle.js?v=20260820-11").catch(() => {
+      import("./three-capability.bundle.js?v=20260820-12").catch(() => {
         threeExperience.classList.add("has-three-error");
       });
     };

@@ -10,8 +10,8 @@
     />
     <title>Lithic | AI Strategy Partner</title>
     <link rel="icon" href="./assets/images/lithic_avatar_black_transparent_1024.png" type="image/png" />
-    <link rel="stylesheet" href="./assets/css/styles.css?v=20260820-11" />
-    <script src="./assets/js/site.js?v=20260820-12" defer></script>
+    <link rel="stylesheet" href="./assets/css/styles.css?v=20260820-12" />
+    <script src="./assets/js/site.js?v=20260820-13" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -116,7 +116,7 @@ Q2 Strategy Report</p>
         <div class="section-shell" data-reveal>
           <div class="capability-layout">
             <div class="capability-copy">
-              <h2 id="capability-title" class="section-heading">From expensive friction to measurable value.</h2>
+              <h2 id="capability-title" class="section-heading">Replace friction with value.</h2>
               <p>We diagnose the right problem, build the business case, implement the first quick win, and connect it to the way your team operates.</p>
               <span class="capability-hint">Select a stage to trace the route down the mountain.</span>
             </div>
@@ -125,7 +125,12 @@ Q2 Strategy Report</p>
               <div class="capability-aurora" aria-hidden="true"></div>
               <div class="capability-fallback" aria-hidden="true">
                 <span class="fallback-mountain">
-                  <span class="fallback-peak"></span>
+                  <span class="fallback-range fallback-range--back"></span>
+                  <span class="fallback-snow fallback-snow--back"></span>
+                  <span class="fallback-snow fallback-snow--far"></span>
+                  <span class="fallback-range fallback-range--main"></span>
+                  <span class="fallback-snow fallback-snow--main"></span>
+                  <span class="fallback-range fallback-range--front"></span>
                   <span class="fallback-route"></span>
                   <span class="fallback-point fallback-point--one"></span>
                   <span class="fallback-point fallback-point--two"></span>
@@ -134,7 +139,7 @@ Q2 Strategy Report</p>
                 </span>
               </div>
               <div id="ai-capability-root" class="capability-root"></div>
-              <p class="sr-only">An interactive 3D mountain with a gold route connecting AI strategy, bespoke systems, intelligence, and integration.</p>
+              <p class="sr-only">An interactive 3D mountain range with frosted snow caps and a gold route connecting AI strategy, bespoke systems, intelligence, and integration.</p>
             </div>
           </div>
         </div>
@@ -144,11 +149,11 @@ Q2 Strategy Report</p>
         <div class="section-shell" data-reveal>
           <div class="section-head">
             <h2 class="section-heading">How we work</h2>
-            <p class="section-intro">We treat AI as a business transformation decision—not a software shopping exercise.</p>
+            <p class="section-intro">We treat AI as a business transformation decision, not a software shopping exercise.</p>
           </div>
           <div class="work-steps">
             <article class="work-step"><span class="step-number" aria-hidden="true">1</span><h3>Investigate</h3><p>We interview leadership and the people doing the work, then map the workflows, handoffs, data, and friction that shape the real opportunity.</p></article>
-            <article class="work-step"><span class="step-number" aria-hidden="true">2</span><h3>Quantify</h3><p>We rank opportunities by impact, feasibility, reliability, and adoption—and turn the strongest candidates into a conservative business case.</p></article>
+            <article class="work-step"><span class="step-number" aria-hidden="true">2</span><h3>Quantify</h3><p>We rank opportunities by impact, feasibility, reliability, and adoption. Then we turn the strongest candidates into a conservative business case.</p></article>
             <article class="work-step"><span class="step-number" aria-hidden="true">3</span><h3>Build</h3><p>We start with a high-impact, lower-risk quick win, connecting the right tools and data with human approval where judgment matters.</p></article>
             <article class="work-step"><span class="step-number" aria-hidden="true">4</span><h3>Improve</h3><p>We stay embedded to measure realized value, strengthen adoption, maintain the system, and move the next priority into operation.</p></article>
           </div>
@@ -157,22 +162,70 @@ Q2 Strategy Report</p>
 
       <section id="business-case" class="section value-section">
         <div class="section-shell" data-reveal>
-          <div class="section-head value-section__head">
-            <h2 class="section-heading">The business case comes before the build.</h2>
-            <p class="section-intro">Every recommendation separates hard savings from capacity, revenue upside, avoided cost, and risk reduction—so an AI idea becomes a decision the business can defend.</p>
-          </div>
-          <div class="value-layout">
-            <article class="roi-model">
-              <span class="value-eyebrow">Illustrative ROI model</span>
-              <p class="roi-equation"><strong>People</strong><i>×</i><strong>hours</strong><i>×</i><strong>loaded cost</strong><i>×</i><strong>frequency</strong></p>
-              <div class="roi-arrow" aria-hidden="true">↓</div>
-              <p class="roi-result">Baseline cost → realistic automation rate → realized annual value</p>
-              <small>Hours saved create capacity. They count as cash savings only when the financial mechanism is real.</small>
-            </article>
-            <div class="quick-wins" aria-label="Examples of measurable AI quick wins">
-              <article><span>01</span><h3>Reporting &amp; insight</h3><p>Reduce recurring manual assembly while preserving the evidence behind every conclusion.</p></article>
-              <article><span>02</span><h3>Email &amp; enquiries</h3><p>Classify, retrieve context, draft, route, and escalate high-frequency communication.</p></article>
-              <article><span>03</span><h3>Internal knowledge</h3><p>Give teams faster access to policies, documents, and proven answers with human controls.</p></article>
+          <div class="roi-builder" data-roi-calculator>
+            <header class="roi-builder__header">
+              <div>
+                <span class="roi-builder__kicker">ROI opportunity builder</span>
+                <h2>See the capacity AI could return to your team.</h2>
+              </div>
+              <span class="roi-builder__estimate">Illustrative estimate</span>
+            </header>
+
+            <div class="roi-use-cases" role="group" aria-label="Choose a use case">
+              <button type="button" aria-pressed="true" data-roi-use-case="reporting">Reporting &amp; insight</button>
+              <button type="button" aria-pressed="false" data-roi-use-case="email">Email &amp; enquiries</button>
+              <button type="button" aria-pressed="false" data-roi-use-case="knowledge">Internal knowledge</button>
+            </div>
+
+            <div class="roi-builder__grid">
+              <div class="roi-builder__inputs">
+                <div class="roi-builder__step">
+                  <span>01</span>
+                  <strong>What are you doing manually?</strong>
+                </div>
+                <div class="roi-task-list" data-roi-task-list>
+                  <label class="roi-task"><input type="checkbox" data-roi-task="0" checked /><i aria-hidden="true"></i><span>Gathering data</span><em>3.5h / week</em></label>
+                  <label class="roi-task"><input type="checkbox" data-roi-task="1" checked /><i aria-hidden="true"></i><span>Cleaning spreadsheets</span><em>2h / week</em></label>
+                  <label class="roi-task"><input type="checkbox" data-roi-task="2" checked /><i aria-hidden="true"></i><span>Drafting summaries</span><em>2.5h / week</em></label>
+                  <label class="roi-task"><input type="checkbox" data-roi-task="3" /><i aria-hidden="true"></i><span>Recurring distribution</span><em>1h / week</em></label>
+                </div>
+
+                <div class="roi-builder__step roi-builder__step--assumptions">
+                  <span>02</span>
+                  <strong>Set your assumptions</strong>
+                </div>
+                <div class="roi-range-stack">
+                  <label>
+                    <span>Time horizon</span>
+                    <output data-roi-horizon-output>12 months</output>
+                    <input type="range" min="3" max="24" step="1" value="12" style="--roi-range-fill: 42.86%" data-roi-range="horizon" />
+                  </label>
+                  <label>
+                    <span>Estimated cost per working hour</span>
+                    <output data-roi-hourly-output>€60</output>
+                    <input type="range" min="30" max="150" step="5" value="60" style="--roi-range-fill: 25%" data-roi-range="hourly" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="roi-builder__outcome">
+                <span class="roi-outcome-label">Business hours saved</span>
+                <div class="roi-outcome-number" aria-live="polite"><strong data-roi-hours>262</strong><span>hours</span></div>
+                <div class="roi-chart">
+                  <svg viewBox="0 0 620 220" role="img" aria-label="Cumulative business hours saved over time">
+                    <path class="roi-chart__grid" d="M20 50H600M20 105H600M20 160H600"></path>
+                    <path class="roi-chart__area" data-roi-chart-area></path>
+                    <path class="roi-chart__line" data-roi-chart-line></path>
+                    <circle class="roi-chart__dot" data-roi-chart-dot r="7" cx="600" cy="45"></circle>
+                  </svg>
+                  <div class="roi-chart__axis"><span>Now</span><span><b data-roi-chart-hours>262 hours</b> over <b data-roi-horizon-label>12 months</b></span></div>
+                </div>
+                <div class="roi-outcome-foot">
+                  <span><small>Estimated capacity value</small><strong data-roi-value>€15,744</strong></span>
+                  <span><small>Recovered each month</small><strong data-roi-monthly>22 hrs</strong></span>
+                </div>
+                <p class="roi-disclaimer">Illustrative capacity estimate. Actual results depend on workflow design, data quality, adoption, and implementation. Recovered hours count as cash savings only when the financial mechanism is real.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -245,7 +298,7 @@ Q2 Strategy Report</p>
       <section class="cta-section">
         <div class="cta-card" data-reveal>
           <h2>Find the first AI opportunity worth pursuing.</h2>
-          <p>In a free intro call, we’ll discuss where work is slow, repetitive, fragmented, or hard to measure—and whether there is a credible place to begin.</p>
+          <p>In a free intro call, we’ll discuss where work is slow, repetitive, fragmented, or hard to measure. We’ll also determine whether there is a credible place to begin.</p>
           <a class="button button--specular" href="./work-with-me/"><span class="button__fx" aria-hidden="true"></span><span class="button__shine" aria-hidden="true"></span><span class="button__label">Free Intro Call</span></a>
         </div>
       </section>
