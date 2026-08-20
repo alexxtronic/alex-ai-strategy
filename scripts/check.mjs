@@ -55,8 +55,8 @@ for (const id of ["how-i-work", "specialties", "past-projects"]) {
 }
 if (!homeHtml.includes("Hi, I'm Alex,")) failures.push("Homepage headline is missing");
 if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is missing the 3D capability experience");
-if (!homeHtml.includes("fallback-layer--four")) failures.push("Homepage is missing the layered capability fallback");
-if (!capabilitySource.includes("function LayeredStack")) failures.push("Layered capability experience is missing");
+if (!homeHtml.includes("fallback-drawer--four")) failures.push("Homepage is missing the drawer-cabinet fallback");
+if (!capabilitySource.includes("function CapabilityCabinet")) failures.push("3D drawer-cabinet experience is missing");
 if (capabilitySource.includes("sphereGeometry") || capabilitySource.includes("CentralIntelligence")) failures.push("Legacy planet geometry remains in the capability experience");
 if (homeCss.includes("backdrop-filter: blur(1.5px)")) failures.push("Investigate lens must not blur discovered words");
 if (!homeHtml.includes('data-build-report="typing-v2"')) failures.push("Homepage is missing the resilient Build-card report");
