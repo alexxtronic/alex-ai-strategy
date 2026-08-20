@@ -1237,8 +1237,25 @@ svg {
 .fallback-core {
   width: 110px;
   height: 110px;
-  background: radial-gradient(circle at 34% 28%, #314b7f, var(--ink) 64%);
-  box-shadow: 0 0 70px rgba(98, 149, 255, 0.44);
+  background:
+    radial-gradient(circle at 64% 28%, white 0 2%, rgba(255, 255, 255, 0.82) 3%, transparent 9%),
+    radial-gradient(circle at 35% 66%, #d8c4ff 0 2%, rgba(152, 91, 255, 0.8) 4%, transparent 12%),
+    radial-gradient(circle at 42% 38%, #6e2be0, #17052e 42%, #03030d 76%);
+  box-shadow:
+    0 0 28px rgba(255, 255, 255, 0.46),
+    0 0 66px rgba(151, 86, 255, 0.74),
+    0 0 110px rgba(77, 34, 156, 0.38);
+  animation: fallback-intelligence-pulse 2.8s ease-in-out infinite alternate;
+}
+
+.fallback-core::before {
+  content: "";
+  position: absolute;
+  inset: -42%;
+  background: conic-gradient(from 20deg, transparent, rgba(151, 86, 255, 0.48), transparent 24%, rgba(255, 255, 255, 0.3), transparent 54%, rgba(105, 48, 222, 0.5), transparent 82%);
+  border-radius: 50%;
+  filter: blur(9px);
+  animation: fallback-intelligence-spin 8s linear infinite;
 }
 
 .fallback-core::after,
@@ -1256,6 +1273,24 @@ svg {
 
 .fallback-node::after {
   border-width: 2px;
+}
+
+.fallback-core::after {
+  width: 220%;
+  height: 220%;
+  background: radial-gradient(circle, transparent 46%, rgba(166, 118, 255, 0.2) 51%, transparent 58%, rgba(255, 255, 255, 0.11) 62%, transparent 68%);
+  border: 0;
+  filter: blur(2px);
+  animation: fallback-intelligence-pulse 3.4s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes fallback-intelligence-pulse {
+  from { opacity: 0.72; transform: translate(-50%, -50%) scale(0.94); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1.07); }
+}
+
+@keyframes fallback-intelligence-spin {
+  to { transform: rotate(360deg); }
 }
 
 .fallback-orbit {

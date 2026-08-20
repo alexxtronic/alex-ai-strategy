@@ -44,6 +44,70 @@ const CAPABILITIES = [
 
 const tempScale = new THREE.Vector3();
 
+const intelligenceVertexShader = `
+  varying vec2 vUv;
+  varying vec3 vWorldNormal;
+  varying vec3 vWorldPosition;
+
+  void main() {
+    vUv = uv;
+    vWorldNormal = normalize(mat3(modelMatrix) * normal);
+    vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const intelligenceFragmentShader = `
+  uniform float uTime;
+  varying vec2 vUv;
+  varying vec3 vWorldNormal;
+  varying vec3 vWorldPosition;
+
+  float hash(vec2 point) {
+    return fract(sin(dot(point, vec2(127.1, 311.7))) * 43758.5453);
+  }
+
+  void main() {
+    vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDirection), 0.0), 2.35);
+    float flowOne = sin(vUv.y * 24.0 + sin(vUv.x * 13.0 + uTime * 0.62) * 4.0 - uTime * 0.9) * 0.5 + 0.5;
+    float flowTwo = sin(vUv.x * 31.0 - vUv.y * 11.0 + uTime * 1.18) * 0.5 + 0.5;
+    float energy = smoothstep(0.48, 0.92, flowOne * 0.68 + flowTwo * 0.48);
+    float cell = hash(floor(vUv * vec2(44.0, 28.0)));
+    float twinkle = 0.5 + 0.5 * sin(uTime * 4.2 + cell * 31.0);
+    float sparkle = step(0.963, cell) * pow(twinkle, 3.0);
+    float whiteCurrent = pow(max(0.0, sin(vUv.x * 19.0 + uTime) * cos(vUv.y * 17.0 - uTime * 0.72)), 14.0);
+
+    vec3 deepBlack = vec3(0.006, 0.004, 0.022);
+    vec3 purple = vec3(0.42, 0.12, 0.88);
+    vec3 violet = vec3(0.72, 0.42, 1.0);
+    vec3 white = vec3(1.0, 0.98, 1.0);
+    vec3 color = mix(deepBlack, purple, energy * 0.76);
+    color = mix(color, violet, fresnel * 0.62);
+    color += white * (sparkle * 1.45 + whiteCurrent * 0.42);
+    color += purple * fresnel * (0.25 + sin(uTime * 1.6) * 0.06);
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+const auraFragmentShader = `
+  uniform float uTime;
+  varying vec2 vUv;
+  varying vec3 vWorldNormal;
+  varying vec3 vWorldPosition;
+
+  void main() {
+    vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+    float fresnel = pow(1.0 - max(dot(normalize(vWorldNormal), viewDirection), 0.0), 2.05);
+    float shimmer = 0.72 + 0.28 * sin(vUv.y * 21.0 + vUv.x * 15.0 - uTime * 1.35);
+    float pulse = 0.82 + 0.18 * sin(uTime * 1.7);
+    vec3 color = mix(vec3(0.42, 0.12, 0.92), vec3(1.0), fresnel * 0.72);
+    float alpha = fresnel * shimmer * pulse * 0.48;
+    gl_FragColor = vec4(color, alpha);
+  }
+`;
+
 function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reducedMotion }) {
   const planet = useRef();
   const sphere = useRef();
@@ -187,10 +251,102 @@ function ParticleField({ reducedMotion }) {
   );
 }
 
+function CentralIntelligence({ reducedMotion }) {
+  const coreMaterial = useRef();
+  const auraMaterial = useRef();
+  const aura = useRef();
+  const burst = useRef();
+  const halos = useRef();
+  const coreUniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
+  const auraUniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
+  const burstGeometry = useMemo(() => {
+    const points = [];
+    const count = 42;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+    for (let index = 0; index < count; index += 1) {
+      const y = 1 - (index / (count - 1)) * 2;
+      const radius = Math.sqrt(1 - y * y);
+      const theta = goldenAngle * index;
+      const direction = new THREE.Vector3(Math.cos(theta) * radius, y, Math.sin(theta) * radius);
+      const inner = 0.88 + ((index * 17) % 7) * 0.012;
+      const outer = 1.12 + ((index * 29) % 11) * 0.035;
+      points.push(direction.clone().multiplyScalar(inner), direction.clone().multiplyScalar(outer));
+    }
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }, []);
+
+  useFrame((state, delta) => {
+    if (reducedMotion) return;
+    const time = state.clock.elapsedTime;
+    if (coreMaterial.current) coreMaterial.current.uniforms.uTime.value = time;
+    if (auraMaterial.current) auraMaterial.current.uniforms.uTime.value = time;
+    if (aura.current) {
+      const scale = 1 + Math.sin(time * 1.45) * 0.035;
+      aura.current.scale.setScalar(scale);
+      aura.current.rotation.y += delta * 0.075;
+    }
+    if (burst.current) {
+      burst.current.rotation.x += delta * 0.018;
+      burst.current.rotation.y -= delta * 0.028;
+      burst.current.scale.setScalar(0.98 + Math.sin(time * 1.9) * 0.035);
+    }
+    if (halos.current) halos.current.rotation.z += delta * 0.025;
+  });
+
+  return (
+    <group>
+      <lineSegments ref={burst} geometry={burstGeometry}>
+        <lineBasicMaterial
+          color="#b88cff"
+          transparent
+          opacity={0.33}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </lineSegments>
+      <mesh>
+        <sphereGeometry args={[0.86, 96, 96]} />
+        <shaderMaterial
+          ref={coreMaterial}
+          vertexShader={intelligenceVertexShader}
+          fragmentShader={intelligenceFragmentShader}
+          uniforms={coreUniforms}
+        />
+      </mesh>
+      <mesh ref={aura} scale={1.12}>
+        <sphereGeometry args={[0.86, 72, 72]} />
+        <shaderMaterial
+          ref={auraMaterial}
+          vertexShader={intelligenceVertexShader}
+          fragmentShader={auraFragmentShader}
+          uniforms={auraUniforms}
+          transparent
+          side={THREE.FrontSide}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+        />
+      </mesh>
+      <group ref={halos}>
+        <mesh rotation={[1.12, 0.22, 0.38]}>
+          <torusGeometry args={[1.08, 0.018, 12, 128]} />
+          <meshBasicMaterial color="#a676ff" transparent opacity={0.48} blending={THREE.AdditiveBlending} depthWrite={false} />
+        </mesh>
+        <mesh rotation={[0.42, 1.05, -0.48]}>
+          <torusGeometry args={[1.18, 0.012, 10, 128]} />
+          <meshBasicMaterial color="#ffffff" transparent opacity={0.32} blending={THREE.AdditiveBlending} depthWrite={false} />
+        </mesh>
+        <mesh rotation={[0.88, -0.7, 0.92]}>
+          <torusGeometry args={[1.28, 0.01, 10, 128]} />
+          <meshBasicMaterial color="#7139e6" transparent opacity={0.3} blending={THREE.AdditiveBlending} depthWrite={false} />
+        </mesh>
+      </group>
+      <pointLight position={[0, 0, 1.4]} intensity={9} distance={4} color="#c7a2ff" />
+    </group>
+  );
+}
+
 function SystemScene({ activeIndex, setActiveIndex, reducedMotion }) {
   const system = useRef();
-  const core = useRef();
-  const coreRings = useRef();
 
   useFrame((state, delta) => {
     if (!system.current || reducedMotion) return;
@@ -198,12 +354,6 @@ function SystemScene({ activeIndex, setActiveIndex, reducedMotion }) {
     const targetY = state.pointer.x * 0.22 + state.clock.elapsedTime * 0.055;
     system.current.rotation.x = THREE.MathUtils.damp(system.current.rotation.x, targetX, 4, delta);
     system.current.rotation.y = THREE.MathUtils.damp(system.current.rotation.y, targetY, 3, delta);
-    if (core.current) {
-      core.current.rotation.y -= delta * 0.045;
-    }
-    if (coreRings.current) {
-      coreRings.current.rotation.z -= delta * 0.018;
-    }
   });
 
   return (
@@ -216,43 +366,7 @@ function SystemScene({ activeIndex, setActiveIndex, reducedMotion }) {
       <ParticleField reducedMotion={reducedMotion} />
       <group ref={system}>
         <ConnectionLines />
-        <mesh ref={core}>
-          <sphereGeometry args={[0.86, 80, 80]} />
-          <meshPhysicalMaterial
-            color="#0b1a37"
-            emissive="#142b58"
-            emissiveIntensity={0.12}
-            metalness={0.12}
-            roughness={0.22}
-            clearcoat={1}
-            clearcoatRoughness={0.14}
-          />
-        </mesh>
-        <mesh scale={1.035}>
-          <sphereGeometry args={[0.86, 64, 64]} />
-          <meshBasicMaterial color="#91a9df" transparent opacity={0.075} side={THREE.BackSide} />
-        </mesh>
-        <group ref={coreRings} rotation={[1.08, 0.18, 0.42]}>
-          <mesh>
-            <ringGeometry args={[1.03, 1.48, 128]} />
-            <meshStandardMaterial
-              color="#b7c8ed"
-              transparent
-              opacity={0.27}
-              roughness={0.42}
-              side={THREE.DoubleSide}
-              depthWrite={false}
-            />
-          </mesh>
-          <mesh position={[0, 0, 0.003]}>
-            <ringGeometry args={[1.22, 1.28, 128]} />
-            <meshBasicMaterial color="#7f9cdf" transparent opacity={0.48} side={THREE.DoubleSide} depthWrite={false} />
-          </mesh>
-          <mesh position={[0, 0, 0.006]}>
-            <ringGeometry args={[1.4, 1.44, 128]} />
-            <meshBasicMaterial color="#d9e3fa" transparent opacity={0.34} side={THREE.DoubleSide} depthWrite={false} />
-          </mesh>
-        </group>
+        <CentralIntelligence reducedMotion={reducedMotion} />
         {CAPABILITIES.map((capability, index) => (
           <CapabilityNode
             key={capability.label}
