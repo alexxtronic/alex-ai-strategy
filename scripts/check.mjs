@@ -69,6 +69,9 @@ for (const phrase of ["Content Strategy", "Email Workflow Automation", "Q2 Strat
 for (const phrase of ["Investigate", "We find where AI makes the biggest impact.", "Email", "Content", "Reporting"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Investigate card is missing ${phrase}`);
 }
+for (const phrase of ["bespoke system catered to your needs", "as technology evolves so do we"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Process card is missing ${phrase}`);
+}
 if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
 
 if (failures.length) {
