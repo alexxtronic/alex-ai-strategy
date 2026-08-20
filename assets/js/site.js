@@ -27,90 +27,6 @@
     node.textContent = String(new Date().getFullYear());
   });
 
-  const rotator = document.querySelector("[data-business-rotator]");
-  if (rotator) {
-    const words = ["SaaS", "Enterprise B2B", "Scale-Ups"];
-    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const width = Math.max(...words.map((word) => word.length));
-    const flipDuration = 96;
-    const stagger = 34;
-    const flipsPerCharacter = 4;
-    let currentPhrase = words[0].padEnd(width, " ");
-    let index = 0;
-    let cycleTimer;
-    let animationTimers = [];
-
-    const normalizePhrase = (phrase) => phrase.padEnd(width, " ").slice(0, width);
-    const randomCharacter = () => charset[Math.floor(Math.random() * charset.length)];
-
-    const renderTiles = (phrase) => {
-      rotator.replaceChildren();
-      phrase.split("").forEach((character) => {
-        const tile = document.createElement("span");
-        tile.className = "split-flap-text__tile";
-        tile.setAttribute("aria-hidden", "true");
-        tile.innerHTML = `<span class="split-flap-text__half split-flap-text__half--top"><span class="split-flap-text__char">${character === " " ? "&nbsp;" : character}</span></span><span class="split-flap-text__half split-flap-text__half--bottom"><span class="split-flap-text__char">${character === " " ? "&nbsp;" : character}</span></span>`;
-        rotator.appendChild(tile);
-      });
-    };
-
-    const updateTile = (tile, currentCharacter, nextCharacter, finalStep) => {
-      const current = currentCharacter === " " ? "&nbsp;" : currentCharacter;
-      const next = nextCharacter === " " ? "&nbsp;" : nextCharacter;
-      tile.innerHTML = `<span class="split-flap-text__half split-flap-text__half--top"><span class="split-flap-text__char">${current}</span></span><span class="split-flap-text__half split-flap-text__half--bottom"><span class="split-flap-text__char">${next}</span></span>${finalStep ? "" : `<span class="split-flap-text__flap split-flap-text__flap--front"><span class="split-flap-text__char">${current}</span></span><span class="split-flap-text__flap split-flap-text__flap--back"><span class="split-flap-text__char">${next}</span></span>`}`;
-    };
-
-    const animateTo = (nextWord) => {
-      const targetPhrase = normalizePhrase(nextWord);
-      const tiles = [...rotator.children];
-
-      targetPhrase.split("").forEach((targetCharacter, characterIndex) => {
-        const fromCharacter = currentPhrase[characterIndex];
-        if (fromCharacter === targetCharacter) return;
-        const sequence = Array.from({ length: flipsPerCharacter }, randomCharacter).concat(targetCharacter);
-
-        sequence.forEach((nextCharacter, stepIndex) => {
-          const timer = window.setTimeout(() => {
-            const currentCharacter = stepIndex === 0 ? fromCharacter : sequence[stepIndex - 1];
-            const finalStep = stepIndex === sequence.length - 1;
-            updateTile(tiles[characterIndex], finalStep ? targetCharacter : currentCharacter, nextCharacter, finalStep);
-          }, characterIndex * stagger + stepIndex * flipDuration);
-          animationTimers.push(timer);
-        });
-      });
-
-      currentPhrase = targetPhrase;
-    };
-
-    const scheduleRotator = () => {
-      window.clearTimeout(cycleTimer);
-      if (reducedMotion.matches) {
-        currentPhrase = normalizePhrase(words[0]);
-        renderTiles(currentPhrase);
-        return;
-      }
-      cycleTimer = window.setTimeout(() => {
-        index = (index + 1) % words.length;
-        animateTo(words[index]);
-        scheduleRotator();
-      }, 3600);
-    };
-
-    const restartRotator = () => {
-      window.clearTimeout(cycleTimer);
-      animationTimers.forEach(window.clearTimeout);
-      animationTimers = [];
-      index = 0;
-      currentPhrase = normalizePhrase(words[0]);
-      renderTiles(currentPhrase);
-      scheduleRotator();
-    };
-
-    renderTiles(currentPhrase);
-    scheduleRotator();
-    reducedMotion.addEventListener?.("change", restartRotator);
-  }
-
   const vertexShader = `#version 300 es
     in vec2 aPosition;
     void main() { gl_Position = vec4(aPosition, 0.0, 1.0); }
@@ -142,7 +58,7 @@
       float clampToEdge = 1.0 - smoothstep(0.5 * uPx, 3.0 * uPx, abs(distanceToEdge));
       float base = (1.0 - smoothstep(0.0, uPx, abs(distanceToEdge))) * 0.3;
       float highlight = edge * rim * clampToEdge * uIntensity;
-      vec3 color = vec3(0.23, 0.30, 0.48) * base + vec3(0.82, 0.88, 1.0) * highlight;
+      vec3 color = vec3(0.30, 0.27, 0.08) * base + vec3(0.94, 0.82, 0.22) * highlight;
       fragColor = vec4(color, clamp(base + highlight, 0.0, 1.0));
     }
   `;
@@ -342,7 +258,7 @@
     const loadExperience = () => {
       if (requested) return;
       requested = true;
-      import("./three-capability.bundle.js?v=20260820-5").catch(() => {
+      import("./three-capability.bundle.js?v=20260820-10").catch(() => {
         threeExperience.classList.add("has-three-error");
       });
     };

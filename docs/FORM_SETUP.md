@@ -2,7 +2,7 @@
 
 Updated: 2026-08-12
 
-The Work with me page is designed to post directly into a standard Google Form without exposing credentials. The Form remains the intake source of truth and may link responses to a private Google Sheet.
+The Work with us page is designed to post directly into a standard Google Form without exposing credentials. The Form remains the intake source of truth and may link responses to a private Google Sheet.
 
 ## Current connection
 
@@ -13,7 +13,7 @@ The Work with me page is designed to post directly into a standard Google Form w
 
 ## Create the Form
 
-The connected Google Form is titled **Alexander D'Amore | Work with me** and uses these questions in this exact order:
+The connected Google Form should be titled **Lithic | Work with us** and use these questions in this exact order:
 
 | Key | Question | Type | Required |
 |---|---|---|---|
@@ -29,7 +29,7 @@ Turn off quiz mode. Do not force Google sign-in or Google-native email collectio
 
 ## Linked responses
 
-The Form's **Responses** tab is linked to a Sheet named **AI Strategy Inquiries**. Keep access restricted to Alex and anyone directly responsible for responding to inquiries.
+The Form's **Responses** tab is linked to a Sheet named **AI Strategy Inquiries**. Keep access restricted to the people directly responsible for responding to inquiries.
 
 ## Get the endpoint and entry IDs
 

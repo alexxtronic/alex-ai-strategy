@@ -3,246 +3,200 @@ import { createRoot } from "react-dom/client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+const GOLD = "#ccac0a";
+const ONYX = "#11100f";
+const CHARCOAL = "#333127";
+const ALABASTER = "#e4e2de";
+
 const CAPABILITIES = [
-  {
-    label: "Strategy",
-    title: "AI strategy",
-    description: "Choose the right problem, sequence the roadmap, and define what measurable value looks like.",
-    color: "#6295ff",
-    tint: "#dce8ff",
-  },
-  {
-    label: "Systems",
-    title: "Bespoke systems",
-    description: "Turn the priority into a working system shaped around your data, tools, and day-to-day reality.",
-    color: "#9b6cff",
-    tint: "#eadfff",
-  },
-  {
-    label: "Intelligence",
-    title: "Marketing intelligence",
-    description: "Create reliable signals from research, reporting, brand visibility, and the evidence behind each decision.",
-    color: "#f36b15",
-    tint: "#ffe5d2",
-  },
-  {
-    label: "Integration",
-    title: "Tool and CRM integration",
-    description: "Connect the system to existing workflows while keeping consequential actions under human control.",
-    color: "#55c89b",
-    tint: "#d8f8eb",
-  },
+  { label: "Strategy", title: "AI strategy", description: "Choose the right problem, sequence the roadmap, and define what measurable value looks like." },
+  { label: "Systems", title: "Bespoke systems", description: "Turn the priority into a working system shaped around your data, tools, and day-to-day reality." },
+  { label: "Intelligence", title: "Marketing intelligence", description: "Create reliable signals from research, reporting, brand visibility, and the evidence behind each decision." },
+  { label: "Integration", title: "Tool and CRM integration", description: "Connect the system to existing workflows while keeping consequential actions under human control." },
 ];
 
-const DRAWER_POSITIONS = [1.25, 0.42, -0.42, -1.25];
-const tempScale = new THREE.Vector3();
+const ROUTE_POINTS = [
+  new THREE.Vector3(-0.08, 1.3, 0.39),
+  new THREE.Vector3(-0.72, 0.46, 0.46),
+  new THREE.Vector3(0.12, -0.24, 0.46),
+  new THREE.Vector3(1.23, -1.18, 0.46),
+];
 
-function createLabelTexture(label, index, color) {
-  const canvas = document.createElement("canvas");
-  canvas.width = 1024;
-  canvas.height = 256;
-  const context = canvas.getContext("2d");
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.textBaseline = "middle";
-  context.fillStyle = color;
-  context.font = "600 54px Georgia, serif";
-  context.fillText(String(index + 1).padStart(2, "0"), 60, 130);
-  context.fillStyle = "#0a1832";
-  context.font = "600 78px Arial, sans-serif";
-  context.fillText(label, 180, 128);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.needsUpdate = true;
-  return texture;
+function createMountainGeometry(points, depth = 0.34) {
+  const shape = new THREE.Shape();
+  shape.moveTo(points[0][0], points[0][1]);
+  points.slice(1).forEach(([x, y]) => shape.lineTo(x, y));
+  shape.closePath();
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth,
+    bevelEnabled: true,
+    bevelSegments: 3,
+    bevelSize: 0.045,
+    bevelThickness: 0.045,
+    curveSegments: 16,
+  });
+  geometry.translate(0, 0, -depth / 2);
+  geometry.computeVertexNormals();
+  return geometry;
 }
 
-function CapabilityDrawer({ capability, index, activeIndex, flashVersion, onSelect, reducedMotion }) {
-  const drawer = useRef();
-  const frontMaterial = useRef();
-  const edgeMaterial = useRef();
-  const glowMaterial = useRef();
-  const flash = useRef(0);
-  const lastFlashVersion = useRef(flashVersion);
-  const [hovered, setHovered] = useState(false);
-  const active = activeIndex === index;
-  const frontGeometry = useMemo(() => new THREE.BoxGeometry(4.08, 0.72, 0.16), []);
-  const edgeGeometry = useMemo(() => new THREE.EdgesGeometry(frontGeometry, 18), [frontGeometry]);
-  const labelTexture = useMemo(() => createLabelTexture(capability.label, index, capability.color), [capability, index]);
+function RouteSegment({ start, end, index, drawRef, reducedMotion }) {
+  const segment = useRef();
+  const glow = useRef();
+  const direction = useMemo(() => end.clone().sub(start), [start, end]);
+  const length = direction.length();
+  const quaternion = useMemo(() => {
+    const result = new THREE.Quaternion();
+    result.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize());
+    return result;
+  }, [direction]);
 
-  useEffect(() => {
-    if (active && flashVersion !== lastFlashVersion.current) flash.current = 1;
-    lastFlashVersion.current = flashVersion;
-  }, [active, flashVersion]);
+  useFrame(() => {
+    const progress = reducedMotion ? (drawRef.current >= index + 1 ? 1 : 0) : THREE.MathUtils.clamp(drawRef.current - index, 0, 1);
+    if (!segment.current || !glow.current) return;
+    const visibleLength = Math.max(progress * length, 0.001);
+    const position = start.clone().add(direction.clone().multiplyScalar(progress / 2));
+    segment.current.position.copy(position);
+    glow.current.position.copy(position);
+    segment.current.scale.set(0.027, visibleLength, 0.027);
+    glow.current.scale.set(0.075, visibleLength, 0.075);
+    segment.current.visible = progress > 0.002;
+    glow.current.visible = progress > 0.002;
+  });
+
+  return (
+    <>
+      <mesh ref={glow} quaternion={quaternion} visible={false}>
+        <cylinderGeometry args={[1, 1, 1, 12]} />
+        <meshBasicMaterial color={GOLD} transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+      </mesh>
+      <mesh ref={segment} quaternion={quaternion} visible={false}>
+        <cylinderGeometry args={[1, 1, 1, 12]} />
+        <meshStandardMaterial color={GOLD} emissive={GOLD} emissiveIntensity={1.45} roughness={0.24} metalness={0.42} toneMapped={false} />
+      </mesh>
+    </>
+  );
+}
+
+function RoutePoint({ point, index, activeIndex, onSelect, reducedMotion }) {
+  const dot = useRef();
+  const halo = useRef();
+  const [hovered, setHovered] = useState(false);
+  const active = index <= activeIndex;
 
   useFrame((state, delta) => {
-    if (!drawer.current) return;
-    const restingScale = active ? 1.012 : hovered ? 1.006 : 1;
-
-    if (reducedMotion) {
-      drawer.current.scale.setScalar(restingScale);
-      if (frontMaterial.current) frontMaterial.current.emissiveIntensity = active ? 0.16 : 0.025;
-      if (edgeMaterial.current) edgeMaterial.current.opacity = active ? 0.95 : 0.26;
-      if (glowMaterial.current) glowMaterial.current.opacity = active ? 0.36 : 0;
-      return;
-    }
-
-    flash.current = Math.max(0, flash.current - delta * 0.62);
-    const progress = 1 - flash.current;
-    const pulse = flash.current > 0 ? Math.pow(flash.current, 0.72) * (0.5 + Math.abs(Math.sin(progress * Math.PI * 7)) * 0.5) : 0;
-    const float = Math.sin(state.clock.elapsedTime * 0.7 + index * 0.8) * 0.008;
-
-    drawer.current.position.y = THREE.MathUtils.damp(drawer.current.position.y, DRAWER_POSITIONS[index] + float, 7, delta);
-    drawer.current.scale.lerp(tempScale.setScalar(restingScale + pulse * 0.008), 1 - Math.exp(-delta * 9));
-    if (frontMaterial.current) frontMaterial.current.emissiveIntensity = (active ? 0.11 : hovered ? 0.06 : 0.018) + pulse * 0.58;
-    if (edgeMaterial.current) edgeMaterial.current.opacity = Math.min(1, (active ? 0.56 : hovered ? 0.4 : 0.2) + pulse * 0.72);
-    if (glowMaterial.current) glowMaterial.current.opacity = pulse * 0.7;
+    if (!dot.current || !halo.current) return;
+    const pulse = reducedMotion ? 1 : 1 + Math.sin(state.clock.elapsedTime * 3.4 + index * 0.7) * 0.08;
+    const target = activeIndex === index ? 1.24 * pulse : hovered ? 1.13 : active ? 1.02 : 0.86;
+    dot.current.scale.setScalar(THREE.MathUtils.damp(dot.current.scale.x, target, 9, delta));
+    halo.current.scale.setScalar(THREE.MathUtils.damp(halo.current.scale.x, activeIndex === index ? 1.75 * pulse : active ? 1.22 : 0.9, 8, delta));
   });
 
   const setHover = (value) => {
     setHovered(value);
     document.body.style.cursor = value ? "pointer" : "";
   };
-
-  const selectDrawer = (event) => {
+  const select = (event) => {
     event.stopPropagation();
     onSelect(index);
   };
 
   return (
-    <group ref={drawer} position={[0, DRAWER_POSITIONS[index], 0.7]}>
-      <mesh position={[0, 0, -0.52]}>
-        <boxGeometry args={[3.92, 0.64, 1.02]} />
-        <meshStandardMaterial color="#dfe6f4" roughness={0.38} metalness={0.02} />
-      </mesh>
-      <mesh geometry={frontGeometry}>
-        <meshPhysicalMaterial
-          ref={frontMaterial}
-          color={capability.tint}
-          emissive={capability.color}
-          emissiveIntensity={0.018}
-          roughness={0.2}
-          metalness={0.02}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-        />
-      </mesh>
-      <lineSegments geometry={edgeGeometry}>
-        <lineBasicMaterial ref={edgeMaterial} color={capability.color} transparent opacity={0.2} />
-      </lineSegments>
-      <lineSegments geometry={edgeGeometry} scale={1.012}>
-        <lineBasicMaterial
-          ref={glowMaterial}
-          color={capability.color}
-          transparent
-          opacity={0}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-          toneMapped={false}
-        />
-      </lineSegments>
-      <mesh position={[0, 0, 0.086]}>
-        <planeGeometry args={[3.7, 0.56]} />
-        <meshBasicMaterial map={labelTexture} transparent depthWrite={false} toneMapped={false} />
+    <group position={point}>
+      <mesh ref={halo}>
+        <sphereGeometry args={[0.13, 24, 24]} />
+        <meshBasicMaterial color={GOLD} transparent opacity={active ? 0.2 : 0.045} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh
-        position={[0, 0, 0.08]}
-        onPointerDown={selectDrawer}
-        onClick={selectDrawer}
-        onPointerEnter={(event) => {
-          event.stopPropagation();
-          setHover(true);
-        }}
-        onPointerLeave={(event) => {
-          event.stopPropagation();
-          setHover(false);
-        }}
+        ref={dot}
+        onPointerDown={select}
+        onClick={select}
+        onPointerEnter={(event) => { event.stopPropagation(); setHover(true); }}
+        onPointerLeave={(event) => { event.stopPropagation(); setHover(false); }}
       >
-        <boxGeometry args={[4.18, 0.8, 0.28]} />
+        <sphereGeometry args={[0.072, 24, 24]} />
+        <meshPhysicalMaterial color={active ? GOLD : "#777267"} emissive={active ? GOLD : ONYX} emissiveIntensity={active ? 1.15 : 0.04} roughness={0.18} metalness={0.55} clearcoat={1} />
+      </mesh>
+      <mesh onPointerDown={select} onClick={select}>
+        <sphereGeometry args={[0.24, 12, 12]} />
         <meshBasicMaterial transparent opacity={0} colorWrite={false} depthWrite={false} />
       </mesh>
     </group>
   );
 }
 
-function CapabilityCabinet({ activeIndex, flashVersion, onSelect, reducedMotion }) {
-  const cabinet = useRef();
-  const cabinetGeometry = useMemo(() => new THREE.BoxGeometry(4.62, 3.86, 1.24), []);
-  const cabinetEdges = useMemo(() => new THREE.EdgesGeometry(cabinetGeometry, 18), [cabinetGeometry]);
+function LithicMountain({ activeIndex, onSelect, reducedMotion }) {
+  const mountain = useRef();
+  const draw = useRef(reducedMotion ? activeIndex : 0);
+  const leftGeometry = useMemo(() => createMountainGeometry([
+    [-2.72, -1.48], [-1.72, -0.37], [-1.17, -0.88], [0.03, 1.48], [0.54, 0.68], [-0.92, -1.48],
+  ]), []);
+  const rightGeometry = useMemo(() => createMountainGeometry([
+    [0.02, -1.48], [1.34, 0.06], [2.68, -1.48],
+  ], 0.28), []);
+  const leftEdges = useMemo(() => new THREE.EdgesGeometry(leftGeometry, 18), [leftGeometry]);
+  const rightEdges = useMemo(() => new THREE.EdgesGeometry(rightGeometry, 18), [rightGeometry]);
+
+  useEffect(() => {
+    if (reducedMotion) draw.current = activeIndex;
+  }, [activeIndex, reducedMotion]);
 
   useFrame((state, delta) => {
-    if (!cabinet.current || reducedMotion) return;
-    const targetX = -0.07 + state.pointer.y * -0.035;
-    const targetY = -0.24 + state.pointer.x * 0.065;
-    cabinet.current.rotation.x = THREE.MathUtils.damp(cabinet.current.rotation.x, targetX, 3, delta);
-    cabinet.current.rotation.y = THREE.MathUtils.damp(cabinet.current.rotation.y, targetY, 3, delta);
-    cabinet.current.position.y = Math.sin(state.clock.elapsedTime * 0.48) * 0.025;
+    if (!mountain.current) return;
+    draw.current = reducedMotion ? activeIndex : THREE.MathUtils.damp(draw.current, activeIndex, 3.9, delta);
+    if (reducedMotion) return;
+    mountain.current.rotation.x = THREE.MathUtils.damp(mountain.current.rotation.x, -0.055 + state.pointer.y * -0.035, 3, delta);
+    mountain.current.rotation.y = THREE.MathUtils.damp(mountain.current.rotation.y, -0.08 + state.pointer.x * 0.08, 3, delta);
+    mountain.current.position.y = Math.sin(state.clock.elapsedTime * 0.48) * 0.025;
   });
 
   return (
-    <group ref={cabinet} rotation={[-0.07, -0.24, 0.012]}>
-      <mesh geometry={cabinetGeometry}>
-        <meshPhysicalMaterial color="#e9eef9" roughness={0.28} metalness={0.025} clearcoat={0.8} clearcoatRoughness={0.2} />
+    <group ref={mountain} rotation={[-0.055, -0.08, 0]} scale={0.98}>
+      <mesh geometry={leftGeometry}>
+        <meshPhysicalMaterial color={ONYX} roughness={0.32} metalness={0.18} clearcoat={0.64} clearcoatRoughness={0.2} />
       </mesh>
-      <lineSegments geometry={cabinetEdges}>
-        <lineBasicMaterial color="#91a4cc" transparent opacity={0.36} />
-      </lineSegments>
-      <mesh position={[0, 0, 0.64]}>
-        <planeGeometry args={[4.18, 3.5]} />
-        <meshBasicMaterial color="#7d8caf" transparent opacity={0.08} />
+      <lineSegments geometry={leftEdges}><lineBasicMaterial color={ALABASTER} transparent opacity={0.2} /></lineSegments>
+      <mesh geometry={rightGeometry}>
+        <meshPhysicalMaterial color={CHARCOAL} roughness={0.38} metalness={0.12} clearcoat={0.52} clearcoatRoughness={0.24} />
       </mesh>
-      {CAPABILITIES.map((capability, index) => (
-        <CapabilityDrawer
-          key={capability.label}
-          capability={capability}
-          index={index}
-          activeIndex={activeIndex}
-          flashVersion={flashVersion}
-          onSelect={onSelect}
-          reducedMotion={reducedMotion}
-        />
+      <lineSegments geometry={rightEdges}><lineBasicMaterial color={ALABASTER} transparent opacity={0.18} /></lineSegments>
+      <mesh position={[-0.77, -0.79, 0.2]} rotation={[0, 0, -0.37]}>
+        <planeGeometry args={[1.8, 0.95]} />
+        <meshBasicMaterial color="#5a574d" transparent opacity={0.2} depthWrite={false} />
+      </mesh>
+      {ROUTE_POINTS.slice(0, -1).map((point, index) => (
+        <RouteSegment key={`route-${index}`} start={point} end={ROUTE_POINTS[index + 1]} index={index} drawRef={draw} reducedMotion={reducedMotion} />
+      ))}
+      {ROUTE_POINTS.map((point, index) => (
+        <RoutePoint key={`point-${index}`} point={point} index={index} activeIndex={activeIndex} onSelect={onSelect} reducedMotion={reducedMotion} />
       ))}
     </group>
   );
 }
 
-function SystemScene({ activeIndex, flashVersion, onSelect, reducedMotion }) {
+function SystemScene({ activeIndex, onSelect, reducedMotion }) {
   return (
     <>
-      <ambientLight intensity={1.55} />
-      <hemisphereLight args={["#ffffff", "#cbd6eb", 1.8]} />
-      <directionalLight position={[4, 5, 7]} intensity={3.4} color="#ffffff" />
-      <pointLight position={[-4, 1, 4]} intensity={9} distance={9} color="#7d9fff" />
-      <pointLight position={[4, -1, 4]} intensity={8} distance={9} color="#ac80ff" />
-      <CapabilityCabinet
-        activeIndex={activeIndex}
-        flashVersion={flashVersion}
-        onSelect={onSelect}
-        reducedMotion={reducedMotion}
-      />
+      <ambientLight intensity={1.35} />
+      <hemisphereLight args={[ALABASTER, ONYX, 1.55]} />
+      <directionalLight position={[4, 5, 7]} intensity={3.2} color="#ffffff" />
+      <pointLight position={[-3.2, 1.4, 4]} intensity={6.5} distance={9} color={GOLD} />
+      <pointLight position={[3.5, -1.5, 4]} intensity={4.4} distance={9} color={ALABASTER} />
+      <LithicMountain activeIndex={activeIndex} onSelect={onSelect} reducedMotion={reducedMotion} />
     </>
   );
 }
 
 function CapabilityExperience({ host }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [flashVersion, setFlashVersion] = useState(0);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const active = CAPABILITIES[activeIndex];
-
-  const selectCapability = (index, flash = true) => {
-    setActiveIndex(index);
-    if (flash) setFlashVersion((version) => version + 1);
-  };
 
   return (
     <div className="capability-canvas">
       <div className="capability-viewport" aria-hidden="true">
         <Canvas
-          camera={{ position: [0, 0, 7.4], fov: 39 }}
+          camera={{ position: [0, 0, 7.1], fov: 39 }}
           dpr={[1, 1.5]}
           frameloop={reducedMotion ? "demand" : "always"}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
@@ -251,24 +205,12 @@ function CapabilityExperience({ host }) {
             host.classList.add("is-three-ready");
           }}
         >
-          <SystemScene
-            activeIndex={activeIndex}
-            flashVersion={flashVersion}
-            onSelect={selectCapability}
-            reducedMotion={reducedMotion}
-          />
+          <SystemScene activeIndex={activeIndex} onSelect={setActiveIndex} reducedMotion={reducedMotion} />
         </Canvas>
       </div>
-      <div className="capability-controls" role="group" aria-label="Explore AI capabilities">
+      <div className="capability-controls" role="group" aria-label="Explore Lithic's AI capabilities">
         {CAPABILITIES.map((capability, index) => (
-          <button
-            key={capability.label}
-            className="capability-control"
-            type="button"
-            aria-pressed={activeIndex === index}
-            onClick={() => selectCapability(index)}
-            onPointerEnter={() => selectCapability(index, false)}
-          >
+          <button key={capability.label} className="capability-control" type="button" aria-pressed={activeIndex === index} onClick={() => setActiveIndex(index)} onPointerEnter={() => setActiveIndex(index)}>
             {capability.label}
           </button>
         ))}
@@ -284,7 +226,4 @@ function CapabilityExperience({ host }) {
 
 const host = document.querySelector("[data-three-experience]");
 const rootNode = document.getElementById("ai-capability-root");
-
-if (host && rootNode) {
-  createRoot(rootNode).render(<CapabilityExperience host={host} />);
-}
+if (host && rootNode) createRoot(rootNode).render(<CapabilityExperience host={host} />);

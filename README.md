@@ -1,4 +1,4 @@
-# Alexander D'Amore | AI Strategy Partner
+# Lithic | AI Strategy Partner
 
 Static, responsive consulting website built for GitHub Pages.
 
