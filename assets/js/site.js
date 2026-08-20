@@ -248,6 +248,48 @@
   const system = document.querySelector("[data-system-demo]");
   const line = document.querySelector("[data-chart-line]");
   const metric = document.querySelector("[data-count-up]");
+  const typingReport = document.querySelector("[data-typing-report]");
+  const reportCopy = [
+    "Luravi senora valemi quorata. Nirevi solenta paremi dorava, teluri sanova mereti.",
+    "Corali venuta saleri monava. Qireto falemi nusora velati peruno taleri sovana.",
+    "Raveli someta quinori latera. Vesuni caromi delava nureni, saturo melavi roneta.",
+  ].join("\n\n");
+  let reportStarted = false;
+
+  const animateReport = () => {
+    if (!typingReport || reportStarted) return;
+    reportStarted = true;
+
+    if (reducedMotion.matches) {
+      typingReport.textContent = reportCopy;
+      return;
+    }
+
+    let characterIndex = 0;
+    const typeNextCharacter = () => {
+      typingReport.classList.remove("is-resetting");
+      typingReport.textContent = reportCopy.slice(0, characterIndex + 1);
+      const character = reportCopy[characterIndex];
+      characterIndex += 1;
+
+      if (characterIndex < reportCopy.length) {
+        const delay = character === "." ? 170 : character === "\n" ? 90 : 28 + Math.random() * 24;
+        window.setTimeout(typeNextCharacter, delay);
+        return;
+      }
+
+      window.setTimeout(() => {
+        typingReport.classList.add("is-resetting");
+        window.setTimeout(() => {
+          typingReport.textContent = "";
+          characterIndex = 0;
+          typeNextCharacter();
+        }, 260);
+      }, 2400);
+    };
+
+    typeNextCharacter();
+  };
 
   const animateMetric = () => {
     if (!metric || reducedMotion.matches) {
@@ -269,6 +311,7 @@
     system?.classList.add("is-running");
     line?.classList.add("is-drawing");
     animateMetric();
+    animateReport();
   };
 
   if (system && "IntersectionObserver" in window && !reducedMotion.matches) {

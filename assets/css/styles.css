@@ -659,14 +659,6 @@ svg {
   animation: prototype-breathe 6s ease-in-out infinite;
 }
 
-.is-running .copy-line {
-  animation: copy-scan 4.8s ease-in-out infinite;
-}
-
-.is-running .copy-line:nth-of-type(2) { animation-delay: -0.7s; }
-.is-running .copy-line:nth-of-type(3) { animation-delay: -1.4s; }
-.is-running .copy-line:nth-of-type(4) { animation-delay: -2.1s; }
-
 .is-running .score-stack strong {
   animation: score-glow 5.4s ease-in-out infinite;
 }
@@ -704,11 +696,6 @@ svg {
 @keyframes prototype-breathe {
   0%, 100% { transform: translateY(0); box-shadow: 0 10px 28px rgba(31, 43, 71, 0.06); }
   50% { transform: translateY(-4px); box-shadow: 0 17px 34px rgba(61, 83, 145, 0.12); }
-}
-
-@keyframes copy-scan {
-  0%, 100% { opacity: 0.48; transform: scaleX(0.82); transform-origin: left; }
-  50% { opacity: 1; transform: scaleX(1); }
 }
 
 @keyframes score-glow {
@@ -828,29 +815,42 @@ svg {
 }
 
 .draft-copy {
-  padding: 18px;
+  padding: 22px 20px;
   border-right: 1px solid var(--line);
 }
 
-.draft-copy strong {
-  display: block;
-  margin: 12px 0 6px;
-  font-size: 0.78rem;
+.typing-report {
+  min-height: 148px;
+  margin: 0;
+  color: #27334b;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1.72;
+  letter-spacing: 0.012em;
+  text-align: left;
+  white-space: pre-wrap;
+  transition: opacity 240ms ease;
 }
 
-.copy-line {
-  height: 6px;
-  margin: 7px 0;
-  background: #e9edf3;
-  border-radius: 10px;
+.typing-report::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 1.08em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: var(--orange);
+  animation: typing-cursor 820ms steps(1, end) infinite;
 }
 
-.copy-line:nth-child(3) {
-  width: 78%;
+.typing-report.is-resetting {
+  opacity: 0;
 }
 
-.copy-line:nth-child(4) {
-  width: 91%;
+@keyframes typing-cursor {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
 }
 
 .score-stack {
