@@ -830,7 +830,6 @@ svg {
   letter-spacing: 0.012em;
   text-align: left;
   white-space: pre-wrap;
-  transition: opacity 240ms ease;
 }
 
 .typing-report::after {
@@ -842,10 +841,6 @@ svg {
   vertical-align: -0.12em;
   background: var(--orange);
   animation: typing-cursor 820ms steps(1, end) infinite;
-}
-
-.typing-report.is-resetting {
-  opacity: 0;
 }
 
 @keyframes typing-cursor {

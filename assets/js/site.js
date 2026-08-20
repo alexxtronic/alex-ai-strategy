@@ -248,7 +248,17 @@
   const system = document.querySelector("[data-system-demo]");
   const line = document.querySelector("[data-chart-line]");
   const metric = document.querySelector("[data-count-up]");
-  const typingReport = document.querySelector("[data-typing-report]");
+  let typingReport = document.querySelector("[data-typing-report]");
+  if (!typingReport) {
+    const legacyDraft = document.querySelector(".draft-copy");
+    if (legacyDraft) {
+      typingReport = document.createElement("p");
+      typingReport.className = "typing-report";
+      typingReport.dataset.typingReport = "";
+      legacyDraft.dataset.buildReport = "typing-v2";
+      legacyDraft.replaceChildren(typingReport);
+    }
+  }
   const reportCopy = [
     "Luravi senora valemi quorata. Nirevi solenta paremi dorava, teluri sanova mereti.",
     "Corali venuta saleri monava. Qireto falemi nusora velati peruno taleri sovana.",
@@ -267,7 +277,6 @@
 
     let characterIndex = 0;
     const typeNextCharacter = () => {
-      typingReport.classList.remove("is-resetting");
       typingReport.textContent = reportCopy.slice(0, characterIndex + 1);
       const character = reportCopy[characterIndex];
       characterIndex += 1;
@@ -279,17 +288,15 @@
       }
 
       window.setTimeout(() => {
-        typingReport.classList.add("is-resetting");
-        window.setTimeout(() => {
-          typingReport.textContent = "";
-          characterIndex = 0;
-          typeNextCharacter();
-        }, 260);
+        characterIndex = 0;
+        typeNextCharacter();
       }, 2400);
     };
 
     typeNextCharacter();
   };
+
+  animateReport();
 
   const animateMetric = () => {
     if (!metric || reducedMotion.matches) {
@@ -322,7 +329,7 @@
           observer.disconnect();
         }
       },
-      { threshold: 0.34 }
+      { threshold: 0.12 }
     );
     systemObserver.observe(system);
   } else {
