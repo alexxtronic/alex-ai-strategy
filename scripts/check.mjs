@@ -56,7 +56,13 @@ if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is miss
 if (!homeHtml.includes('data-build-report="typing-v2"')) failures.push("Homepage is missing the resilient Build-card report");
 if (homeHtml.includes("A tailored recommendation")) failures.push("Homepage still contains the legacy Build-card recommendation");
 const reportMatch = homeHtml.match(/data-typing-report>([\s\S]*?)<\/p>/);
-if (!reportMatch || reportMatch[1].trim().split("\n").length !== 6) failures.push("Build-card report must contain exactly six lines");
+if (!reportMatch || reportMatch[1].trim().split("\n").length !== 3) failures.push("Build-card report must contain exactly three lines");
+for (const phrase of ["Content Strategy", "Email Workflow Automation", "Q2 Strategy Report"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Build-card report is missing ${phrase}`);
+}
+for (const phrase of ["Investigate", "We find where AI makes the biggest impact.", "Email", "Content", "Reporting"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Investigate card is missing ${phrase}`);
+}
 if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
 
 if (failures.length) {

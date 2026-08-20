@@ -260,12 +260,9 @@
     }
   }
   const reportCopy = [
-    "Luravi senora valemi.",
-    "Quorata nirevi sola.",
-    "Paremi dorava teluri.",
-    "Corali venuta saleri.",
-    "Qireto falemi nusa.",
-    "Raveli someta quina.",
+    "Content Strategy",
+    "Email Workflow Automation",
+    "Q2 Strategy Report",
   ].join("\n");
   let reportStarted = false;
 
