@@ -691,18 +691,18 @@ svg {
 }
 
 @keyframes investigation-email {
-  0%, 20%, 92%, 100% { color: var(--ink); opacity: 1; transform: scale(1.04); }
-  25%, 87% { color: var(--ink-soft); opacity: 0.48; transform: scale(1); }
+  0%, 20%, 92%, 100% { color: var(--ink); opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  25%, 87% { color: var(--ink); opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
 }
 
 @keyframes investigation-content {
-  0%, 25%, 57%, 100% { color: var(--ink-soft); opacity: 0.48; transform: scale(1); }
-  30%, 52% { color: var(--ink); opacity: 1; transform: scale(1.04); }
+  0%, 25%, 57%, 100% { color: var(--ink); opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
+  30%, 52% { color: var(--ink); opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 @keyframes investigation-reporting {
-  0%, 57%, 89%, 100% { color: var(--ink-soft); opacity: 0.48; transform: scale(1); }
-  62%, 84% { color: var(--ink); opacity: 1; transform: scale(1.04); }
+  0%, 57%, 89%, 100% { color: var(--ink); opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
+  62%, 84% { color: var(--ink); opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 @keyframes prototype-breathe {
@@ -787,17 +787,18 @@ svg {
 .investigation-word {
   position: absolute;
   z-index: 1;
-  color: var(--ink-soft);
+  color: var(--ink);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  opacity: 0.48;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.94);
   transition: color 220ms ease, opacity 220ms ease, transform 220ms ease;
 }
 
-.investigation-word--email { left: 13%; top: 21%; }
-.investigation-word--content { right: 13%; top: 42%; }
-.investigation-word--reporting { left: 25%; bottom: 15%; }
+.investigation-word--email { left: 23%; top: 27%; opacity: 1; transform: translate(-50%, -50%); }
+.investigation-word--content { left: 71%; top: 48%; }
+.investigation-word--reporting { left: 38%; top: 76%; }
 
 .search-lens {
   position: absolute;
@@ -808,12 +809,11 @@ svg {
   height: 74px;
   border: 1.5px solid rgba(86, 111, 175, 0.66);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
   box-shadow:
     inset 0 0 0 6px rgba(255, 255, 255, 0.24),
     0 12px 26px rgba(43, 61, 109, 0.12),
     0 0 28px rgba(112, 102, 255, 0.11);
-  backdrop-filter: blur(1.5px) saturate(1.18);
   transform: translate(-50%, -50%);
   will-change: left, top;
 }
@@ -1288,99 +1288,51 @@ svg {
   opacity: 0;
 }
 
-.fallback-core,
-.fallback-node,
-.fallback-orbit {
+.fallback-layer {
+  --layer-color: 98, 149, 255;
   position: absolute;
-  top: 40%;
+  top: 38%;
   left: 50%;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.fallback-core {
-  width: 110px;
-  height: 110px;
+  width: min(72%, 390px);
+  height: 86px;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 64% 28%, white 0 2%, rgba(255, 255, 255, 0.82) 3%, transparent 9%),
-    radial-gradient(circle at 35% 66%, #d8c4ff 0 2%, rgba(152, 91, 255, 0.8) 4%, transparent 12%),
-    radial-gradient(circle at 42% 38%, #6e2be0, #17052e 42%, #03030d 76%);
-  box-shadow:
-    0 0 28px rgba(255, 255, 255, 0.46),
-    0 0 66px rgba(151, 86, 255, 0.74),
-    0 0 110px rgba(77, 34, 156, 0.38);
-  animation: fallback-intelligence-pulse 2.8s ease-in-out infinite alternate;
+    linear-gradient(110deg, rgba(var(--layer-color), 0.17), rgba(255, 255, 255, 0.5) 44%, rgba(var(--layer-color), 0.08)),
+    rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(var(--layer-color), 0.5);
+  border-radius: 18px;
+  box-shadow: 0 22px 38px rgba(42, 58, 104, 0.1);
+  transform: translate(-50%, -50%) perspective(700px) rotateX(58deg) rotateZ(-2deg);
+  backdrop-filter: blur(8px);
 }
 
-.fallback-core::before {
+.fallback-layer::before {
   content: "";
   position: absolute;
-  inset: -42%;
-  background: conic-gradient(from 20deg, transparent, rgba(151, 86, 255, 0.48), transparent 24%, rgba(255, 255, 255, 0.3), transparent 54%, rgba(105, 48, 222, 0.5), transparent 82%);
-  border-radius: 50%;
-  filter: blur(9px);
-  animation: fallback-intelligence-spin 8s linear infinite;
+  top: 18px;
+  bottom: 18px;
+  left: 22px;
+  width: 4px;
+  background: rgb(var(--layer-color));
+  border-radius: 999px;
+  box-shadow: 0 0 18px rgba(var(--layer-color), 0.64);
 }
 
-.fallback-core::after,
-.fallback-node::after {
-  content: "";
+.fallback-layer i,
+.fallback-layer b {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 172%;
-  height: 50%;
-  border: 5px solid rgba(205, 219, 250, 0.55);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(-15deg);
+  left: 46px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(60, 76, 116, 0.16);
 }
 
-.fallback-node::after {
-  border-width: 2px;
-}
-
-.fallback-core::after {
-  width: 220%;
-  height: 220%;
-  background: radial-gradient(circle, transparent 46%, rgba(166, 118, 255, 0.2) 51%, transparent 58%, rgba(255, 255, 255, 0.11) 62%, transparent 68%);
-  border: 0;
-  filter: blur(2px);
-  animation: fallback-intelligence-pulse 3.4s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes fallback-intelligence-pulse {
-  from { opacity: 0.72; transform: translate(-50%, -50%) scale(0.94); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1.07); }
-}
-
-@keyframes fallback-intelligence-spin {
-  to { transform: rotate(360deg); }
-}
-
-.fallback-orbit {
-  width: 340px;
-  height: 180px;
-  border: 1px solid rgba(92, 119, 178, 0.34);
-  transform: translate(-50%, -50%) rotate(-18deg);
-}
-
-.fallback-orbit--two {
-  width: 260px;
-  height: 310px;
-  transform: translate(-50%, -50%) rotate(58deg);
-}
-
-.fallback-node {
-  width: 30px;
-  height: 30px;
-  background: radial-gradient(circle at 34% 28%, #b8ceff, var(--blue) 66%);
-  box-shadow: 0 10px 30px rgba(54, 83, 151, 0.22);
-}
-
-.fallback-node--one { margin: -92px 0 0 -160px; }
-.fallback-node--two { margin: -74px 0 0 156px; background: radial-gradient(circle at 34% 28%, #d6c2ff, var(--violet) 66%); }
-.fallback-node--three { margin: 104px 0 0 -138px; background: radial-gradient(circle at 34% 28%, #ffc69e, var(--orange) 66%); }
-.fallback-node--four { margin: 94px 0 0 146px; background: radial-gradient(circle at 34% 28%, #b9f1db, #55c89b 66%); }
+.fallback-layer i { top: 28px; width: 42%; }
+.fallback-layer b { top: 48px; width: 25%; }
+.fallback-layer--one { margin-top: -104px; }
+.fallback-layer--two { --layer-color: 155, 108, 255; margin: -36px 0 0 16px; }
+.fallback-layer--three { --layer-color: 243, 107, 21; margin: 34px 0 0 -12px; }
+.fallback-layer--four { --layer-color: 85, 200, 155; margin: 104px 0 0 18px; }
 
 .capability-controls {
   position: relative;
