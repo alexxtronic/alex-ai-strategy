@@ -1241,6 +1241,23 @@ svg {
   box-shadow: 0 0 70px rgba(98, 149, 255, 0.44);
 }
 
+.fallback-core::after,
+.fallback-node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 172%;
+  height: 50%;
+  border: 5px solid rgba(205, 219, 250, 0.55);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+}
+
+.fallback-node::after {
+  border-width: 2px;
+}
+
 .fallback-orbit {
   width: 340px;
   height: 180px;
@@ -1257,14 +1274,14 @@ svg {
 .fallback-node {
   width: 30px;
   height: 30px;
-  background: var(--blue);
+  background: radial-gradient(circle at 34% 28%, #b8ceff, var(--blue) 66%);
   box-shadow: 0 10px 30px rgba(54, 83, 151, 0.22);
 }
 
 .fallback-node--one { margin: -92px 0 0 -160px; }
-.fallback-node--two { margin: -74px 0 0 156px; background: var(--violet); }
-.fallback-node--three { margin: 104px 0 0 -138px; background: var(--orange); }
-.fallback-node--four { margin: 94px 0 0 146px; background: #55c89b; }
+.fallback-node--two { margin: -74px 0 0 156px; background: radial-gradient(circle at 34% 28%, #d6c2ff, var(--violet) 66%); }
+.fallback-node--three { margin: 104px 0 0 -138px; background: radial-gradient(circle at 34% 28%, #ffc69e, var(--orange) 66%); }
+.fallback-node--four { margin: 94px 0 0 146px; background: radial-gradient(circle at 34% 28%, #b9f1db, #55c89b 66%); }
 
 .capability-controls {
   position: relative;

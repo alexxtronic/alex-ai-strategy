@@ -9,6 +9,8 @@ const CAPABILITIES = [
     title: "AI strategy",
     description: "Choose the right problem, sequence the roadmap, and define what measurable value looks like.",
     color: "#6295ff",
+    atmosphere: "#b8ceff",
+    ring: "#d9e5ff",
     position: [-2.15, 1.08, 0.15],
   },
   {
@@ -16,6 +18,8 @@ const CAPABILITIES = [
     title: "Bespoke systems",
     description: "Turn the priority into a working system shaped around your data, tools, and day-to-day reality.",
     color: "#9b6cff",
+    atmosphere: "#d6c2ff",
+    ring: "#eadfff",
     position: [2.2, 0.98, -0.08],
   },
   {
@@ -23,6 +27,8 @@ const CAPABILITIES = [
     title: "Marketing intelligence",
     description: "Create reliable signals from research, reporting, brand visibility, and the evidence behind each decision.",
     color: "#f36b15",
+    atmosphere: "#ffc69e",
+    ring: "#ffe2cb",
     position: [-2.05, -1.16, -0.12],
   },
   {
@@ -30,6 +36,8 @@ const CAPABILITIES = [
     title: "Tool and CRM integration",
     description: "Connect the system to existing workflows while keeping consequential actions under human control.",
     color: "#55c89b",
+    atmosphere: "#b9f1db",
+    ring: "#d8f8eb",
     position: [2.12, -1.12, 0.12],
   },
 ];
@@ -37,20 +45,21 @@ const CAPABILITIES = [
 const tempScale = new THREE.Vector3();
 
 function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reducedMotion }) {
-  const mesh = useRef();
-  const halo = useRef();
+  const planet = useRef();
+  const sphere = useRef();
+  const rings = useRef();
   const [hovered, setHovered] = useState(false);
   const active = activeIndex === index;
 
   useFrame((state, delta) => {
-    if (!mesh.current || reducedMotion) return;
+    if (!planet.current || reducedMotion) return;
     const scale = active ? 1.23 : hovered ? 1.12 : 1;
-    mesh.current.scale.lerp(tempScale.setScalar(scale), 1 - Math.exp(-delta * 8));
-    mesh.current.rotation.x += delta * (0.18 + index * 0.015);
-    mesh.current.rotation.y += delta * (0.24 + index * 0.02);
-    if (halo.current) {
-      halo.current.rotation.z -= delta * 0.22;
-      halo.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 1.7 + index) * 0.035);
+    planet.current.scale.lerp(tempScale.setScalar(scale), 1 - Math.exp(-delta * 8));
+    if (sphere.current) sphere.current.rotation.y += delta * (0.12 + index * 0.012);
+    if (rings.current) {
+      rings.current.rotation.z += delta * (0.035 + index * 0.006);
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.45 + index) * 0.018;
+      rings.current.scale.setScalar(pulse);
     }
   });
 
@@ -61,8 +70,8 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
 
   return (
     <group position={capability.position}>
-      <mesh
-        ref={mesh}
+      <group
+        ref={planet}
         onClick={(event) => {
           event.stopPropagation();
           setActiveIndex(index);
@@ -73,19 +82,62 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
         }}
         onPointerLeave={() => setHover(false)}
       >
-        <icosahedronGeometry args={[0.38, 1]} />
-        <meshStandardMaterial
-          color={capability.color}
-          emissive={capability.color}
-          emissiveIntensity={active || hovered ? 0.5 : 0.16}
-          metalness={0.48}
-          roughness={0.24}
-        />
-      </mesh>
-      <mesh ref={halo} rotation={[Math.PI / 2, 0, index * 0.7]}>
-        <torusGeometry args={[0.55, 0.012, 8, 72]} />
-        <meshBasicMaterial color={capability.color} transparent opacity={active ? 0.82 : 0.36} />
-      </mesh>
+        <mesh ref={sphere}>
+          <sphereGeometry args={[0.39, 64, 64]} />
+          <meshPhysicalMaterial
+            color={capability.color}
+            emissive={capability.color}
+            emissiveIntensity={active || hovered ? 0.16 : 0.045}
+            metalness={0.08}
+            roughness={0.28}
+            clearcoat={1}
+            clearcoatRoughness={0.16}
+          />
+        </mesh>
+        <mesh scale={1.035}>
+          <sphereGeometry args={[0.39, 48, 48]} />
+          <meshBasicMaterial
+            color={capability.atmosphere}
+            transparent
+            opacity={active || hovered ? 0.13 : 0.065}
+            side={THREE.BackSide}
+          />
+        </mesh>
+        <group ref={rings} rotation={[1.03, 0.12, index * 0.72]}>
+          <mesh>
+            <ringGeometry args={[0.49, 0.73, 96]} />
+            <meshStandardMaterial
+              color={capability.ring}
+              transparent
+              opacity={active || hovered ? 0.6 : 0.42}
+              roughness={0.38}
+              metalness={0.08}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+            />
+          </mesh>
+          <mesh position={[0, 0, 0.002]}>
+            <ringGeometry args={[0.59, 0.625, 96]} />
+            <meshBasicMaterial
+              color={capability.color}
+              transparent
+              opacity={active || hovered ? 0.78 : 0.52}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+            />
+          </mesh>
+          <mesh position={[0, 0, 0.004]}>
+            <ringGeometry args={[0.69, 0.72, 96]} />
+            <meshBasicMaterial
+              color="#ffffff"
+              transparent
+              opacity={active || hovered ? 0.46 : 0.24}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+            />
+          </mesh>
+        </group>
+      </group>
     </group>
   );
 }
@@ -138,6 +190,7 @@ function ParticleField({ reducedMotion }) {
 function SystemScene({ activeIndex, setActiveIndex, reducedMotion }) {
   const system = useRef();
   const core = useRef();
+  const coreRings = useRef();
 
   useFrame((state, delta) => {
     if (!system.current || reducedMotion) return;
@@ -146,32 +199,60 @@ function SystemScene({ activeIndex, setActiveIndex, reducedMotion }) {
     system.current.rotation.x = THREE.MathUtils.damp(system.current.rotation.x, targetX, 4, delta);
     system.current.rotation.y = THREE.MathUtils.damp(system.current.rotation.y, targetY, 3, delta);
     if (core.current) {
-      core.current.rotation.x += delta * 0.09;
-      core.current.rotation.y -= delta * 0.12;
+      core.current.rotation.y -= delta * 0.045;
+    }
+    if (coreRings.current) {
+      coreRings.current.rotation.z -= delta * 0.018;
     }
   });
 
   return (
     <>
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[4, 5, 5]} intensity={2.2} color="#e9efff" />
-      <pointLight position={[-3, -1, 3]} intensity={22} distance={7} color="#7c9fff" />
-      <pointLight position={[3, 1, 2]} intensity={18} distance={7} color="#aa76ff" />
+      <ambientLight intensity={0.82} />
+      <hemisphereLight args={["#eef3ff", "#253052", 1.45]} />
+      <directionalLight position={[4, 5, 6]} intensity={2.8} color="#f5f7ff" />
+      <pointLight position={[-3, -1, 3]} intensity={17} distance={7} color="#7c9fff" />
+      <pointLight position={[3, 1, 2]} intensity={14} distance={7} color="#aa76ff" />
       <ParticleField reducedMotion={reducedMotion} />
       <group ref={system}>
         <ConnectionLines />
         <mesh ref={core}>
-          <icosahedronGeometry args={[0.88, 2]} />
-          <meshStandardMaterial color="#0b1a37" metalness={0.72} roughness={0.2} />
+          <sphereGeometry args={[0.86, 80, 80]} />
+          <meshPhysicalMaterial
+            color="#0b1a37"
+            emissive="#142b58"
+            emissiveIntensity={0.12}
+            metalness={0.12}
+            roughness={0.22}
+            clearcoat={1}
+            clearcoatRoughness={0.14}
+          />
         </mesh>
-        <mesh scale={1.12} rotation={[0.35, 0.2, 0]}>
-          <icosahedronGeometry args={[0.88, 1]} />
-          <meshBasicMaterial color="#91a9df" wireframe transparent opacity={0.34} />
+        <mesh scale={1.035}>
+          <sphereGeometry args={[0.86, 64, 64]} />
+          <meshBasicMaterial color="#91a9df" transparent opacity={0.075} side={THREE.BackSide} />
         </mesh>
-        <mesh rotation={[Math.PI / 2.6, 0.25, 0.4]}>
-          <torusGeometry args={[1.3, 0.014, 8, 120]} />
-          <meshBasicMaterial color="#7b8fb9" transparent opacity={0.38} />
-        </mesh>
+        <group ref={coreRings} rotation={[1.08, 0.18, 0.42]}>
+          <mesh>
+            <ringGeometry args={[1.03, 1.48, 128]} />
+            <meshStandardMaterial
+              color="#b7c8ed"
+              transparent
+              opacity={0.27}
+              roughness={0.42}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+            />
+          </mesh>
+          <mesh position={[0, 0, 0.003]}>
+            <ringGeometry args={[1.22, 1.28, 128]} />
+            <meshBasicMaterial color="#7f9cdf" transparent opacity={0.48} side={THREE.DoubleSide} depthWrite={false} />
+          </mesh>
+          <mesh position={[0, 0, 0.006]}>
+            <ringGeometry args={[1.4, 1.44, 128]} />
+            <meshBasicMaterial color="#d9e3fa" transparent opacity={0.34} side={THREE.DoubleSide} depthWrite={false} />
+          </mesh>
+        </group>
         {CAPABILITIES.map((capability, index) => (
           <CapabilityNode
             key={capability.label}
