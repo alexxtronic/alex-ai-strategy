@@ -258,7 +258,7 @@
     const loadExperience = () => {
       if (requested) return;
       requested = true;
-      import("./three-capability.bundle.js?v=20260820-10").catch(() => {
+      import("./three-capability.bundle.js?v=20260820-11").catch(() => {
         threeExperience.classList.add("has-three-error");
       });
     };
