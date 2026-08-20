@@ -260,10 +260,13 @@
     }
   }
   const reportCopy = [
-    "Luravi senora valemi quorata. Nirevi solenta paremi dorava, teluri sanova mereti.",
-    "Corali venuta saleri monava. Qireto falemi nusora velati peruno taleri sovana.",
-    "Raveli someta quinori latera. Vesuni caromi delava nureni, saturo melavi roneta.",
-  ].join("\n\n");
+    "Luravi senora valemi.",
+    "Quorata nirevi sola.",
+    "Paremi dorava teluri.",
+    "Corali venuta saleri.",
+    "Qireto falemi nusa.",
+    "Raveli someta quina.",
+  ].join("\n");
   let reportStarted = false;
 
   const animateReport = () => {

@@ -811,17 +811,22 @@ svg {
 .prototype-body {
   display: grid;
   grid-template-columns: 1fr 92px;
+  height: 188px;
   min-height: 188px;
 }
 
 .draft-copy {
+  min-width: 0;
   padding: 22px 20px;
+  overflow: hidden;
   border-right: 1px solid var(--line);
 }
 
 .typing-report {
-  min-height: 148px;
+  width: 100%;
+  height: 10.32em;
   margin: 0;
+  overflow: hidden;
   color: #27334b;
   font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.7rem;
@@ -829,7 +834,7 @@ svg {
   line-height: 1.72;
   letter-spacing: 0.012em;
   text-align: left;
-  white-space: pre-wrap;
+  white-space: pre;
 }
 
 .typing-report::after {

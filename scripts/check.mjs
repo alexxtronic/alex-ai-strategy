@@ -55,6 +55,8 @@ if (!homeHtml.includes("Hi, I'm Alex,")) failures.push("Homepage headline is mis
 if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is missing the 3D capability experience");
 if (!homeHtml.includes('data-build-report="typing-v2"')) failures.push("Homepage is missing the resilient Build-card report");
 if (homeHtml.includes("A tailored recommendation")) failures.push("Homepage still contains the legacy Build-card recommendation");
+const reportMatch = homeHtml.match(/data-typing-report>([\s\S]*?)<\/p>/);
+if (!reportMatch || reportMatch[1].trim().split("\n").length !== 6) failures.push("Build-card report must contain exactly six lines");
 if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
 
 if (failures.length) {
