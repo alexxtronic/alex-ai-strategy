@@ -16,10 +16,10 @@ const CAPABILITIES = [
 ];
 
 const ROUTE_POINTS = [
-  new THREE.Vector3(-0.08, 1.3, 0.39),
-  new THREE.Vector3(-0.72, 0.46, 0.46),
-  new THREE.Vector3(0.12, -0.24, 0.46),
-  new THREE.Vector3(1.23, -1.18, 0.46),
+  new THREE.Vector3(-0.04, 1.18, 0.34),
+  new THREE.Vector3(-0.58, 0.43, 0.34),
+  new THREE.Vector3(-0.1, -0.24, 0.34),
+  new THREE.Vector3(1.2, -1.05, 0.34),
 ];
 
 function createMountainGeometry(points, depth = 0.34) {
@@ -30,9 +30,9 @@ function createMountainGeometry(points, depth = 0.34) {
   const geometry = new THREE.ExtrudeGeometry(shape, {
     depth,
     bevelEnabled: true,
-    bevelSegments: 3,
-    bevelSize: 0.045,
-    bevelThickness: 0.045,
+    bevelSegments: 5,
+    bevelSize: 0.06,
+    bevelThickness: 0.06,
     curveSegments: 16,
   });
   geometry.translate(0, 0, -depth / 2);
@@ -104,38 +104,38 @@ function RoutePoint({ point, index, activeIndex, onSelect, reducedMotion }) {
   return (
     <group position={point}>
       <mesh ref={halo}>
-        <sphereGeometry args={[0.13, 24, 24]} />
-        <meshBasicMaterial color={GOLD} transparent opacity={active ? 0.2 : 0.045} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
+        <ringGeometry args={[0.085, 0.14, 32]} />
+        <meshBasicMaterial color={GOLD} transparent opacity={active ? 0.28 : 0.04} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </mesh>
       <mesh
         ref={dot}
+        position={[0, 0, 0.006]}
         onPointerDown={select}
         onClick={select}
         onPointerEnter={(event) => { event.stopPropagation(); setHover(true); }}
         onPointerLeave={(event) => { event.stopPropagation(); setHover(false); }}
       >
-        <sphereGeometry args={[0.072, 24, 24]} />
-        <meshPhysicalMaterial color={active ? GOLD : "#777267"} emissive={active ? GOLD : ONYX} emissiveIntensity={active ? 1.15 : 0.04} roughness={0.18} metalness={0.55} clearcoat={1} />
+        <circleGeometry args={[0.066, 32]} />
+        <meshPhysicalMaterial color={active ? GOLD : "#6f6a5d"} emissive={active ? GOLD : ONYX} emissiveIntensity={active ? 1.05 : 0.02} roughness={0.22} metalness={0.5} clearcoat={0.8} />
       </mesh>
-      <mesh onPointerDown={select} onClick={select}>
-        <sphereGeometry args={[0.24, 12, 12]} />
+      <mesh position={[0, 0, 0.012]} onPointerDown={select} onClick={select}>
+        <circleGeometry args={[0.24, 20]} />
         <meshBasicMaterial transparent opacity={0} colorWrite={false} depthWrite={false} />
       </mesh>
     </group>
   );
 }
 
-function LithicMountain({ activeIndex, onSelect, reducedMotion }) {
+function LithicMountain({ activeIndex, onSelect, pointerRef, reducedMotion }) {
   const mountain = useRef();
   const draw = useRef(reducedMotion ? activeIndex : 0);
-  const leftGeometry = useMemo(() => createMountainGeometry([
-    [-2.72, -1.48], [-1.72, -0.37], [-1.17, -0.88], [0.03, 1.48], [0.54, 0.68], [-0.92, -1.48],
-  ]), []);
-  const rightGeometry = useMemo(() => createMountainGeometry([
-    [0.02, -1.48], [1.34, 0.06], [2.68, -1.48],
-  ], 0.28), []);
-  const leftEdges = useMemo(() => new THREE.EdgesGeometry(leftGeometry, 18), [leftGeometry]);
-  const rightEdges = useMemo(() => new THREE.EdgesGeometry(rightGeometry, 18), [rightGeometry]);
+  const mountainGeometry = useMemo(() => createMountainGeometry([
+    [-2.5, -1.42],
+    [-1.5, -0.62],
+    [0, 1.52],
+    [0.64, 0.62],
+    [2.5, -1.42],
+  ], 0.48), []);
 
   useEffect(() => {
     if (reducedMotion) draw.current = activeIndex;
@@ -145,24 +145,18 @@ function LithicMountain({ activeIndex, onSelect, reducedMotion }) {
     if (!mountain.current) return;
     draw.current = reducedMotion ? activeIndex : THREE.MathUtils.damp(draw.current, activeIndex, 3.9, delta);
     if (reducedMotion) return;
-    mountain.current.rotation.x = THREE.MathUtils.damp(mountain.current.rotation.x, -0.055 + state.pointer.y * -0.035, 3, delta);
-    mountain.current.rotation.y = THREE.MathUtils.damp(mountain.current.rotation.y, -0.08 + state.pointer.x * 0.08, 3, delta);
-    mountain.current.position.y = Math.sin(state.clock.elapsedTime * 0.48) * 0.025;
+    const pointer = pointerRef.current;
+    mountain.current.rotation.x = THREE.MathUtils.damp(mountain.current.rotation.x, -0.08 - pointer.y * 0.15, 5.4, delta);
+    mountain.current.rotation.y = THREE.MathUtils.damp(mountain.current.rotation.y, -0.1 + pointer.x * 0.26, 5.4, delta);
+    mountain.current.rotation.z = THREE.MathUtils.damp(mountain.current.rotation.z, pointer.x * 0.025, 5.4, delta);
+    mountain.current.position.x = THREE.MathUtils.damp(mountain.current.position.x, pointer.x * 0.08, 5, delta);
+    mountain.current.position.y = THREE.MathUtils.damp(mountain.current.position.y, pointer.y * 0.045 + Math.sin(state.clock.elapsedTime * 0.5) * 0.018, 4.5, delta);
   });
 
   return (
-    <group ref={mountain} rotation={[-0.055, -0.08, 0]} scale={0.98}>
-      <mesh geometry={leftGeometry}>
-        <meshPhysicalMaterial color={ONYX} roughness={0.32} metalness={0.18} clearcoat={0.64} clearcoatRoughness={0.2} />
-      </mesh>
-      <lineSegments geometry={leftEdges}><lineBasicMaterial color={ALABASTER} transparent opacity={0.2} /></lineSegments>
-      <mesh geometry={rightGeometry}>
-        <meshPhysicalMaterial color={CHARCOAL} roughness={0.38} metalness={0.12} clearcoat={0.52} clearcoatRoughness={0.24} />
-      </mesh>
-      <lineSegments geometry={rightEdges}><lineBasicMaterial color={ALABASTER} transparent opacity={0.18} /></lineSegments>
-      <mesh position={[-0.77, -0.79, 0.2]} rotation={[0, 0, -0.37]}>
-        <planeGeometry args={[1.8, 0.95]} />
-        <meshBasicMaterial color="#5a574d" transparent opacity={0.2} depthWrite={false} />
+    <group ref={mountain} rotation={[-0.08, -0.1, 0]} scale={0.92}>
+      <mesh geometry={mountainGeometry} castShadow receiveShadow>
+        <meshPhysicalMaterial color={ONYX} roughness={0.24} metalness={0.2} clearcoat={0.9} clearcoatRoughness={0.16} />
       </mesh>
       {ROUTE_POINTS.slice(0, -1).map((point, index) => (
         <RouteSegment key={`route-${index}`} start={point} end={ROUTE_POINTS[index + 1]} index={index} drawRef={draw} reducedMotion={reducedMotion} />
@@ -174,29 +168,42 @@ function LithicMountain({ activeIndex, onSelect, reducedMotion }) {
   );
 }
 
-function SystemScene({ activeIndex, onSelect, reducedMotion }) {
+function SystemScene({ activeIndex, onSelect, pointerRef, reducedMotion }) {
   return (
     <>
-      <ambientLight intensity={1.35} />
-      <hemisphereLight args={[ALABASTER, ONYX, 1.55]} />
-      <directionalLight position={[4, 5, 7]} intensity={3.2} color="#ffffff" />
-      <pointLight position={[-3.2, 1.4, 4]} intensity={6.5} distance={9} color={GOLD} />
-      <pointLight position={[3.5, -1.5, 4]} intensity={4.4} distance={9} color={ALABASTER} />
-      <LithicMountain activeIndex={activeIndex} onSelect={onSelect} reducedMotion={reducedMotion} />
+      <ambientLight intensity={0.95} />
+      <hemisphereLight args={[ALABASTER, ONYX, 1.25]} />
+      <directionalLight position={[4.5, 5.5, 7]} intensity={3.8} color="#ffffff" />
+      <pointLight position={[-3.4, 1.8, 4]} intensity={4.2} distance={10} color={GOLD} />
+      <pointLight position={[3.5, -1.3, 4.5]} intensity={2.4} distance={10} color={ALABASTER} />
+      <LithicMountain activeIndex={activeIndex} onSelect={onSelect} pointerRef={pointerRef} reducedMotion={reducedMotion} />
     </>
   );
 }
 
 function CapabilityExperience({ host }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const pointer = useRef({ x: 0, y: 0 });
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const active = CAPABILITIES[activeIndex];
 
+  const moveMountain = (event) => {
+    if (reducedMotion) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    pointer.current.x = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+    pointer.current.y = -(((event.clientY - bounds.top) / bounds.height) * 2 - 1);
+  };
+
+  const centerMountain = () => {
+    pointer.current.x = 0;
+    pointer.current.y = 0;
+  };
+
   return (
     <div className="capability-canvas">
-      <div className="capability-viewport" aria-hidden="true">
+      <div className="capability-viewport" aria-hidden="true" onPointerMove={moveMountain} onPointerLeave={centerMountain}>
         <Canvas
-          camera={{ position: [0, 0, 7.1], fov: 39 }}
+          camera={{ position: [0, 0, 7.4], fov: 41 }}
           dpr={[1, 1.5]}
           frameloop={reducedMotion ? "demand" : "always"}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
@@ -205,7 +212,7 @@ function CapabilityExperience({ host }) {
             host.classList.add("is-three-ready");
           }}
         >
-          <SystemScene activeIndex={activeIndex} onSelect={setActiveIndex} reducedMotion={reducedMotion} />
+          <SystemScene activeIndex={activeIndex} onSelect={setActiveIndex} pointerRef={pointer} reducedMotion={reducedMotion} />
         </Canvas>
       </div>
       <div className="capability-controls" role="group" aria-label="Explore Lithic's AI capabilities">

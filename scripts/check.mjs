@@ -59,6 +59,9 @@ if (homeHtml.includes("data-business-rotator") || homeHtml.includes("I help")) f
 if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is missing the 3D capability experience");
 if (!homeHtml.includes("fallback-mountain")) failures.push("Homepage is missing the Lithic mountain fallback");
 if (!capabilitySource.includes("function LithicMountain")) failures.push("3D Lithic mountain experience is missing");
+if (!capabilitySource.includes("const mountainGeometry")) failures.push("3D capability experience must use one solid mountain geometry");
+if (!capabilitySource.includes("onPointerMove={moveMountain}")) failures.push("3D mountain is missing cursor-following movement");
+if (capabilitySource.includes("leftGeometry") || capabilitySource.includes("rightGeometry") || capabilitySource.includes("planeGeometry")) failures.push("Split or decorative legacy mountain shapes remain");
 if (capabilitySource.includes("CapabilityCabinet") || capabilitySource.includes("CapabilityDrawer")) failures.push("Legacy drawer cabinet remains in the capability experience");
 if (homeCss.includes("backdrop-filter: blur(1.5px)")) failures.push("Investigate lens must not blur discovered words");
 if (!homeHtml.includes('data-build-report="typing-v2"')) failures.push("Homepage is missing the resilient Build-card report");

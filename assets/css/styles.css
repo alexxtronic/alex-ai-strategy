@@ -2760,25 +2760,11 @@ body {
 
 .fallback-peak {
   position: absolute;
-  bottom: 10%;
+  inset: 8% 2% 10%;
   display: block;
+  background: linear-gradient(145deg, #333127 0%, #11100f 58%, #242219 100%);
+  clip-path: polygon(0 100%, 20% 72%, 50% 0, 63% 30%, 100% 100%);
   filter: drop-shadow(18px 24px 24px rgba(17, 16, 15, 0.16));
-}
-
-.fallback-peak--left {
-  left: 2%;
-  width: 58%;
-  height: 84%;
-  background: linear-gradient(135deg, #333127, #11100f 62%);
-  clip-path: polygon(0 100%, 22% 58%, 36% 73%, 69% 12%, 82% 32%, 48% 100%);
-}
-
-.fallback-peak--right {
-  right: 2%;
-  width: 54%;
-  height: 60%;
-  background: #333127;
-  clip-path: polygon(0 100%, 50% 9%, 100% 100%);
 }
 
 .fallback-route {
