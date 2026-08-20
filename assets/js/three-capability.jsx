@@ -43,6 +43,8 @@ const CAPABILITIES = [
 ];
 
 const tempScale = new THREE.Vector3();
+const CAPABILITY_PLANET_RADIUS = 0.56;
+const CAPABILITY_HIT_RADIUS = 1.02;
 
 const intelligenceVertexShader = `
   varying vec2 vUv;
@@ -116,8 +118,12 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
   const active = activeIndex === index;
 
   useFrame((state, delta) => {
-    if (!planet.current || reducedMotion) return;
+    if (!planet.current) return;
     const scale = active ? 1.23 : hovered ? 1.12 : 1;
+    if (reducedMotion) {
+      planet.current.scale.setScalar(scale);
+      return;
+    }
     planet.current.scale.lerp(tempScale.setScalar(scale), 1 - Math.exp(-delta * 8));
     if (sphere.current) sphere.current.rotation.y += delta * (0.12 + index * 0.012);
     if (rings.current) {
@@ -132,22 +138,31 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
     document.body.style.cursor = value ? "pointer" : "";
   };
 
+  const selectPlanet = (event) => {
+    event.stopPropagation();
+    setActiveIndex(index);
+  };
+
   return (
     <group position={capability.position}>
-      <group
-        ref={planet}
-        onClick={(event) => {
-          event.stopPropagation();
-          setActiveIndex(index);
-        }}
-        onPointerEnter={(event) => {
-          event.stopPropagation();
-          setHover(true);
-        }}
-        onPointerLeave={() => setHover(false)}
-      >
+      <group ref={planet}>
+        <mesh
+          onPointerDown={selectPlanet}
+          onClick={selectPlanet}
+          onPointerEnter={(event) => {
+            event.stopPropagation();
+            setHover(true);
+          }}
+          onPointerLeave={(event) => {
+            event.stopPropagation();
+            setHover(false);
+          }}
+        >
+          <sphereGeometry args={[CAPABILITY_HIT_RADIUS, 28, 28]} />
+          <meshBasicMaterial transparent opacity={0} depthWrite={false} colorWrite={false} />
+        </mesh>
         <mesh ref={sphere}>
-          <sphereGeometry args={[0.39, 64, 64]} />
+          <sphereGeometry args={[CAPABILITY_PLANET_RADIUS, 64, 64]} />
           <meshPhysicalMaterial
             color={capability.color}
             emissive={capability.color}
@@ -159,7 +174,7 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
           />
         </mesh>
         <mesh scale={1.035}>
-          <sphereGeometry args={[0.39, 48, 48]} />
+          <sphereGeometry args={[CAPABILITY_PLANET_RADIUS, 48, 48]} />
           <meshBasicMaterial
             color={capability.atmosphere}
             transparent
@@ -169,7 +184,7 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
         </mesh>
         <group ref={rings} rotation={[1.03, 0.12, index * 0.72]}>
           <mesh>
-            <ringGeometry args={[0.49, 0.73, 96]} />
+            <ringGeometry args={[0.69, 1.02, 96]} />
             <meshStandardMaterial
               color={capability.ring}
               transparent
@@ -181,7 +196,7 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
             />
           </mesh>
           <mesh position={[0, 0, 0.002]}>
-            <ringGeometry args={[0.59, 0.625, 96]} />
+            <ringGeometry args={[0.82, 0.87, 96]} />
             <meshBasicMaterial
               color={capability.color}
               transparent
@@ -191,7 +206,7 @@ function CapabilityNode({ capability, index, activeIndex, setActiveIndex, reduce
             />
           </mesh>
           <mesh position={[0, 0, 0.004]}>
-            <ringGeometry args={[0.69, 0.72, 96]} />
+            <ringGeometry args={[0.96, 1.01, 96]} />
             <meshBasicMaterial
               color="#ffffff"
               transparent
