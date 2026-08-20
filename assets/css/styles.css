@@ -1489,8 +1489,7 @@ svg {
   pointer-events: none;
 }
 
-.value-eyebrow,
-.cta-eyebrow {
+.value-eyebrow {
   position: relative;
   z-index: 1;
   display: inline-block;
@@ -2009,10 +2008,6 @@ svg {
   font-weight: 400;
   line-height: 0.98;
   letter-spacing: -0.04em;
-}
-
-.cta-card .cta-eyebrow {
-  color: #ccac0a;
 }
 
 .cta-card p {
