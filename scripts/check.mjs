@@ -49,20 +49,19 @@ for (const id of ["company", "title"]) {
 
 const homeHtml = await readFile(join(root, "index.html"), "utf8");
 const homeCss = await readFile(join(root, "assets/css/styles.css"), "utf8");
-const capabilitySource = await readFile(join(root, "assets/js/three-capability.jsx"), "utf8");
 for (const id of ["how-i-work", "specialties", "past-projects"]) {
   if (!homeHtml.includes(`id="${id}"`)) failures.push(`Homepage is missing ${id}`);
 }
-if (!homeHtml.includes("We're your next<br />AI Strategy Partner")) failures.push("Lithic homepage headline is missing");
-if (!homeHtml.includes("lithic_full_logo_black_transparent.png")) failures.push("Homepage is missing the Lithic header logo");
+if (!homeHtml.includes("We're your next<br />AI Strategy Partner")) failures.push("Vitrus homepage headline is missing");
+if (!homeHtml.includes("vitrus_full_logo_black_transparent.png")) failures.push("Homepage is missing the Vitrus header logo");
 if (homeHtml.includes("data-business-rotator") || homeHtml.includes("I help")) failures.push("Legacy rotating industry copy remains");
-if (!homeHtml.includes('data-three-experience')) failures.push("Homepage is missing the 3D capability experience");
-if (!homeHtml.includes("fallback-mountain")) failures.push("Homepage is missing the Lithic mountain fallback");
-if (!capabilitySource.includes("function LithicMountain")) failures.push("3D Lithic mountain experience is missing");
-if (!capabilitySource.includes("const mountainGeometry")) failures.push("3D capability experience must use one solid mountain geometry");
-if (!capabilitySource.includes("onPointerMove={moveMountain}")) failures.push("3D mountain is missing cursor-following movement");
-if (capabilitySource.includes("leftGeometry") || capabilitySource.includes("rightGeometry") || capabilitySource.includes("planeGeometry")) failures.push("Split or decorative legacy mountain shapes remain");
-if (capabilitySource.includes("CapabilityCabinet") || capabilitySource.includes("CapabilityDrawer")) failures.push("Legacy drawer cabinet remains in the capability experience");
+if (!homeHtml.includes('data-capability-experience')) failures.push("Homepage is missing the 2D capability experience");
+if (!homeHtml.includes("capability-mountain")) failures.push("Homepage is missing the Vitrus vector mountain range");
+if (!homeHtml.includes("capability-route--segment")) failures.push("Vector mountain is missing the segmented ascending route");
+if ((homeHtml.match(/data-capability-segment=/g) || []).length !== 3) failures.push("Vector mountain must contain exactly three aligned route segments");
+if (/<circle[^>]*class="capability/.test(homeHtml)) failures.push("Vector mountain must not contain decorative circle elements");
+if (homeHtml.includes("capability-sun") || homeHtml.includes("capability-aurora")) failures.push("Vector mountain contains legacy ambient shapes");
+if (homeHtml.includes("data-three-experience") || homeHtml.includes("interactive 3D")) failures.push("Legacy 3D capability language remains");
 if (homeCss.includes("backdrop-filter: blur(1.5px)")) failures.push("Investigate lens must not blur discovered words");
 if (!homeHtml.includes('data-build-report="typing-v2"')) failures.push("Homepage is missing the resilient Build-card report");
 if (homeHtml.includes("A tailored recommendation")) failures.push("Homepage still contains the legacy Build-card recommendation");
@@ -77,9 +76,14 @@ for (const phrase of ["Investigate", "We find where AI makes the biggest impact.
 for (const phrase of ["bespoke system catered to your needs", "as technology evolves so do we"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Process card is missing ${phrase}`);
 }
-for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "© <span data-current-year></span> Lithic"]) {
-  if (!homeHtml.includes(phrase)) failures.push(`Lithic homepage is missing ${phrase}`);
+for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "AI ROI Calculator", "© <span data-current-year></span> Vitrus"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Vitrus homepage is missing ${phrase}`);
 }
+for (const phrase of ["data-approval-timeline", "data-approval-progress", "AI drafts", "Human review", "Approve", "Publish", "Measure"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Approval timeline is missing ${phrase}`);
+}
+if (homeHtml.includes("approval-flow") || homeHtml.includes("Human approval included")) failures.push("Legacy approval flow remains");
+if (homeHtml.includes("roi-builder__kicker") || homeHtml.includes("project-type")) failures.push("Small decorative subheading copy remains");
 for (const phrase of ['data-roi-calculator', 'data-roi-use-case="reporting"', 'data-roi-use-case="email"', 'data-roi-use-case="knowledge"', 'data-roi-range="horizon"', 'data-roi-range="hourly"', "data-roi-hours"]) {
   if (!homeHtml.includes(phrase)) failures.push(`ROI opportunity builder is missing ${phrase}`);
 }
@@ -90,11 +94,11 @@ for (const phrase of ["Alexander D’Amore", "Alexander D'Amore", "Work with me"
   if (homeHtml.includes(phrase)) failures.push(`Legacy personal-site language remains: ${phrase}`);
 }
 const cname = await readFile(join(root, "CNAME"), "utf8");
-if (cname.trim() !== "lithic.business") failures.push("CNAME must point to lithic.business");
-if (!files.some((file) => relative(root, file) === "assets/js/three-capability.bundle.js")) failures.push("3D capability bundle is missing");
+if (cname.trim() !== "vitrus.org") failures.push("CNAME must point to vitrus.org");
+if (files.some((file) => relative(root, file).startsWith("assets/js/three-capability"))) failures.push("Legacy 3D capability assets remain");
 
-const copyExtensions = new Set([".html", ".js", ".jsx"]);
-for (const file of files.filter((candidate) => copyExtensions.has(extname(candidate)) && !candidate.endsWith("three-capability.bundle.js"))) {
+const copyExtensions = new Set([".html", ".js", ".jsx", ".md"]);
+for (const file of files.filter((candidate) => copyExtensions.has(extname(candidate)))) {
   const source = await readFile(file, "utf8");
   if (source.includes("—")) failures.push(`${relative(root, file)} contains an em dash`);
 }

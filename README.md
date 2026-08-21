@@ -1,8 +1,8 @@
-# Lithic | AI Strategy Partner
+# Vitrus | AI Strategy Partner
 
 Static, responsive consulting website built for GitHub Pages.
 
-The interactive capability model is built with React Three Fiber and committed as a browser-ready bundle, so GitHub Pages remains a static deployment.
+The interactive capability model is a lightweight inline SVG mountain range, so GitHub Pages remains a fast static deployment with no application runtime.
 
 ## Local preview
 
@@ -12,11 +12,10 @@ python3 -m http.server 4173
 
 Then open `http://127.0.0.1:4173/`.
 
-## Rebuild the 3D experience
+## Validate the site
 
 ```bash
-npm install
-npm run build:3d
+npm run check
 ```
 
 ## Contact form connection

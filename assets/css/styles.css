@@ -2855,6 +2855,7 @@ svg {
 
   .approval-flow {
     grid-template-columns: 1fr;
+    margin-top: 64px;
   }
 
   .approval-copy {
@@ -2964,7 +2965,302 @@ svg {
   }
 }
 
-/* Lithic brand system */
+/* Vitrus release */
+.card-kicker {
+  color: var(--ink-soft);
+  text-transform: none;
+}
+
+.approval-timeline {
+  margin-top: 34px;
+  padding: clamp(36px, 5vw, 64px);
+  background: rgba(248, 247, 244, 0.82);
+  border: 1px solid rgba(51, 49, 39, 0.18);
+  border-radius: 22px;
+}
+
+.approval-timeline__header {
+  max-width: 660px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.approval-timeline__header h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 5vw, 4.4rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.approval-timeline__header p {
+  max-width: 560px;
+  margin: 18px auto 0;
+  color: var(--ink-soft);
+  font-size: clamp(0.96rem, 1.4vw, 1.08rem);
+}
+
+.approval-timeline__track {
+  position: relative;
+  display: grid;
+  gap: 22px;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.approval-timeline__rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  overflow: hidden;
+  background: rgba(51, 49, 39, 0.18);
+  transform: translateX(-50%);
+}
+
+.approval-timeline__rail i {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: #ccac0a;
+  box-shadow: 0 0 10px rgba(204, 172, 10, 0.38);
+  transition: height 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.approval-timeline.is-resetting .approval-timeline__rail i {
+  transition: none;
+}
+
+.approval-timeline__step {
+  position: relative;
+  display: grid;
+  width: calc(50% - 50px);
+  min-height: 128px;
+  padding: 24px 26px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(51, 49, 39, 0.14);
+  border-radius: 16px;
+  opacity: 0.36;
+  transform: translateY(8px);
+  transition: opacity 420ms ease, transform 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
+}
+
+.approval-timeline__step:nth-of-type(even) {
+  margin-left: auto;
+}
+
+.approval-timeline__marker {
+  position: absolute;
+  top: 50%;
+  right: -68px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  color: var(--ink-soft);
+  background: #f8f7f4;
+  border: 1px solid rgba(51, 49, 39, 0.28);
+  border-radius: 8px;
+  font-family: var(--serif);
+  font-size: 0.84rem;
+  transform: translateY(-50%);
+  transition: color 320ms ease, background 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+}
+
+.approval-timeline__step:nth-of-type(even) .approval-timeline__marker {
+  right: auto;
+  left: -68px;
+}
+
+.approval-timeline__step h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+}
+
+.approval-timeline__step p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.approval-timeline__step.is-complete,
+.approval-timeline__step.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.approval-timeline__step.is-complete {
+  border-color: rgba(51, 49, 39, 0.22);
+}
+
+.approval-timeline__step.is-active {
+  border-color: rgba(204, 172, 10, 0.72);
+  box-shadow: 0 16px 36px rgba(17, 16, 15, 0.09);
+}
+
+.approval-timeline__step.is-complete .approval-timeline__marker,
+.approval-timeline__step.is-active .approval-timeline__marker {
+  color: #11100f;
+  background: #ccac0a;
+  border-color: #ccac0a;
+}
+
+.approval-timeline__step.is-active .approval-timeline__marker {
+  box-shadow: 0 0 0 6px rgba(204, 172, 10, 0.14);
+}
+
+.capability-experience {
+  background: rgba(228, 226, 222, 0.46);
+}
+
+.capability-experience .capability-viewport {
+  background: linear-gradient(180deg, rgba(248, 247, 244, 0.36), rgba(228, 226, 222, 0.08));
+}
+
+.capability-range--back {
+  fill: url(#vitrus-back-range);
+}
+
+.capability-range--middle {
+  fill: url(#vitrus-mid-range);
+}
+
+.capability-range--main {
+  fill: url(#vitrus-main-range);
+}
+
+.capability-route--guide {
+  stroke: rgba(204, 172, 10, 0.18);
+  stroke-width: 2;
+}
+
+.capability-route--segment {
+  stroke: #ccac0a;
+  stroke-width: 4;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: url(#vitrus-route-glow);
+  transition: stroke-dashoffset 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.capability-route--segment.is-active {
+  stroke-dashoffset: 0;
+}
+
+.capability-stage-diamond {
+  fill: #6d685c;
+  stroke: #f8f7f4;
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill 320ms ease, transform 320ms ease, filter 320ms ease;
+}
+
+.capability-stage-point.is-active .capability-stage-diamond {
+  fill: #ccac0a;
+}
+
+.capability-stage-point.is-current .capability-stage-diamond {
+  transform: rotate(45deg) scale(1.25);
+  filter: drop-shadow(0 0 5px rgba(204, 172, 10, 0.62));
+}
+
+.capability-readout span {
+  color: var(--ink);
+}
+
+.roi-outcome-label {
+  color: rgba(248, 247, 244, 0.72);
+}
+
+@media (max-width: 840px) {
+  .site-nav {
+    background: rgba(248, 247, 244, 0.98);
+  }
+
+  .approval-timeline {
+    padding: 34px 24px 38px;
+  }
+
+  .approval-timeline__header {
+    margin-bottom: 36px;
+  }
+
+  .approval-timeline__track {
+    gap: 18px;
+    padding-left: 54px;
+  }
+
+  .approval-timeline__rail {
+    left: 18px;
+    transform: none;
+  }
+
+  .approval-timeline__step,
+  .approval-timeline__step:nth-of-type(even) {
+    width: 100%;
+    min-height: 0;
+    margin-left: 0;
+    padding: 22px;
+  }
+
+  .approval-timeline__marker,
+  .approval-timeline__step:nth-of-type(even) .approval-timeline__marker {
+    right: auto;
+    left: -54px;
+  }
+}
+
+@media (max-width: 640px) {
+  .approval-timeline {
+    margin-top: 44px;
+    padding: 30px 18px 34px;
+    border-radius: 18px;
+  }
+
+  .approval-timeline__header h2 {
+    font-size: 2.6rem;
+  }
+
+  .approval-timeline__track {
+    padding-left: 48px;
+  }
+
+  .approval-timeline__rail {
+    left: 15px;
+  }
+
+  .approval-timeline__step {
+    padding: 20px;
+  }
+
+  .approval-timeline__marker,
+  .approval-timeline__step:nth-of-type(even) .approval-timeline__marker {
+    left: -49px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .approval-timeline__rail i,
+  .approval-timeline__step,
+  .approval-timeline__marker,
+  .capability-route--segment,
+  .capability-stage-diamond {
+    transition: none;
+  }
+}
+
+/* Vitrus brand system */
 body {
   background:
     radial-gradient(circle at 14% 8%, rgba(204, 172, 10, 0.08), transparent 30%),
@@ -3216,4 +3512,209 @@ body {
 @media (max-width: 840px) {
   .brand { width: 148px; height: 38px; }
   .fallback-mountain { width: min(82%, 350px); }
+}
+
+/* Vitrus two-dimensional capability range */
+.capability-experience {
+  min-height: 0;
+  background: rgba(228, 226, 222, 0.44);
+  border-color: rgba(51, 49, 39, 0.18);
+  box-shadow: 0 30px 86px rgba(17, 16, 15, 0.1);
+}
+
+.capability-experience::after {
+  z-index: 5;
+  border-color: rgba(255, 255, 255, 0.58);
+}
+
+.capability-experience .capability-aurora {
+  top: 2%;
+  left: 18%;
+  width: 66%;
+  background: radial-gradient(circle, rgba(204, 172, 10, 0.28), rgba(204, 172, 10, 0.08) 48%, transparent 72%);
+  filter: blur(54px);
+  opacity: 0.72;
+}
+
+.capability-experience .capability-canvas {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  min-height: 0;
+  padding: 18px;
+}
+
+.capability-experience .capability-viewport {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 1.78;
+  overflow: hidden;
+  border-radius: 22px 22px 12px 12px;
+}
+
+.capability-mountain {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.capability-sun {
+  fill: rgba(204, 172, 10, 0.08);
+}
+
+.capability-range,
+.capability-snow {
+  vector-effect: non-scaling-stroke;
+}
+
+.capability-range--back {
+  fill: url(#vitrus-back-range);
+  opacity: 0.72;
+}
+
+.capability-range--middle {
+  fill: url(#vitrus-mid-range);
+  opacity: 0.7;
+}
+
+.capability-range--main {
+  fill: url(#vitrus-main-range);
+  filter: drop-shadow(0 18px 22px rgba(17, 16, 15, 0.12));
+}
+
+.capability-range--front {
+  fill: #242219;
+}
+
+.capability-snow {
+  fill: #f8f7f4;
+  opacity: 0.9;
+}
+
+.capability-snow--left,
+.capability-snow--right {
+  opacity: 0.72;
+}
+
+.capability-route {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.capability-route--guide {
+  stroke: rgba(204, 172, 10, 0.2);
+  stroke-width: 3;
+}
+
+.capability-route--progress {
+  stroke: #ccac0a;
+  stroke-width: 5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: url(#vitrus-route-glow);
+  transition: stroke-dashoffset 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.capability-stage-halo {
+  fill: rgba(204, 172, 10, 0.08);
+  stroke: rgba(204, 172, 10, 0.22);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+  transition: fill 300ms ease, stroke 300ms ease, transform 300ms ease;
+}
+
+.capability-stage-dot {
+  fill: #6d685c;
+  stroke: rgba(248, 247, 244, 0.86);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+  transition: fill 300ms ease, transform 300ms ease;
+}
+
+.capability-stage-point.is-active .capability-stage-halo {
+  fill: rgba(204, 172, 10, 0.16);
+  stroke: rgba(204, 172, 10, 0.62);
+}
+
+.capability-stage-point.is-active .capability-stage-dot {
+  fill: #ccac0a;
+}
+
+.capability-stage-point.is-current .capability-stage-halo {
+  transform: scale(1.15);
+  transform-origin: center;
+  animation: capability-stage-breathe 2.6s ease-in-out infinite;
+}
+
+@keyframes capability-stage-breathe {
+  0%, 100% { opacity: 0.68; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.22); }
+}
+
+.capability-experience .capability-controls {
+  padding: 8px 4px 12px;
+}
+
+.capability-experience .capability-control {
+  min-height: 48px;
+  background: rgba(248, 247, 244, 0.78);
+  border-color: rgba(51, 49, 39, 0.2);
+}
+
+.capability-experience .capability-control[aria-pressed="true"] {
+  color: #11100f;
+  background: #ccac0a;
+  border-color: #ccac0a;
+}
+
+.capability-experience .capability-readout {
+  min-height: 116px;
+  margin: 0 4px 4px;
+  background: rgba(248, 247, 244, 0.9);
+  border-color: rgba(51, 49, 39, 0.18);
+  backdrop-filter: blur(10px);
+}
+
+.capability-experience .capability-readout span {
+  color: #9c8300;
+}
+
+@media (max-width: 840px) {
+  .capability-experience {
+    min-height: 0;
+  }
+
+  .capability-experience .capability-canvas {
+    padding: 10px;
+  }
+
+  .capability-experience .capability-viewport {
+    min-height: 0;
+    aspect-ratio: 1.38;
+    border-radius: 16px 16px 8px 8px;
+  }
+
+  .capability-experience .capability-controls {
+    padding: 4px 4px 10px;
+  }
+
+  .capability-experience .capability-readout {
+    margin: 0 4px 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capability-route--progress,
+  .capability-stage-halo,
+  .capability-stage-dot {
+    transition: none;
+  }
+
+  .capability-stage-point.is-current .capability-stage-halo {
+    animation: none;
+  }
 }

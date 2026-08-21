@@ -252,6 +252,54 @@
     activateSystem();
   }
 
+  const approvalTimeline = document.querySelector("[data-approval-timeline]");
+  if (approvalTimeline) {
+    const approvalSteps = [...approvalTimeline.querySelectorAll("[data-approval-step]")];
+    const approvalProgress = approvalTimeline.querySelector("[data-approval-progress]");
+    let approvalIndex = 0;
+    let approvalTimer = 0;
+
+    const renderApprovalStep = (index) => {
+      approvalIndex = index;
+      approvalSteps.forEach((step, stepIndex) => {
+        step.classList.toggle("is-complete", stepIndex < index);
+        step.classList.toggle("is-active", stepIndex === index);
+      });
+      const progress = approvalSteps.length > 1 ? (index / (approvalSteps.length - 1)) * 100 : 100;
+      approvalProgress.style.height = `${progress}%`;
+    };
+
+    const stopApprovalTimeline = () => window.clearInterval(approvalTimer);
+    const startApprovalTimeline = () => {
+      stopApprovalTimeline();
+      if (reducedMotion.matches) {
+        approvalSteps.forEach((step) => step.classList.add("is-complete"));
+        approvalProgress.style.height = "100%";
+        return;
+      }
+      approvalTimer = window.setInterval(() => {
+        const nextIndex = (approvalIndex + 1) % approvalSteps.length;
+        if (nextIndex === 0) approvalTimeline.classList.add("is-resetting");
+        renderApprovalStep(nextIndex);
+        if (nextIndex === 0) requestAnimationFrame(() => approvalTimeline.classList.remove("is-resetting"));
+      }, 3000);
+    };
+
+    renderApprovalStep(0);
+    if ("IntersectionObserver" in window && !reducedMotion.matches) {
+      const approvalObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) startApprovalTimeline();
+          else stopApprovalTimeline();
+        },
+        { threshold: 0.18 }
+      );
+      approvalObserver.observe(approvalTimeline);
+    } else {
+      startApprovalTimeline();
+    }
+  }
+
   const roiCalculator = document.querySelector("[data-roi-calculator]");
   if (roiCalculator) {
     const roiCases = {
@@ -437,29 +485,84 @@
     renderRoiResults();
   }
 
-  const threeExperience = document.querySelector("[data-three-experience]");
-  if (threeExperience) {
-    let requested = false;
-    const loadExperience = () => {
-      if (requested) return;
-      requested = true;
-      import("./three-capability.bundle.js?v=20260820-12").catch(() => {
-        threeExperience.classList.add("has-three-error");
+  const capabilityExperience = document.querySelector("[data-capability-experience]");
+  if (capabilityExperience) {
+    const capabilityData = [
+      {
+        title: "Opportunity strategy",
+        description: "Find expensive friction, quantify the economics, and choose the first problem worth solving.",
+      },
+      {
+        title: "Reliable quick wins",
+        description: "Turn the priority into a focused system shaped around your data, tools, team, and human judgment.",
+      },
+      {
+        title: "Measurable intelligence",
+        description: "Keep the evidence visible, measure realized value, and improve decisions instead of chasing impressive demos.",
+      },
+      {
+        title: "Embedded integration",
+        description: "Connect the system to real workflows, strengthen adoption, and keep improving it as the business evolves.",
+      },
+    ];
+    const capabilityControls = [...capabilityExperience.querySelectorAll("[data-capability-control]")];
+    const capabilityPoints = [...capabilityExperience.querySelectorAll("[data-capability-point]")];
+    const capabilitySegments = [...capabilityExperience.querySelectorAll("[data-capability-segment]")];
+    const capabilityNumber = capabilityExperience.querySelector("[data-capability-number]");
+    const capabilityTitle = capabilityExperience.querySelector("[data-capability-title]");
+    const capabilityDescription = capabilityExperience.querySelector("[data-capability-description]");
+
+    let capabilityIndex = 0;
+    let capabilityTimer = 0;
+
+    const selectCapability = (index) => {
+      const active = capabilityData[index];
+      if (!active) return;
+      capabilityIndex = index;
+      capabilityExperience.dataset.activeStage = String(index);
+      capabilityControls.forEach((control, controlIndex) => {
+        control.setAttribute("aria-pressed", String(controlIndex === index));
       });
+      capabilitySegments.forEach((segment, segmentIndex) => {
+        segment.classList.toggle("is-active", segmentIndex < index);
+      });
+      capabilityPoints.forEach((point, pointIndex) => {
+        point.classList.toggle("is-active", pointIndex <= index);
+        point.classList.toggle("is-current", pointIndex === index);
+      });
+      capabilityNumber.textContent = String(index + 1).padStart(2, "0");
+      capabilityTitle.textContent = active.title;
+      capabilityDescription.textContent = active.description;
     };
 
-    if ("IntersectionObserver" in window) {
-      const threeObserver = new IntersectionObserver(
-        (entries, observer) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-          loadExperience();
-          observer.disconnect();
+    const stopCapabilityCycle = () => window.clearInterval(capabilityTimer);
+    const startCapabilityCycle = () => {
+      stopCapabilityCycle();
+      if (reducedMotion.matches) return;
+      capabilityTimer = window.setInterval(() => {
+        selectCapability((capabilityIndex + 1) % capabilityData.length);
+      }, 4000);
+    };
+
+    capabilityControls.forEach((control) => {
+      control.addEventListener("click", () => {
+        selectCapability(Number(control.dataset.capabilityControl));
+        startCapabilityCycle();
+      });
+    });
+
+    selectCapability(0);
+    if ("IntersectionObserver" in window && !reducedMotion.matches) {
+      const capabilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) startCapabilityCycle();
+          else stopCapabilityCycle();
         },
-        { rootMargin: "600px 0px", threshold: 0.01 }
+        { threshold: 0.2 }
       );
-      threeObserver.observe(threeExperience);
+      capabilityObserver.observe(capabilityExperience);
     } else {
-      loadExperience();
+      startCapabilityCycle();
     }
   }
 })();

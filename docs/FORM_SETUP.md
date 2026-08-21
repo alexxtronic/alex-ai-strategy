@@ -13,7 +13,7 @@ The Free Intro Call page is designed to post directly into a standard Google For
 
 ## Create the Form
 
-The connected Google Form should be titled **Lithic | Free Intro Call** and use these questions in this exact order:
+The connected Google Form should be titled **Vitrus | Free Intro Call** and use these questions in this exact order:
 
 | Key | Question | Type | Required |
 |---|---|---|---|
