@@ -2294,6 +2294,100 @@ svg {
   font-size: 1.8rem;
 }
 
+.team-section {
+  padding-top: clamp(84px, 10vw, 138px);
+  padding-bottom: clamp(24px, 4vw, 54px);
+}
+
+.team-section__header {
+  margin-bottom: clamp(36px, 5vw, 62px);
+  text-align: center;
+}
+
+.team-section__header .section-heading {
+  margin-inline: auto;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 34px);
+}
+
+.team-card {
+  overflow: hidden;
+  background: rgba(248, 247, 244, 0.86);
+  border: 1px solid rgba(51, 49, 39, 0.18);
+  border-radius: 22px;
+  box-shadow: 0 18px 48px rgba(17, 16, 15, 0.07);
+  transition: transform 320ms ease, border-color 320ms ease, box-shadow 320ms ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(204, 172, 10, 0.56);
+  box-shadow: 0 24px 58px rgba(17, 16, 15, 0.11);
+}
+
+.team-card__portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #11100f;
+}
+
+.team-card__portrait::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 22%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(17, 16, 15, 0.18));
+}
+
+.team-card__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.03);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.team-card:first-child .team-card__portrait img {
+  object-position: 50% 48%;
+}
+
+.team-card:nth-child(2) .team-card__portrait img {
+  object-position: 50% 45%;
+}
+
+.team-card:nth-child(3) .team-card__portrait img {
+  object-position: 50% 46%;
+}
+
+.team-card:hover .team-card__portrait img {
+  transform: scale(1.025);
+}
+
+.team-card__content {
+  padding: 26px 28px 30px;
+}
+
+.team-card__content h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 2.8vw, 2.45rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.team-card__content p {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+}
+
 .cta-section {
   padding: clamp(84px, 10vw, 140px) 24px;
   text-align: center;
@@ -2376,6 +2470,18 @@ svg {
 .site-footer a {
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
+}
+
+@media (max-width: 840px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    width: min(100%, 520px);
+    margin-inline: auto;
+  }
+
+  .team-card__content {
+    padding: 24px 24px 27px;
+  }
 }
 
 .page-hero {

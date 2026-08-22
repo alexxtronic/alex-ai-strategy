@@ -80,6 +80,13 @@ for (const phrase of ["bespoke system catered to your needs", "as technology evo
 for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "AI ROI Calculator", "© <span data-current-year></span> Vitrus"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Vitrus homepage is missing ${phrase}`);
 }
+for (const phrase of ["Meet the team", "Alexander D'Amore", "Founder &amp; CEO", "André Dimmer", "Director of Integration", "Kristian Hampsted", "Deliverables Lead"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`Team section is missing ${phrase}`);
+}
+if ((homeHtml.match(/class="team-card"/g) || []).length !== 3) failures.push("Team section must contain exactly three team members");
+for (const image of ["alexander-damore.jpg", "andre-dimmer.jpg", "kristian-hampsted.jpg"]) {
+  if (!homeHtml.includes(`assets/images/team/${image}`)) failures.push(`Team section is missing ${image}`);
+}
 for (const phrase of ["data-approval-timeline", "data-approval-progress", "Investigate", "Quantify", "Build", "Improve"]) {
   if (!homeHtml.includes(phrase)) failures.push(`How we work timeline is missing ${phrase}`);
 }
@@ -99,7 +106,7 @@ for (const phrase of ['data-roi-calculator', 'data-roi-use-case="reporting"', 'd
 for (const phrase of ["Illustrative ROI model", "Baseline cost"]) {
   if (homeHtml.includes(phrase)) failures.push(`Legacy static ROI copy remains: ${phrase}`);
 }
-for (const phrase of ["Alexander D’Amore", "Alexander D'Amore", "Work with me", "How I work", "Prioritize"]) {
+for (const phrase of ["Work with me", "How I work", "Prioritize"]) {
   if (homeHtml.includes(phrase)) failures.push(`Legacy personal-site language remains: ${phrase}`);
 }
 const cname = await readFile(join(root, "CNAME"), "utf8");
