@@ -57,8 +57,9 @@ if (!homeHtml.includes("vitrus_full_logo_black_transparent.png")) failures.push(
 if (homeHtml.includes("data-business-rotator") || homeHtml.includes("I help")) failures.push("Legacy rotating industry copy remains");
 if (!homeHtml.includes('data-capability-experience')) failures.push("Homepage is missing the 2D capability experience");
 if (!homeHtml.includes("capability-mountain")) failures.push("Homepage is missing the Vitrus vector mountain range");
-if (!homeHtml.includes("capability-route--segment")) failures.push("Vector mountain is missing the segmented ascending route");
-if ((homeHtml.match(/data-capability-segment=/g) || []).length !== 3) failures.push("Vector mountain must contain exactly three aligned route segments");
+if ((homeHtml.match(/capability-route--progress/g) || []).length !== 1) failures.push("Vector mountain must contain one continuous progress route");
+if (!homeHtml.includes('pathLength="100"')) failures.push("Vector mountain progress route must use normalized path geometry");
+if (homeHtml.includes("capability-route--segment") || homeHtml.includes("data-capability-segment")) failures.push("Legacy segmented mountain route remains");
 if (/<circle[^>]*class="capability/.test(homeHtml)) failures.push("Vector mountain must not contain decorative circle elements");
 if (homeHtml.includes("capability-sun") || homeHtml.includes("capability-aurora")) failures.push("Vector mountain contains legacy ambient shapes");
 if (homeHtml.includes("data-three-experience") || homeHtml.includes("interactive 3D")) failures.push("Legacy 3D capability language remains");
@@ -79,10 +80,18 @@ for (const phrase of ["bespoke system catered to your needs", "as technology evo
 for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "AI ROI Calculator", "© <span data-current-year></span> Vitrus"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Vitrus homepage is missing ${phrase}`);
 }
-for (const phrase of ["data-approval-timeline", "data-approval-progress", "AI drafts", "Human review", "Approve", "Publish", "Measure"]) {
-  if (!homeHtml.includes(phrase)) failures.push(`Approval timeline is missing ${phrase}`);
+for (const phrase of ["data-approval-timeline", "data-approval-progress", "Investigate", "Quantify", "Build", "Improve"]) {
+  if (!homeHtml.includes(phrase)) failures.push(`How we work timeline is missing ${phrase}`);
+}
+if ((homeHtml.match(/data-approval-step=/g) || []).length !== 4) failures.push("How we work timeline must contain exactly four steps");
+if ((homeHtml.match(/id="how-i-work"/g) || []).length !== 1) failures.push("Homepage must contain exactly one How we work anchor");
+if (homeHtml.includes("work-steps") || homeHtml.includes("work-step\"")) failures.push("Legacy How we work cards remain");
+for (const phrase of ["AI drafts", "Human review", "<h3>Approve</h3>", "<h3>Publish</h3>", "<h3>Measure</h3>"]) {
+  if (homeHtml.includes(phrase)) failures.push(`Legacy approval timeline content remains: ${phrase}`);
 }
 if (homeHtml.includes("approval-flow") || homeHtml.includes("Human approval included")) failures.push("Legacy approval flow remains");
+const siteJs = await readFile(join(root, "assets/js/site.js"), "utf8");
+if (siteJs.includes("startApprovalTimeline") || siteJs.includes("approvalTimer") || siteJs.includes("}, 3000)")) failures.push("How we work timeline must be controlled by scroll, not a timer");
 if (homeHtml.includes("roi-builder__kicker") || homeHtml.includes("project-type")) failures.push("Small decorative subheading copy remains");
 for (const phrase of ['data-roi-calculator', 'data-roi-use-case="reporting"', 'data-roi-use-case="email"', 'data-roi-use-case="knowledge"', 'data-roi-range="horizon"', 'data-roi-range="hourly"', "data-roi-hours"]) {
   if (!homeHtml.includes(phrase)) failures.push(`ROI opportunity builder is missing ${phrase}`);

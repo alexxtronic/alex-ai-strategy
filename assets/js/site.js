@@ -256,48 +256,42 @@
   if (approvalTimeline) {
     const approvalSteps = [...approvalTimeline.querySelectorAll("[data-approval-step]")];
     const approvalProgress = approvalTimeline.querySelector("[data-approval-progress]");
-    let approvalIndex = 0;
-    let approvalTimer = 0;
+    let approvalIndex = -1;
+    let approvalFrame = 0;
 
     const renderApprovalStep = (index) => {
+      if (approvalIndex === index) return;
       approvalIndex = index;
       approvalSteps.forEach((step, stepIndex) => {
         step.classList.toggle("is-complete", stepIndex < index);
         step.classList.toggle("is-active", stepIndex === index);
+        if (stepIndex === index) step.setAttribute("aria-current", "step");
+        else step.removeAttribute("aria-current");
       });
-      const progress = approvalSteps.length > 1 ? (index / (approvalSteps.length - 1)) * 100 : 100;
+      const progress = approvalSteps.length > 1 ? (index / (approvalSteps.length - 1)) * 100 : 0;
       approvalProgress.style.height = `${progress}%`;
     };
 
-    const stopApprovalTimeline = () => window.clearInterval(approvalTimer);
-    const startApprovalTimeline = () => {
-      stopApprovalTimeline();
-      if (reducedMotion.matches) {
-        approvalSteps.forEach((step) => step.classList.add("is-complete"));
-        approvalProgress.style.height = "100%";
-        return;
-      }
-      approvalTimer = window.setInterval(() => {
-        const nextIndex = (approvalIndex + 1) % approvalSteps.length;
-        if (nextIndex === 0) approvalTimeline.classList.add("is-resetting");
-        renderApprovalStep(nextIndex);
-        if (nextIndex === 0) requestAnimationFrame(() => approvalTimeline.classList.remove("is-resetting"));
-      }, 3000);
+    const updateApprovalTimeline = () => {
+      approvalFrame = 0;
+      const triggerLine = window.innerHeight * 0.62;
+      let nextIndex = 0;
+      approvalSteps.forEach((step, index) => {
+        const rect = step.getBoundingClientRect();
+        if (rect.top + rect.height * 0.35 <= triggerLine) nextIndex = index;
+      });
+      renderApprovalStep(nextIndex);
     };
 
-    renderApprovalStep(0);
-    if ("IntersectionObserver" in window && !reducedMotion.matches) {
-      const approvalObserver = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) startApprovalTimeline();
-          else stopApprovalTimeline();
-        },
-        { threshold: 0.18 }
-      );
-      approvalObserver.observe(approvalTimeline);
-    } else {
-      startApprovalTimeline();
-    }
+    const requestApprovalUpdate = () => {
+      if (!approvalFrame) {
+        approvalFrame = window.requestAnimationFrame(updateApprovalTimeline);
+      }
+    };
+
+    window.addEventListener("scroll", requestApprovalUpdate, { passive: true });
+    window.addEventListener("resize", requestApprovalUpdate);
+    updateApprovalTimeline();
   }
 
   const roiCalculator = document.querySelector("[data-roi-calculator]");
@@ -507,7 +501,6 @@
     ];
     const capabilityControls = [...capabilityExperience.querySelectorAll("[data-capability-control]")];
     const capabilityPoints = [...capabilityExperience.querySelectorAll("[data-capability-point]")];
-    const capabilitySegments = [...capabilityExperience.querySelectorAll("[data-capability-segment]")];
     const capabilityNumber = capabilityExperience.querySelector("[data-capability-number]");
     const capabilityTitle = capabilityExperience.querySelector("[data-capability-title]");
     const capabilityDescription = capabilityExperience.querySelector("[data-capability-description]");
@@ -522,9 +515,6 @@
       capabilityExperience.dataset.activeStage = String(index);
       capabilityControls.forEach((control, controlIndex) => {
         control.setAttribute("aria-pressed", String(controlIndex === index));
-      });
-      capabilitySegments.forEach((segment, segmentIndex) => {
-        segment.classList.toggle("is-active", segmentIndex < index);
       });
       capabilityPoints.forEach((point, pointIndex) => {
         point.classList.toggle("is-active", pointIndex <= index);
