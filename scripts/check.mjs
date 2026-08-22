@@ -48,6 +48,7 @@ for (const id of ["company", "title"]) {
 }
 
 const homeHtml = await readFile(join(root, "index.html"), "utf8");
+const calculatorHtml = await readFile(join(root, "ai-roi-calculator/index.html"), "utf8");
 const homeCss = await readFile(join(root, "assets/css/styles.css"), "utf8");
 for (const id of ["how-i-work", "specialties", "past-projects"]) {
   if (!homeHtml.includes(`id="${id}"`)) failures.push(`Homepage is missing ${id}`);
@@ -80,6 +81,8 @@ for (const phrase of ["bespoke system catered to your needs", "as technology evo
 for (const phrase of ["How we work", "Investigate", "Quantify", "Free Intro Call", "AI ROI Calculator", "© <span data-current-year></span> Vitrus"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Vitrus homepage is missing ${phrase}`);
 }
+if (!homeHtml.includes('href="./ai-roi-calculator/"')) failures.push("Homepage navigation must link to the dedicated AI ROI Calculator page");
+if (homeHtml.includes("data-roi-calculator") || homeHtml.includes('id="business-case"')) failures.push("ROI calculator must not remain on the homepage");
 for (const phrase of ["Meet the team", "Alexander D'Amore", "Founder &amp; CEO", "André Dimmer", "Director of Integration", "Kristian Hampsted", "Deliverables Lead"]) {
   if (!homeHtml.includes(phrase)) failures.push(`Team section is missing ${phrase}`);
 }
@@ -100,11 +103,13 @@ if (homeHtml.includes("approval-flow") || homeHtml.includes("Human approval incl
 const siteJs = await readFile(join(root, "assets/js/site.js"), "utf8");
 if (siteJs.includes("startApprovalTimeline") || siteJs.includes("approvalTimer") || siteJs.includes("}, 3000)")) failures.push("How we work timeline must be controlled by scroll, not a timer");
 if (homeHtml.includes("roi-builder__kicker") || homeHtml.includes("project-type")) failures.push("Small decorative subheading copy remains");
+if (!calculatorHtml.includes("AI ROI Calculator | Vitrus")) failures.push("Dedicated ROI calculator page title is missing");
+if (!calculatorHtml.includes('href="https://vitrus.org/ai-roi-calculator/"')) failures.push("Dedicated ROI calculator canonical URL is missing");
 for (const phrase of ['data-roi-calculator', 'data-roi-use-case="reporting"', 'data-roi-use-case="email"', 'data-roi-use-case="knowledge"', 'data-roi-range="horizon"', 'data-roi-range="hourly"', "data-roi-hours"]) {
-  if (!homeHtml.includes(phrase)) failures.push(`ROI opportunity builder is missing ${phrase}`);
+  if (!calculatorHtml.includes(phrase)) failures.push(`Dedicated ROI calculator page is missing ${phrase}`);
 }
 for (const phrase of ["Illustrative ROI model", "Baseline cost"]) {
-  if (homeHtml.includes(phrase)) failures.push(`Legacy static ROI copy remains: ${phrase}`);
+  if (homeHtml.includes(phrase) || calculatorHtml.includes(phrase)) failures.push(`Legacy static ROI copy remains: ${phrase}`);
 }
 for (const phrase of ["Work with me", "How I work", "Prioritize"]) {
   if (homeHtml.includes(phrase)) failures.push(`Legacy personal-site language remains: ${phrase}`);
