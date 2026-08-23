@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useRef, useState } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "motion/react";
 
 export function Reveal({
   children,
@@ -48,108 +48,108 @@ export function HeroTitle() {
   );
 }
 
-export function SignalField() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export function HeroOrb() {
   const reduced = useReducedMotion();
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
+  return (
+    <div className="hero-orb" aria-hidden="true">
+      <div className="hero-orbit hero-orbit-one" />
+      <div className="hero-orbit hero-orbit-two" />
+      <motion.div
+        className="hero-blob"
+        animate={reduced ? undefined : {
+          rotate: 360,
+          borderRadius: ["43% 57% 68% 32% / 48% 35% 65% 52%", "66% 34% 38% 62% / 35% 58% 42% 65%", "43% 57% 68% 32% / 48% 35% 65% 52%"],
+        }}
+        transition={reduced ? undefined : { rotate: { duration: 24, repeat: Infinity, ease: "linear" }, borderRadius: { duration: 9, repeat: Infinity, ease: "easeInOut" } }}
+      >
+        <span />
+      </motion.div>
+      <motion.div className="hero-moon" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 18, repeat: Infinity, ease: "linear" }}>
+        <span />
+      </motion.div>
+    </div>
+  );
+}
 
-    let frame = 0;
-    let width = 0;
-    let height = 0;
-    const pointer = { x: -1000, y: -1000 };
-    const nodes = Array.from({ length: 24 }, (_, index) => ({
-      x: (index * 0.61803398875) % 1,
-      y: (index * 0.38196601125 + 0.13) % 1,
-      phase: index * 0.63,
-    }));
+const valueSteps = [
+  { title: "Find it", text: "We get close to the work and spot the friction worth fixing.", note: "Opportunity" },
+  { title: "Prove it", text: "We turn instinct into a business case people can believe in.", note: "Confidence" },
+  { title: "Build it", text: "We make the useful thing, connect it, and help your team own it.", note: "Momentum" },
+];
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      width = rect.width;
-      height = rect.height;
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
-      context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    };
+export function ValueSequence() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-    const move = (event: PointerEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
-    };
-
-    const leave = () => {
-      pointer.x = -1000;
-      pointer.y = -1000;
-    };
-
-    const draw = (time = 0) => {
-      context.clearRect(0, 0, width, height);
-      const points = nodes.map((node) => {
-        const drift = reduced ? 0 : time * 0.00012;
-        return {
-          x: node.x * width + Math.sin(node.phase + drift * 8) * 12,
-          y: node.y * height + Math.cos(node.phase * 1.4 + drift * 7) * 10,
-        };
-      });
-
-      for (let i = 0; i < points.length; i += 1) {
-        for (let j = i + 1; j < points.length; j += 1) {
-          const dx = points[i].x - points[j].x;
-          const dy = points[i].y - points[j].y;
-          const distance = Math.hypot(dx, dy);
-          if (distance < 145) {
-            context.beginPath();
-            context.moveTo(points[i].x, points[i].y);
-            context.lineTo(points[j].x, points[j].y);
-            context.strokeStyle = `rgba(17,17,15,${(1 - distance / 145) * 0.2})`;
-            context.lineWidth = 0.7;
-            context.stroke();
-          }
-        }
-      }
-
-      points.forEach((point, index) => {
-        const proximity = Math.max(0, 1 - Math.hypot(point.x - pointer.x, point.y - pointer.y) / 180);
-        context.beginPath();
-        context.arc(point.x, point.y, 1.8 + proximity * 3.8, 0, Math.PI * 2);
-        context.fillStyle = index % 7 === 0 ? "#b5942b" : `rgba(17,17,15,${0.42 + proximity * 0.5})`;
-        context.fill();
-      });
-
-      if (!reduced) frame = requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-    window.addEventListener("resize", resize);
-    canvas.addEventListener("pointermove", move);
-    canvas.addEventListener("pointerleave", leave);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("resize", resize);
-      canvas.removeEventListener("pointermove", move);
-      canvas.removeEventListener("pointerleave", leave);
-    };
-  }, [reduced]);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    setActive(Math.min(2, Math.floor(latest * 3)));
+  });
 
   return (
-    <div className="signal-field" aria-hidden="true">
-      <canvas ref={canvasRef} />
-      <motion.div
-        className="signal-core"
-        drag={!reduced}
-        dragConstraints={{ left: -100, right: 100, top: -65, bottom: 65 }}
-        dragElastic={0.12}
-        whileHover={reduced ? undefined : { scale: 1.14 }}
-      />
+    <section className="value-sequence" ref={ref} aria-labelledby="value-sequence-title">
+      <div className="value-sequence-sticky">
+        <div className="value-sequence-head">
+          <h2 id="value-sequence-title">Find it.<br />Prove it.<br />Build it.</h2>
+          <p>One idea, moving from possibility to something your business can actually use.</p>
+        </div>
+        <div className="value-stage" aria-hidden="true">
+          <div className="value-track" />
+          <motion.div
+            className="value-orb"
+            animate={reduced ? undefined : {
+              left: `${10 + active * 40}%`,
+              rotate: active * 150,
+              scale: [1, 1.08, 1],
+              borderRadius: active === 0 ? "50%" : active === 1 ? "36% 64% 58% 42% / 61% 42% 58% 39%" : "18%",
+            }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span>{active + 1}</span>
+          </motion.div>
+          {valueSteps.map((step, index) => <span className={`value-node${index === active ? " active" : ""}`} style={{ left: `${10 + index * 40}%` }} key={step.title} />)}
+        </div>
+        <div className="value-steps">
+          {valueSteps.map((step, index) => (
+            <motion.article className={index === active ? "active" : ""} animate={{ opacity: index === active ? 1 : 0.28, y: index === active ? 0 : 10 }} key={step.title}>
+              <span>{step.note}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const integrationSteps = [
+  { number: "01", title: "Listen", text: "We sit with the people who know the work, map the messy bits, and find the opportunity hiding in plain sight.", output: "A sharper problem" },
+  { number: "02", title: "Shape", text: "We pressure-test value, data, risk, and adoption before anyone falls in love with the technology.", output: "A credible case" },
+  { number: "03", title: "Integrate", text: "We build around your systems and safeguards, so the solution feels native to the business—not bolted on.", output: "A working system" },
+  { number: "04", title: "Evolve", text: "We watch how it performs in the real world, learn from your team, and keep turning useful into indispensable.", output: "Compounding value" },
+];
+
+export function IntegrationTimeline() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 72%", "end 55%"] });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => setActive(Math.min(3, Math.floor(latest * 4))));
+
+  return (
+    <div className="integration-timeline" ref={ref}>
+      <div className="timeline-rail" aria-hidden="true"><motion.span style={{ scaleY: progress }} /></div>
+      {integrationSteps.map((step, index) => (
+        <motion.article className={`integration-step${index <= active ? " active" : ""}`} key={step.number}>
+          <span className="integration-number">{step.number}</span>
+          <div><h3>{step.title}</h3><p>{step.text}</p></div>
+          <strong>{step.output}</strong>
+        </motion.article>
+      ))}
     </div>
   );
 }

@@ -24,8 +24,11 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /We’re your next/);
   assert.match(html, /AI Strategy Partner/);
   assert.match(html, /We find where AI can make or save the most money/);
-  assert.match(html, /AI becomes valuable when the work changes/);
+  assert.match(html, /Less AI theatre/);
+  assert.match(html, /Custom AI integrations for your specific needs/);
+  assert.match(html, /We know your business/);
   assert.doesNotMatch(html, /One connected client journey/i);
+  assert.doesNotMatch(html, /↗/);
   assert.doesNotMatch(html, /<em\b/i);
 });
 
@@ -43,7 +46,10 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(motion, /from "motion\/react"/);
   assert.match(motion, /useReducedMotion/);
-  assert.match(motion, /<canvas/);
+  assert.match(motion, /export function HeroOrb/);
+  assert.match(motion, /export function ValueSequence/);
+  assert.match(motion, /export function IntegrationTimeline/);
+  assert.match(motion, /useScroll/);
   assert.match(packageJson, /"motion":/);
   assert.match(layout, /og-v2\.png/);
 });

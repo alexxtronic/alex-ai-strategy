@@ -36,7 +36,7 @@ export function ContactForm() {
         <label className="honeypot" aria-hidden="true"><span>Website</span><input name="website" type="text" tabIndex={-1} autoComplete="off" /></label>
         <input name="entry.1647873135" type="hidden" value="Agreed to contact privacy note v2026-08-12" />
         <label className="consent"><input type="checkbox" required /><span>I agree that VITRUS may use these details to respond to my inquiry. I have not included confidential, regulated, or sensitive personal information.</span></label>
-        <button className="button button-dark form-submit" type="submit" disabled={submitted}>{submitted ? "Sending…" : "Request free intro call"}<span aria-hidden="true">↗</span></button>
+        <button className="button button-dark form-submit" type="submit" disabled={submitted}><span>{submitted ? "Sending…" : "Request free intro call"}</span></button>
         <p className="form-note">Responses are stored with Google Forms and a private Google Sheet. See the <Link href="/privacy">privacy note</Link>.</p>
       </form>
       <iframe name="contact-sink" title="Contact form response" className="form-sink" onLoad={() => submitted && setComplete(true)} />
