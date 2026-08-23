@@ -50,23 +50,29 @@ export function HeroTitle() {
 
 export function HeroCloud() {
   const reduced = useReducedMotion();
+  const morph = [
+    "46% 54% 58% 42% / 48% 42% 58% 52%",
+    "58% 42% 44% 56% / 40% 56% 44% 60%",
+    "42% 58% 52% 48% / 58% 44% 56% 42%",
+    "46% 54% 58% 42% / 48% 42% 58% 52%",
+  ];
 
   return (
     <div className="hero-cloud" aria-hidden="true">
       <motion.span
         className="cloud-shape cloud-shape-one"
-        animate={reduced ? undefined : { x: [0, 34, -18, 0], y: [0, -18, 22, 0], scale: [1, 1.08, .96, 1] }}
-        transition={reduced ? undefined : { duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduced ? undefined : { x: ["-8vw", "8vw", "-3vw", "-8vw"], y: ["2vh", "-6vh", "5vh", "2vh"], rotate: [-5, 7, -2, -5], scale: [.92, 1.08, .98, .92], borderRadius: morph }}
+        transition={reduced ? undefined : { duration: 16, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.span
         className="cloud-shape cloud-shape-two"
-        animate={reduced ? undefined : { x: [0, -30, 16, 0], y: [0, 24, -12, 0], scale: [1, .94, 1.06, 1] }}
-        transition={reduced ? undefined : { duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduced ? undefined : { x: ["7vw", "-9vw", "4vw", "7vw"], y: ["-3vh", "5vh", "-5vh", "-3vh"], rotate: [6, -8, 3, 6], scale: [1.06, .9, 1.04, 1.06], borderRadius: [...morph].reverse() }}
+        transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.span
         className="cloud-shape cloud-shape-three"
-        animate={reduced ? undefined : { rotate: [0, 18, -12, 0], scale: [1, 1.12, 1] }}
-        transition={reduced ? undefined : { duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        animate={reduced ? undefined : { x: ["-4vw", "9vw", "-7vw", "-4vw"], y: ["5vh", "-4vh", "2vh", "5vh"], rotate: [-8, 10, -4, -8], scale: [.96, 1.13, .9, .96], borderRadius: morph }}
+        transition={reduced ? undefined : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
     </div>
   );

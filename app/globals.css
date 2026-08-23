@@ -67,11 +67,12 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .hero-moon { position: absolute; inset: 0; }
 .hero-moon span { position: absolute; left: 11%; top: 38%; width: 23px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 6px var(--gold); }
 
-.hero-cloud { position: absolute; z-index: -1; inset: 14% 8% 3%; overflow: hidden; opacity: .38; filter: blur(2px); pointer-events: none; }
-.cloud-shape { position: absolute; display: block; border-radius: 50%; filter: blur(90px); mix-blend-mode: multiply; }
-.cloud-shape-one { width: 52%; height: 54%; left: 18%; top: 24%; background: rgba(217,204,145,.52); }
-.cloud-shape-two { width: 40%; height: 46%; right: 8%; top: 13%; background: rgba(181,148,43,.22); }
-.cloud-shape-three { width: 44%; height: 38%; left: 10%; bottom: 0; background: rgba(137,128,101,.15); }
+.hero-cloud { position: absolute; z-index: 1; inset: 3% 1% 0; overflow: hidden; opacity: .76; pointer-events: none; }
+.hero-cloud::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 26%, rgba(242,240,234,.2) 78%); }
+.cloud-shape { position: absolute; display: block; filter: blur(48px); mix-blend-mode: multiply; will-change: transform, border-radius; }
+.cloud-shape-one { width: 46%; height: 34%; left: 5%; top: 22%; background: rgba(226,201,86,.58); }
+.cloud-shape-two { width: 40%; height: 32%; right: 3%; top: 38%; background: rgba(181,148,43,.44); }
+.cloud-shape-three { width: 38%; height: 29%; left: 31%; bottom: 7%; background: rgba(113,105,79,.28); }
 
 .client-strip { min-height: 118px; overflow: hidden; display: flex; align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-bright); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); }
 .client-track { width: max-content; display: flex; align-items: center; animation: client-marquee 52s linear infinite reverse; }
@@ -345,8 +346,8 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   h1 { font-size: clamp(58px, 15vw, 92px); line-height: .84; }
   .hero-lede { margin-top: 7vh; font-size: 20px; }
   .hero-orb { width: 116vw; bottom: -25vw; opacity: .94; }
-  .hero-cloud { inset: 18% -24% 5%; opacity: .32; }
-  .cloud-shape { filter: blur(62px); }
+  .hero-cloud { inset: 8% -28% 2%; opacity: .64; }
+  .cloud-shape { filter: blur(42px); }
   .client-strip { min-height: 92px; }
   .client-logo { flex-basis: 140px; width: 140px; height: 42px; margin: 0 22px; }
   .section-light, .section-dark, .point-of-view, .work-section, .principles, .team-section { padding: 94px 22px; }
@@ -426,7 +427,7 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .hero-actions .button { min-width: 212px; }
   .hero-orb { width: 138vw; bottom: -30vw; }
-  .hero-cloud { inset: 22% -45% 7%; opacity: .29; }
+  .hero-cloud { inset: 10% -42% 4%; opacity: .58; }
   .hero-moon span { width: 18px; }
   .client-strip { min-height: 82px; }
   .client-logo { flex-basis: 118px; width: 118px; height: 36px; margin: 0 18px; }
