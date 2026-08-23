@@ -131,15 +131,24 @@ function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
     return () => cancelAnimationFrame(frame);
   }, [reduced, value, visible]);
 
-  return <span ref={ref}>{reduced ? value : current}{suffix}</span>;
+  return <span ref={ref}>{(reduced ? value : current).toLocaleString("en-US")}{suffix}</span>;
 }
 
 export function AnimatedStatistics() {
   return (
     <div className="statistics-grid">
-      <article><strong><CountUp value={1} suffix="+" /></strong><p>hour saved per day by 47% of surveyed people using GenAI at work</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a></article>
-      <article><strong><CountUp value={1} suffix="%" /></strong><p>of executives describe their company’s GenAI rollout as mature</p><a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work" target="_blank" rel="noreferrer">McKinsey, 2025</a></article>
-      <article><strong><CountUp value={52} /></strong><p>combined years of experience across the VITRUS team</p><span>One senior team throughout</span></article>
+      <article className="metric-card metric-card-hours">
+        <div className="metric-visual metric-workflow" aria-hidden="true">{[.36, .68, .48, .82, .57, .94].map((scale, index) => <motion.i key={index} animate={{ scaleX: [scale, 1, scale] }} transition={{ duration: 4.2 + index * .35, repeat: Infinity, ease: "easeInOut", delay: index * .16 }} />)}</div>
+        <strong><CountUp value={81} /></strong><p>average employee hours saved each week by automations we’ve built</p><span>VITRUS workflow averages</span>
+      </article>
+      <article className="metric-card metric-card-adoption">
+        <div className="metric-visual metric-network" aria-hidden="true"><motion.div animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => <i key={item} />)}</motion.div></div>
+        <strong><CountUp value={88} suffix="%" /></strong><p>of organizations report regular AI use in at least one business function</p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai/" target="_blank" rel="noreferrer">McKinsey, State of AI 2025</a>
+      </article>
+      <article className="metric-card metric-card-time">
+        <div className="metric-visual metric-time-rings" aria-hidden="true"><motion.i animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} /><motion.i animate={{ rotate: -360 }} transition={{ duration: 19, repeat: Infinity, ease: "linear" }} /></div>
+        <strong><CountUp value={47} suffix="%" /></strong><p>of surveyed GenAI users save at least six hours every week</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a>
+      </article>
     </div>
   );
 }
@@ -148,36 +157,44 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   const reduced = useReducedMotion();
 
   if (variant === "visibility") {
+    const monitors = ["Model coverage", "Prompt groups", "Mention analysis", "Evidence log"];
     return (
-      <div className="case-art case-art-visibility" aria-hidden="true">
-        <motion.div className="case-orbit case-orbit-outer" animate={reduced ? undefined : { rotate: 360 }} transition={reduced ? undefined : { duration: 28, repeat: Infinity, ease: "linear" }}>
-          {[0, 1, 2, 3, 4].map((item) => <span key={item} />)}
-        </motion.div>
-        <motion.div className="case-orbit case-orbit-inner" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "linear" }}>
-          {[0, 1, 2].map((item) => <span key={item} />)}
-        </motion.div>
-        <motion.div className="case-art-core" whileHover={reduced ? undefined : { scale: 1.08, rotate: 8 }} transition={{ duration: 0.5 }}><span>1K</span></motion.div>
+      <div className="case-art case-art-visibility dashboard-frame" aria-hidden="true">
+        <div className="llm-dashboard">
+          <div className="dashboard-header"><span>AI visibility monitor</span><span className="dashboard-live"><i />Automatic</span></div>
+          <div className="dashboard-impact"><strong><CountUp value={3449} /></strong><p>hours saved through automatic LLM monitoring</p></div>
+          <div className="monitor-grid">
+            {monitors.map((label, index) => <div key={label}><span>{label}</span><motion.i initial={reduced ? false : { scaleX: .12 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.1, delay: index * .14, ease: [0.16, 1, 0.3, 1] }} /></div>)}
+          </div>
+          <div className="monitor-feed">
+            {["01", "02", "03", "04"].map((item, index) => <div key={item}><span>{item}</span><b /><motion.i animate={reduced ? undefined : { scaleX: [.24, .94, .52, .24] }} transition={reduced ? undefined : { duration: 4.6 + index * .45, delay: index * .18, repeat: Infinity, ease: "easeInOut" }} /></div>)}
+          </div>
+        </div>
+        <motion.div className="dashboard-scan" animate={reduced ? undefined : { y: [0, 430, 0] }} transition={reduced ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }} />
       </div>
     );
   }
 
-  const heights = [38, 57, 47, 72, 61, 84, 68, 92];
+  const channels = [
+    { name: "Facebook", value: 842 },
+    { name: "Instagram", value: 516 },
+    { name: "Blogs", value: 227 },
+  ];
   return (
-    <div className="case-art case-art-intelligence" aria-hidden="true">
-      <div className="case-wave">
-        {heights.map((height, index) => (
-          <motion.span
-            key={`${height}-${index}`}
-            initial={reduced ? false : { scaleY: 0 }}
-            whileInView={reduced ? undefined : { scaleY: 1 }}
-            viewport={{ once: true, amount: 0.45 }}
-            transition={{ duration: 0.9, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
-            style={{ height: `${height}%` }}
-          />
-        ))}
+    <div className="case-art case-art-intelligence report-frame" aria-hidden="true">
+      <div className="report-dashboard">
+        <div className="dashboard-header report-header"><span>Sample reporting view</span><span className="dashboard-live"><i />Live</span></div>
+        <div className="channel-totals">
+          {channels.map((channel, index) => <div key={channel.name}><span>{channel.name}</span><strong><CountUp value={channel.value} /></strong><small>Total mentions</small><motion.i initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .9, delay: index * .13, ease: [0.16, 1, 0.3, 1] }} /></div>)}
+        </div>
+        <div className="sentiment-report">
+          <div><span>User sentiment</span><strong><CountUp value={68} suffix="%" /></strong><small>Positive</small></div>
+          <div className="sentiment-bars">
+            {[68, 22, 10].map((value, index) => <motion.i key={value} initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.1, delay: .25 + index * .12, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${value}%` }} />)}
+          </div>
+          <div className="sentiment-legend"><span>Positive 68%</span><span>Neutral 22%</span><span>Negative 10%</span></div>
+        </div>
       </div>
-      <motion.div className="case-scan" animate={reduced ? undefined : { y: [0, 250, 0] }} transition={reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" }} />
-      <div className="case-evidence-chip"><span />Evidence stays attached</div>
     </div>
   );
 }

@@ -4,20 +4,20 @@ import { SiteHeader } from "./components/SiteHeader";
 import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal } from "./components/ExperienceMotion";
 
 const clients = [
-  { name: "Specsavers", image: "/clients/specsavers.png" },
-  { name: "Boligsiden", image: "/clients/boligsiden.png" },
-  { name: "Global Citizen", image: "/clients/global-citizen.png" },
-  { name: "LEMAN", image: "/clients/leman.png" },
-  { name: "Empire State Realty Trust", image: "/clients/empire-state-realty-trust.png" },
-  { name: "Scaleup Finance", image: "/clients/scaleup-finance.webp" },
-  { name: "Humana", image: "/clients/humana.png" },
-  { name: "Candy King", image: "/clients/candy-king.png" },
+  { name: "Specsavers", slug: "specsavers", image: "/clients/specsavers.png" },
+  { name: "Boligsiden", slug: "boligsiden", image: "/clients/boligsiden.png" },
+  { name: "Global Citizen", slug: "global-citizen", image: "/clients/global-citizen.png" },
+  { name: "LEMAN", slug: "leman", image: "/clients/leman.png" },
+  { name: "Empire State Realty Trust", slug: "empire-state", image: "/clients/empire-state-realty-trust.png" },
+  { name: "Scaleup Finance", slug: "scaleup-finance", image: "/clients/scaleup-finance.webp" },
+  { name: "Humana", slug: "humana", image: "/clients/humana.png" },
+  { name: "Candy King", slug: "candy-king", image: "/clients/candy-king.png" },
 ];
 
 const team = [
   { name: "Alexander D'Amore", role: "Founder & CEO", image: "/alexander-damore.jpg" },
-  { name: "André Dimmer", role: "Director of Integration", image: "/andre-dimmer.jpg" },
-  { name: "Kristian Hampsted", role: "Deliverables Lead", image: "/kristian-hampsted.jpg" },
+  { name: "André Rosario", role: "Senior Consultant, AI & CRM", image: "/andre-dimmer.jpg" },
+  { name: "Kristian Hansen", role: "Advisor", image: "/kristian-hampsted.jpg" },
 ];
 
 export default function Home() {
@@ -32,14 +32,14 @@ export default function Home() {
           <Reveal className="hero-lede-wrap" delay={0.3}>
             <p className="hero-lede">We find where AI can make or save the most money, quantify the opportunity, and stay to build and improve what matters.</p>
           </Reveal>
-          <div className="hero-actions"><a className="button button-dark" href="/contact"><span>Start a conversation</span></a></div>
+          <div className="hero-actions"><a className="button button-dark" href="/contact"><span>Let’s Chat</span></a></div>
         </div>
       </section>
 
       <section className="client-strip" aria-label="Selected past clients">
         <div className="client-track">
           {[...clients, ...clients].map((client, index) => (
-            <div className="client-logo" aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
+            <div className={`client-logo client-logo-${client.slug}`} aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
               <Image src={client.image} alt={index < clients.length ? client.name : ""} fill sizes="190px" />
             </div>
           ))}
@@ -61,10 +61,10 @@ export default function Home() {
         <div className="case-grid">
           <Reveal>
             <article className="case-card">
-              <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /><div className="case-client-logo"><Image src="/clients/boligsiden.png" alt="Boligsiden" fill sizes="220px" /></div></div>
-              <div className="case-result"><strong>≈ 1,000</strong><p>controlled prompt results across multiple AI models</p></div>
+              <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /></div>
+              <div className="case-result"><strong>3,449</strong><p>hours saved through automatic LLM monitoring</p></div>
               <h3>Turning AI visibility into a benchmark for Boligsiden.</h3>
-              <p className="case-summary">Boligsiden needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. The result was a repeatable GEO and AEO baseline surfaced in a custom dashboard.</p>
+              <p className="case-summary">Boligsiden needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. Automatic monitoring turned that work into a repeatable GEO and AEO benchmark while saving 3,449 hours.</p>
               <p className="case-type">Boligsiden · Multi-model AI visibility</p>
             </article>
           </Reveal>
@@ -73,15 +73,15 @@ export default function Home() {
               <CaseStudyVisual variant="intelligence" />
               <div className="case-result"><strong>Live</strong><p>source evidence kept beside every signal</p></div>
               <h3>Making web sentiment easier to trust.</h3>
-              <p className="case-summary">For a global enterprise brand, we helped create an AI-enabled sentiment dashboard that kept the underlying web evidence beside the model-assisted analysis—giving teams a clearer signal without turning the system into a black box.</p>
-              <p className="case-type">Enterprise brand intelligence · Evidence systems</p>
+              <p className="case-summary">For a global enterprise brand, we helped create an AI-enabled report tracking total Facebook, Instagram, and blog mentions alongside user sentiment, while keeping the underlying evidence beside the model-assisted analysis.</p>
+              <p className="case-type">Enterprise brand intelligence · Social and web sentiment</p>
             </article>
           </Reveal>
         </div>
       </section>
 
       <section className="team-section section-light" id="team">
-        <div className="section-intro compact-intro"><Reveal><h2>The people you meet are the people who build.</h2></Reveal><Reveal delay={0.1}><p>Commercial direction, integration, and delivery stay connected through one senior team with 52 years of combined experience.</p></Reveal></div>
+        <div className="section-intro compact-intro"><Reveal><h2>A team you can trust.</h2></Reveal><Reveal delay={0.1}><p>Strategy, AI and CRM integration, and advisory stay connected through one experienced team.</p></Reveal></div>
         <div className="team-grid">{team.map((person, index) => <Reveal key={person.name} delay={index * 0.08}><article className="team-card"><div className="portrait-wrap"><Image src={person.image} alt={person.name} fill sizes="(max-width: 760px) 100vw, 33vw" /></div><h3>{person.name}</h3><p>{person.role}</p></article></Reveal>)}</div>
       </section>
 
