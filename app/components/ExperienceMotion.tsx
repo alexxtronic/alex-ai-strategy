@@ -173,3 +173,41 @@ export function DataBars() {
     </div>
   );
 }
+
+export function CaseStudyVisual({ variant }: { variant: "visibility" | "intelligence" }) {
+  const reduced = useReducedMotion();
+
+  if (variant === "visibility") {
+    return (
+      <div className="case-art case-art-visibility" aria-hidden="true">
+        <motion.div className="case-orbit case-orbit-outer" animate={reduced ? undefined : { rotate: 360 }} transition={reduced ? undefined : { duration: 28, repeat: Infinity, ease: "linear" }}>
+          {[0, 1, 2, 3, 4].map((item) => <span key={item} />)}
+        </motion.div>
+        <motion.div className="case-orbit case-orbit-inner" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "linear" }}>
+          {[0, 1, 2].map((item) => <span key={item} />)}
+        </motion.div>
+        <motion.div className="case-art-core" whileHover={reduced ? undefined : { scale: 1.08, rotate: 8 }} transition={{ duration: 0.5 }}><span>1K</span></motion.div>
+      </div>
+    );
+  }
+
+  const heights = [38, 57, 47, 72, 61, 84, 68, 92];
+  return (
+    <div className="case-art case-art-intelligence" aria-hidden="true">
+      <div className="case-wave">
+        {heights.map((height, index) => (
+          <motion.span
+            key={`${height}-${index}`}
+            initial={reduced ? false : { scaleY: 0 }}
+            whileInView={reduced ? undefined : { scaleY: 1 }}
+            viewport={{ once: true, amount: 0.45 }}
+            transition={{ duration: 0.9, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+            style={{ height: `${height}%` }}
+          />
+        ))}
+      </div>
+      <motion.div className="case-scan" animate={reduced ? undefined : { y: [0, 250, 0] }} transition={reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" }} />
+      <div className="case-evidence-chip"><span />Evidence stays attached</div>
+    </div>
+  );
+}

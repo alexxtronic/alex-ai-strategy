@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { DataBars, HeroOrb, HeroTitle, IntegrationTimeline, Reveal, ValueSequence } from "./components/ExperienceMotion";
+import { CaseStudyVisual, HeroOrb, HeroTitle, IntegrationTimeline, Reveal, ValueSequence } from "./components/ExperienceMotion";
 
 const approach = [
   { title: "Find", text: "We get close to the work and find the friction worth fixing." },
@@ -55,11 +55,27 @@ export default function Home() {
         <IntegrationTimeline />
       </section>
 
-      <section className="work-section section-dark" id="work">
-        <div className="section-intro work-intro"><Reveal><h2>We know your business.</h2></Reveal><Reveal delay={0.1}><p>Don’t just take our word for it. Our clients tend to stick around when they see what thoughtful AI can do.</p></Reveal></div>
-        <div className="work-grid">
-          <Reveal><article className="work-card work-card-primary"><h3>Making AI visibility measurable.</h3><p>A controlled GEO/AEO evaluation system spanning n8n, edge functions, agentic mention analysis, and a custom dashboard.</p><strong className="work-number">≈ 1,000</strong><p className="work-number-copy">prompt results, without losing the thread</p></article></Reveal>
-          <Reveal delay={0.12}><article className="work-card"><h3>Brand intelligence you can inspect.</h3><p>An AI-enabled view of web sentiment that keeps the source evidence right beside the analysis.</p><DataBars /></article></Reveal>
+      <section className="case-section section-light" id="work">
+        <div className="case-section-intro"><Reveal><h2>We know your business.</h2></Reveal><Reveal delay={0.1}><div><p>Don’t just take our word for it. Our clients tend to stick around when they see what thoughtful AI can do.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
+        <div className="case-grid">
+          <Reveal>
+            <article className="case-card">
+              <CaseStudyVisual variant="visibility" />
+              <div className="case-result"><strong>≈ 1,000</strong><p>prompt results across multiple models</p></div>
+              <h3>Making AI visibility measurable.</h3>
+              <p className="case-summary">A controlled GEO and AEO evaluation system spanning automated workflows, edge functions, agentic mention analysis, and a custom dashboard.</p>
+              <p className="case-type">AI visibility and decision intelligence</p>
+            </article>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <article className="case-card case-card-offset">
+              <CaseStudyVisual variant="intelligence" />
+              <div className="case-result"><strong>Live</strong><p>evidence beside every signal</p></div>
+              <h3>Brand intelligence you can inspect.</h3>
+              <p className="case-summary">An AI-enabled view of web sentiment that keeps the source evidence beside the analysis, so teams can move quickly without guessing.</p>
+              <p className="case-type">Brand intelligence and evidence systems</p>
+            </article>
+          </Reveal>
         </div>
       </section>
 
