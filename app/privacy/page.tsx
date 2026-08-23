@@ -13,7 +13,7 @@ export default function PrivacyPage() {
   return (
     <main>
       <SiteHeader compact />
-      <section className="page-hero legal-hero"><p className="eyebrow"><span>Privacy note</span><span>Last reviewed August 2026</span></p><h1>Clear handling of<br /><em>inquiry data.</em></h1></section>
+      <section className="page-hero legal-hero"><h1>Clear handling of inquiry data.</h1></section>
       <article className="legal-body">
         <section><span>01</span><div><h2>What the inquiry form collects</h2><p>The form asks for your name, email address, phone number, and—if you choose to provide them—your company, title, and a short description of the business problem you want to discuss.</p></div></section>
         <section><span>02</span><div><h2>How the information is used</h2><p>VITRUS uses the submitted details to review and respond to your inquiry, prepare for an introductory conversation, and decide whether a deeper opportunity assessment may be useful.</p></div></section>

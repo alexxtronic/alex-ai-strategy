@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <a className="footer-wordmark" href="/">VITRUS</a>
-      <div className="footer-positioning"><span>Applied AI consultancy</span><p>Strategy, implementation, and improvement—connected by the business case.</p></div>
-      <div className="footer-nav"><a href="/#approach">Approach</a><a href="/#capabilities">Capabilities</a><a href="/#work">Work</a><a href="/ai-roi-calculator">ROI calculator</a></div>
-      <div className="footer-meta"><span>© 2026 VITRUS</span><a href="/privacy">Privacy</a></div>
+      <Link className="footer-wordmark" href="/">VITRUS</Link>
+      <div className="footer-positioning"><span>AI strategy and implementation</span><p>We find the opportunity, prove the case, and build what matters.</p></div>
+      <div className="footer-nav"><Link href="/#approach">Approach</Link><Link href="/#capabilities">Capabilities</Link><Link href="/#work">Work</Link><Link href="/ai-roi-calculator">ROI calculator</Link></div>
+      <div className="footer-meta"><span>© 2026 VITRUS</span><Link href="/privacy">Privacy</Link></div>
     </footer>
   );
 }
