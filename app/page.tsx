@@ -1,13 +1,17 @@
 import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { CaseStudyVisual, HeroOrb, HeroTitle, IntegrationTimeline, Reveal, ValueSequence } from "./components/ExperienceMotion";
+import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal } from "./components/ExperienceMotion";
 
-const approach = [
-  { title: "Find", text: "We get close to the work and find the friction worth fixing." },
-  { title: "Prove", text: "We put numbers around the opportunity before anyone makes a big bet." },
-  { title: "Build", text: "We connect the right system to the way your business already works." },
-  { title: "Improve", text: "We stay close, watch what happens, and keep making it better." },
+const clients = [
+  { name: "Specsavers", image: "/clients/specsavers.png" },
+  { name: "Boligsiden", image: "/clients/boligsiden.png" },
+  { name: "Global Citizen", image: "/clients/global-citizen.png" },
+  { name: "LEMAN", image: "/clients/leman.png" },
+  { name: "Empire State Realty Trust", image: "/clients/empire-state-realty-trust.png" },
+  { name: "Scaleup Finance", image: "/clients/scaleup-finance.webp" },
+  { name: "Humana", image: "/clients/humana.png" },
+  { name: "Candy King", image: "/clients/candy-king.png" },
 ];
 
 const team = [
@@ -22,73 +26,66 @@ export default function Home() {
       <SiteHeader />
 
       <section className="hero" id="top" aria-labelledby="hero-title">
+        <HeroCloud />
         <div className="hero-copy">
           <HeroTitle />
-          <Reveal className="hero-lede-wrap" delay={0.35}>
+          <Reveal className="hero-lede-wrap" delay={0.3}>
             <p className="hero-lede">We find where AI can make or save the most money, quantify the opportunity, and stay to build and improve what matters.</p>
           </Reveal>
-          <div className="hero-actions">
-            <a className="button button-dark" href="/contact"><span>Start a conversation</span></a>
-          </div>
-        </div>
-        <HeroOrb />
-      </section>
-
-      <section className="point-of-view section-dark">
-        <div className="pov-grid">
-          <Reveal><h2>Less AI theatre.<br />More useful magic.</h2></Reveal>
-          <Reveal className="pov-copy" delay={0.12}><p>The model is rarely the hard part.</p><p>The real craft is choosing the right problem, proving it matters, and making the new way of working feel natural.</p></Reveal>
+          <div className="hero-actions"><a className="button button-dark" href="/contact"><span>Start a conversation</span></a></div>
         </div>
       </section>
 
-      <section className="approach section-light" id="approach">
-        <div className="section-intro"><Reveal><h2>From friction<br />to value.</h2></Reveal><Reveal delay={0.1}><p>No mysterious handoffs. The same senior team follows the idea from first conversation to everyday use.</p></Reveal></div>
-        <div className="approach-list">
-          {approach.map((item, index) => <Reveal key={item.title} delay={index * 0.045}><article className="approach-row"><h3>{item.title}</h3><p>{item.text}</p></article></Reveal>)}
+      <section className="client-strip" aria-label="Selected past clients">
+        <div className="client-track">
+          {[...clients, ...clients].map((client, index) => (
+            <div className="client-logo" aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
+              <Image src={client.image} alt={index < clients.length ? client.name : ""} fill sizes="190px" />
+            </div>
+          ))}
         </div>
       </section>
 
-      <ValueSequence />
+      <section className="process-section section-light" id="process">
+        <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can make the largest impact—and turns that opportunity into something your team can use.</p></Reveal></div>
+        <ProcessSystem />
+      </section>
 
-      <section className="capabilities section-light" id="capabilities">
-        <div className="section-intro integration-intro"><Reveal><h2>Custom AI integrations for your specific needs.</h2></Reveal><Reveal delay={0.1}><p>We’ve worked with multiple enterprise brands to integrate AI solutions strategically. Our four-step system keeps the ambition bold and the implementation grounded.</p></Reveal></div>
-        <IntegrationTimeline />
+      <section className="statistics-section section-dark" id="proof">
+        <div className="statistics-intro"><Reveal><h2>The opportunity is real.<br />So is the gap.</h2></Reveal><Reveal delay={0.1}><p>AI is already saving time. Very few companies have turned it into a mature operating advantage. That space between adoption and impact is where we work.</p></Reveal></div>
+        <AnimatedStatistics />
       </section>
 
       <section className="case-section section-light" id="work">
-        <div className="case-section-intro"><Reveal><h2>We know your business.</h2></Reveal><Reveal delay={0.1}><div><p>Don’t just take our word for it. Our clients tend to stick around when they see what thoughtful AI can do.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
+        <div className="case-section-intro"><Reveal><h2>Useful AI, doing real work.</h2></Reveal><Reveal delay={0.1}><div><p>Selected systems built around a concrete business question, with the evidence kept close enough to trust.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
         <div className="case-grid">
           <Reveal>
             <article className="case-card">
-              <CaseStudyVisual variant="visibility" />
-              <div className="case-result"><strong>≈ 1,000</strong><p>prompt results across multiple models</p></div>
-              <h3>Making AI visibility measurable.</h3>
-              <p className="case-summary">A controlled GEO and AEO evaluation system spanning automated workflows, edge functions, agentic mention analysis, and a custom dashboard.</p>
-              <p className="case-type">AI visibility and decision intelligence</p>
+              <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /><div className="case-client-logo"><Image src="/clients/boligsiden.png" alt="Boligsiden" fill sizes="220px" /></div></div>
+              <div className="case-result"><strong>≈ 1,000</strong><p>controlled prompt results across multiple AI models</p></div>
+              <h3>Turning AI visibility into a benchmark for Boligsiden.</h3>
+              <p className="case-summary">Boligsiden needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. The result was a repeatable GEO and AEO baseline surfaced in a custom dashboard.</p>
+              <p className="case-type">Boligsiden · Multi-model AI visibility</p>
             </article>
           </Reveal>
           <Reveal delay={0.1}>
             <article className="case-card case-card-offset">
               <CaseStudyVisual variant="intelligence" />
-              <div className="case-result"><strong>Live</strong><p>evidence beside every signal</p></div>
-              <h3>Brand intelligence you can inspect.</h3>
-              <p className="case-summary">An AI-enabled view of web sentiment that keeps the source evidence beside the analysis, so teams can move quickly without guessing.</p>
-              <p className="case-type">Brand intelligence and evidence systems</p>
+              <div className="case-result"><strong>Live</strong><p>source evidence kept beside every signal</p></div>
+              <h3>Making web sentiment easier to trust.</h3>
+              <p className="case-summary">For a global enterprise brand, we helped create an AI-enabled sentiment dashboard that kept the underlying web evidence beside the model-assisted analysis—giving teams a clearer signal without turning the system into a black box.</p>
+              <p className="case-type">Enterprise brand intelligence · Evidence systems</p>
             </article>
           </Reveal>
         </div>
       </section>
 
-      <section className="principles section-light">
-        <div className="principles-grid"><Reveal><h2>Serious systems.<br />No serious faces required.</h2></Reveal><div className="principle-list"><Reveal><div><p><strong>No favourite hammer.</strong> We choose the technology after we understand the job.</p></div></Reveal><Reveal delay={0.06}><div><p><strong>Humans stay in the loop.</strong> Important decisions always have a clear owner and an escape hatch.</p></div></Reveal><Reveal delay={0.12}><div><p><strong>The numbers stay visible.</strong> Value, cost, risk, and responsibility never disappear into a slide deck.</p></div></Reveal><Reveal delay={0.18}><div><p><strong>Launch is the middle.</strong> The real work is helping the system earn a place in everyday operations.</p></div></Reveal></div></div>
-      </section>
-
       <section className="team-section section-light" id="team">
-        <div className="section-intro compact-intro"><Reveal><h2>The people you meet are the people who build.</h2></Reveal><Reveal delay={0.1}><p>A small senior team, close to the detail from first idea to finished system.</p></Reveal></div>
+        <div className="section-intro compact-intro"><Reveal><h2>The people you meet are the people who build.</h2></Reveal><Reveal delay={0.1}><p>Commercial direction, integration, and delivery stay connected through one senior team with 52 years of combined experience.</p></Reveal></div>
         <div className="team-grid">{team.map((person, index) => <Reveal key={person.name} delay={index * 0.08}><article className="team-card"><div className="portrait-wrap"><Image src={person.image} alt={person.name} fill sizes="(max-width: 760px) 100vw, 33vw" /></div><h3>{person.name}</h3><p>{person.role}</p></article></Reveal>)}</div>
       </section>
 
-      <section className="final-cta section-dark"><Reveal><h2>Bring us the problem everyone keeps stepping around.</h2></Reveal><Reveal delay={0.12}><div><p>We’ll tell you if AI belongs in the answer—and what a smart first move looks like.</p><a className="button button-gold" href="/contact"><span>Talk to us</span></a></div></Reveal></section>
+      <section className="final-cta section-dark"><Reveal><h2>Let’s find your highest-impact AI opportunity.</h2></Reveal><Reveal delay={0.12}><div><p>Give us 30 minutes with the business problem. One of our specialists will help you identify where AI could make the largest difference—and what a smart first step looks like.</p><a className="button button-gold" href="/contact"><span>Request 30 minutes</span></a></div></Reveal></section>
       <SiteFooter />
     </main>
   );

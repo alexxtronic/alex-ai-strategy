@@ -8,9 +8,9 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
         <Image src="/vitrus-logo-black.png" alt="VITRUS" width={2172} height={724} priority />
       </Link>
       <nav aria-label="Primary navigation">
-        <Link href="/#approach">Approach</Link>
-        <Link href="/#capabilities">Capabilities</Link>
-        <Link href="/#work">Work</Link>
+        <Link href="/#process">Process</Link>
+        <Link href="/#proof">Proof</Link>
+        <Link href="/#work">Case studies</Link>
         <Link href="/ai-roi-calculator">ROI calculator</Link>
         <Link className="nav-cta" href="/contact">Talk to us</Link>
       </nav>

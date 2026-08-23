@@ -24,9 +24,11 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /We’re your next/);
   assert.match(html, /AI Strategy Partner/);
   assert.match(html, /We find where AI can make or save the most money/);
-  assert.match(html, /Less AI theatre/);
-  assert.match(html, /Custom AI integrations for your specific needs/);
-  assert.match(html, /We know your business/);
+  assert.match(html, /AI solutions as unique as your company/);
+  assert.match(html, /The opportunity is real/);
+  assert.match(html, /Boligsiden/);
+  assert.match(html, /52 years of combined experience/);
+  assert.doesNotMatch(html, /Find it/);
   assert.doesNotMatch(html, /One connected client journey/i);
   assert.doesNotMatch(html, /↗/);
   assert.doesNotMatch(html, /<em\b/i);
@@ -46,10 +48,22 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(motion, /from "motion\/react"/);
   assert.match(motion, /useReducedMotion/);
-  assert.match(motion, /export function HeroOrb/);
-  assert.match(motion, /export function ValueSequence/);
-  assert.match(motion, /export function IntegrationTimeline/);
-  assert.match(motion, /useScroll/);
+  assert.match(motion, /export function HeroCloud/);
+  assert.match(motion, /export function ProcessSystem/);
+  assert.match(motion, /export function AnimatedStatistics/);
+  assert.match(motion, /requestAnimationFrame/);
   assert.match(packageJson, /"motion":/);
   assert.match(layout, /og-v2\.png/);
+});
+
+test("server-renders the focused 30 minute contact page", async () => {
+  const response = await render("/contact");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /We’re yours for/);
+  assert.match(html, /30 minutes/);
+  assert.match(html, /Request a free 30 minute AI readiness call with one of our experts today\./);
+  assert.match(html, /Request 30 minutes/);
+  assert.doesNotMatch(html, /What happens next/);
 });

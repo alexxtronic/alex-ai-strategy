@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 
 export function Reveal({
   children,
@@ -48,128 +48,92 @@ export function HeroTitle() {
   );
 }
 
-export function HeroOrb() {
+export function HeroCloud() {
   const reduced = useReducedMotion();
 
   return (
-    <div className="hero-orb" aria-hidden="true">
-      <div className="hero-orbit hero-orbit-one" />
-      <div className="hero-orbit hero-orbit-two" />
-      <motion.div
-        className="hero-blob"
-        animate={reduced ? undefined : {
-          rotate: 360,
-          borderRadius: ["43% 57% 68% 32% / 48% 35% 65% 52%", "66% 34% 38% 62% / 35% 58% 42% 65%", "43% 57% 68% 32% / 48% 35% 65% 52%"],
-        }}
-        transition={reduced ? undefined : { rotate: { duration: 24, repeat: Infinity, ease: "linear" }, borderRadius: { duration: 9, repeat: Infinity, ease: "easeInOut" } }}
-      >
-        <span />
-      </motion.div>
-      <motion.div className="hero-moon" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 18, repeat: Infinity, ease: "linear" }}>
-        <span />
-      </motion.div>
+    <div className="hero-cloud" aria-hidden="true">
+      <motion.span
+        className="cloud-shape cloud-shape-one"
+        animate={reduced ? undefined : { x: [0, 34, -18, 0], y: [0, -18, 22, 0], scale: [1, 1.08, .96, 1] }}
+        transition={reduced ? undefined : { duration: 20, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="cloud-shape cloud-shape-two"
+        animate={reduced ? undefined : { x: [0, -30, 16, 0], y: [0, 24, -12, 0], scale: [1, .94, 1.06, 1] }}
+        transition={reduced ? undefined : { duration: 24, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="cloud-shape cloud-shape-three"
+        animate={reduced ? undefined : { rotate: [0, 18, -12, 0], scale: [1, 1.12, 1] }}
+        transition={reduced ? undefined : { duration: 28, repeat: Infinity, ease: "easeInOut" }}
+      />
     </div>
   );
 }
 
-const valueSteps = [
-  { title: "Find it", text: "We get close to the work and spot the friction worth fixing.", note: "Opportunity" },
-  { title: "Prove it", text: "We turn instinct into a business case people can believe in.", note: "Confidence" },
-  { title: "Build it", text: "We make the useful thing, connect it, and help your team own it.", note: "Momentum" },
+const processSteps = [
+  { number: "01", title: "Listen", text: "We learn how the work really happens—not how the slide deck says it happens." },
+  { number: "02", title: "Locate", text: "We find the moments where AI can create the biggest gain in time, quality, or growth." },
+  { number: "03", title: "Build", text: "We create and connect a solution around your systems, data, and people." },
+  { number: "04", title: "Improve", text: "We measure what changes, learn from use, and keep making the system more valuable." },
 ];
 
-export function ValueSequence() {
-  const ref = useRef<HTMLElement>(null);
+export function ProcessSystem() {
   const reduced = useReducedMotion();
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    setActive(Math.min(2, Math.floor(latest * 3)));
-  });
 
   return (
-    <section className="value-sequence" ref={ref} aria-labelledby="value-sequence-title">
-      <div className="value-sequence-sticky">
-        <div className="value-sequence-head">
-          <h2 id="value-sequence-title">Find it.<br />Prove it.<br />Build it.</h2>
-          <p>One idea, moving from possibility to something your business can actually use.</p>
-        </div>
-        <div className="value-stage" aria-hidden="true">
-          <div className="value-track" />
-          <motion.div
-            className="value-orb"
-            animate={reduced ? undefined : {
-              left: `${10 + active * 40}%`,
-              rotate: active * 150,
-              scale: [1, 1.08, 1],
-              borderRadius: active === 0 ? "50%" : active === 1 ? "36% 64% 58% 42% / 61% 42% 58% 39%" : "18%",
-            }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span>{active + 1}</span>
-          </motion.div>
-          {valueSteps.map((step, index) => <span className={`value-node${index === active ? " active" : ""}`} style={{ left: `${10 + index * 40}%` }} key={step.title} />)}
-        </div>
-        <div className="value-steps">
-          {valueSteps.map((step, index) => (
-            <motion.article className={index === active ? "active" : ""} animate={{ opacity: index === active ? 1 : 0.28, y: index === active ? 0 : 10 }} key={step.title}>
-              <span>{step.note}</span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </motion.article>
-          ))}
-        </div>
+    <div className="process-system">
+      <div className="process-line" aria-hidden="true">
+        <motion.span initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .55 }} transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }} />
       </div>
-    </section>
-  );
-}
-
-const integrationSteps = [
-  { number: "01", title: "Listen", text: "We sit with the people who know the work, map the messy bits, and find the opportunity hiding in plain sight.", output: "A sharper problem" },
-  { number: "02", title: "Shape", text: "We pressure-test value, data, risk, and adoption before anyone falls in love with the technology.", output: "A credible case" },
-  { number: "03", title: "Integrate", text: "We build around your systems and safeguards, so the solution feels native to the business—not bolted on.", output: "A working system" },
-  { number: "04", title: "Evolve", text: "We watch how it performs in the real world, learn from your team, and keep turning useful into indispensable.", output: "Compounding value" },
-];
-
-export function IntegrationTimeline() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 72%", "end 55%"] });
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => setActive(Math.min(3, Math.floor(latest * 4))));
-
-  return (
-    <div className="integration-timeline" ref={ref}>
-      <div className="timeline-rail" aria-hidden="true"><motion.span style={{ scaleY: progress }} /></div>
-      {integrationSteps.map((step, index) => (
-        <motion.article className={`integration-step${index <= active ? " active" : ""}`} key={step.number}>
-          <span className="integration-number">{step.number}</span>
-          <div><h3>{step.title}</h3><p>{step.text}</p></div>
-          <strong>{step.output}</strong>
+      {processSteps.map((step, index) => (
+        <motion.article
+          key={step.number}
+          initial={reduced ? false : { opacity: 0, y: 24 }}
+          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: .45 }}
+          transition={{ duration: .7, delay: .2 + index * .11, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="process-node">{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
         </motion.article>
       ))}
     </div>
   );
 }
 
-export function DataBars() {
+function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const visible = useInView(ref, { once: true, amount: .7 });
   const reduced = useReducedMotion();
-  const values = [24, 41, 35, 58, 52, 73, 82];
+  const [current, setCurrent] = useState(0);
 
+  useEffect(() => {
+    if (!visible) return;
+    if (reduced) return;
+    let frame = 0;
+    const started = performance.now();
+    const tick = (time: number) => {
+      const progress = Math.min(1, (time - started) / 1350);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCurrent(Math.round(value * eased));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [reduced, value, visible]);
+
+  return <span ref={ref}>{reduced ? value : current}{suffix}</span>;
+}
+
+export function AnimatedStatistics() {
   return (
-    <div className="data-bars" aria-hidden="true">
-      {values.map((value, index) => (
-        <motion.span
-          key={value}
-          initial={reduced ? false : { scaleY: 0 }}
-          whileInView={reduced ? undefined : { scaleY: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, delay: index * 0.055, ease: [0.22, 1, 0.36, 1] }}
-          style={{ height: `${value}%` }}
-        />
-      ))}
+    <div className="statistics-grid">
+      <article><strong><CountUp value={1} suffix="+" /></strong><p>hour saved per day by 47% of surveyed people using GenAI at work</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a></article>
+      <article><strong><CountUp value={1} suffix="%" /></strong><p>of executives describe their company’s GenAI rollout as mature</p><a href="https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work" target="_blank" rel="noreferrer">McKinsey, 2025</a></article>
+      <article><strong><CountUp value={52} /></strong><p>combined years of experience across the VITRUS team</p><span>One senior team throughout</span></article>
     </div>
   );
 }
