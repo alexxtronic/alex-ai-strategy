@@ -38,6 +38,9 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /André Rosario/);
   assert.match(html, /Kristian Hansen/);
   assert.match(html, /Let’s Chat/);
+  assert.match(html, /aria-controls="mobile-menu"/);
+  assert.match(html, /Mobile navigation/);
+  assert.match(html, /ROI calculator/);
   assert.doesNotMatch(html, /Find it/);
   assert.doesNotMatch(html, /One connected client journey/i);
   assert.doesNotMatch(html, /↗/);
