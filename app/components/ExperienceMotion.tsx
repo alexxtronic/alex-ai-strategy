@@ -54,20 +54,34 @@ export function HeroCloud() {
   return (
     <div className="hero-cloud hero-future-field" aria-hidden="true">
       <motion.div
-        className="glass-lens glass-lens-one"
-        animate={reduced ? undefined : { rotate: 360 }}
-        transition={reduced ? undefined : { duration: 48, repeat: Infinity, ease: "linear" }}
+        className="corner-signals corner-signals-upper"
+        animate={reduced ? undefined : { rotate: [-2, 3, -2] }}
+        transition={reduced ? undefined : { duration: 20, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span className="glass-lens-rim" />
-        <i className="glass-lens-glint" />
+        <span />
+        <span />
+        <span />
+        <span />
+        <motion.i
+          className="corner-signal-node"
+          animate={reduced ? undefined : { rotate: 360 }}
+          transition={reduced ? undefined : { duration: 26, repeat: Infinity, ease: "linear" }}
+        />
       </motion.div>
       <motion.div
-        className="glass-lens glass-lens-two"
-        animate={reduced ? undefined : { rotate: -360 }}
-        transition={reduced ? undefined : { duration: 38, repeat: Infinity, ease: "linear" }}
+        className="corner-signals corner-signals-lower"
+        animate={reduced ? undefined : { rotate: [2, -3, 2] }}
+        transition={reduced ? undefined : { duration: 24, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span className="glass-lens-rim" />
-        <i className="glass-lens-glint" />
+        <span />
+        <span />
+        <span />
+        <span />
+        <motion.i
+          className="corner-signal-node"
+          animate={reduced ? undefined : { rotate: -360 }}
+          transition={reduced ? undefined : { duration: 31, repeat: Infinity, ease: "linear" }}
+        />
       </motion.div>
     </div>
   );

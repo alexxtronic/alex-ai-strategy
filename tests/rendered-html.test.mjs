@@ -72,8 +72,9 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /from "motion\/react"/);
   assert.match(motion, /useReducedMotion/);
   assert.match(motion, /export function HeroCloud/);
-  assert.match(motion, /glass-lens-one/);
-  assert.match(motion, /glass-lens-two/);
+  assert.match(motion, /corner-signals-upper/);
+  assert.match(motion, /corner-signals-lower/);
+  assert.doesNotMatch(motion, /glass-lens/);
   assert.doesNotMatch(motion, /future-orbit/);
   assert.match(motion, /export function ProcessSystem/);
   assert.match(motion, /}, 2000\);/);
