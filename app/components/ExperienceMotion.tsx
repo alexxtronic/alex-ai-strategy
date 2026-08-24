@@ -97,25 +97,51 @@ const processSteps = [
 
 export function ProcessSystem() {
   const reduced = useReducedMotion();
+  const processRef = useRef<HTMLDivElement>(null);
+  const visible = useInView(processRef, { amount: .35 });
+  const [activeStep, setActiveStep] = useState(-1);
+
+  useEffect(() => {
+    if (!visible || reduced) return;
+
+    const start = window.setTimeout(() => setActiveStep(0), 0);
+    const interval = window.setInterval(() => {
+      setActiveStep((current) => (current + 1) % processSteps.length);
+    }, 2500);
+
+    return () => {
+      window.clearTimeout(start);
+      window.clearInterval(interval);
+    };
+  }, [reduced, visible]);
 
   return (
-    <div className="process-system">
+    <div className="process-system" ref={processRef}>
       <div className="process-line" aria-hidden="true">
-        <motion.span initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .55 }} transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }} />
+        <motion.span animate={reduced ? undefined : { x: `${Math.max(activeStep, 0) * 100}%`, scaleX: activeStep >= 0 ? 1 : 0 }} transition={{ duration: .55, ease: [0.16, 1, 0.3, 1] }} />
       </div>
-      {processSteps.map((step, index) => (
-        <motion.article
-          key={step.number}
-          initial={reduced ? false : { opacity: 0, y: 24 }}
-          whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: .45 }}
-          transition={{ duration: .7, delay: .2 + index * .11, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <span className="process-node">{step.number}</span>
-          <h3>{step.title}</h3>
-          <p>{step.text}</p>
-        </motion.article>
-      ))}
+      {processSteps.map((step, index) => {
+        const active = activeStep === index;
+
+        return (
+          <motion.article
+            key={step.number}
+            aria-current={active ? "step" : undefined}
+            animate={reduced ? undefined : { opacity: active ? 1 : .38, y: active ? -9 : 0 }}
+            transition={{ duration: .5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.span
+              className="process-node"
+              animate={reduced ? undefined : active ? { scale: 1.22, backgroundColor: "#b5942b", borderColor: "#b5942b", boxShadow: "0 14px 32px rgba(181,148,43,.3)" } : { scale: 1, backgroundColor: "#f2f0ea", borderColor: "#11110f", boxShadow: "0 0 0 rgba(181,148,43,0)" }}
+              transition={{ duration: .45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {step.number}
+            </motion.span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </motion.article>
+        );
+      })}
     </div>
   );
 }
