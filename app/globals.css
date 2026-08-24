@@ -231,10 +231,10 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .monitor-grid i { display: block; height: 2px; margin-top: 15px; background: var(--gold); transform-origin: left; }
 .monitor-feed { padding: 12px 18px; display: grid; gap: 7px; }
 .monitor-feed > div { min-height: 32px; display: grid; grid-template-columns: 28px 8px 1fr; gap: 10px; align-items: center; }
-.monitor-feed span { color: #8c8981; font-size: 9px; }
+.llm-monitor-logo { width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid rgba(242,240,234,.14); border-radius: 50%; background: rgba(242,240,234,.035); }
+.llm-monitor-logo img { width: 14px; height: 14px; object-fit: contain; opacity: .72; }
 .monitor-feed b { width: 7px; aspect-ratio: 1; border-radius: 50%; background: #7d9c67; box-shadow: 0 0 0 4px rgba(125,156,103,.09); }
 .monitor-feed i { height: 4px; border-radius: 999px; background: linear-gradient(90deg, rgba(217,204,145,.14), rgba(217,204,145,.72)); transform-origin: left; }
-.dashboard-scan { position: absolute; z-index: 3; left: 3%; right: 3%; top: 10%; height: 1px; background: rgba(217,204,145,.7); box-shadow: 0 0 18px rgba(217,204,145,.7); }
 .report-frame { padding: clamp(18px, 2.4vw, 36px); background: var(--gold-pale); }
 .report-dashboard { border-color: rgba(17,17,15,.4); background: rgba(248,246,240,.88); color: var(--ink); }
 .report-header { border-bottom-color: rgba(17,17,15,.24); color: var(--muted); }

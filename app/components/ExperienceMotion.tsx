@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 
@@ -333,6 +334,12 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
 
   if (variant === "visibility") {
     const monitors = ["Model coverage", "Prompt groups", "Mention analysis", "Evidence log"];
+    const models = [
+      { name: "ChatGPT", icon: "/llm/chatgpt.svg" },
+      { name: "Claude", icon: "/llm/claude.svg" },
+      { name: "Gemini", icon: "/llm/gemini.svg" },
+      { name: "Perplexity", icon: "/llm/perplexity.svg" },
+    ];
     return (
       <div className="case-art case-art-visibility dashboard-frame" aria-hidden="true">
         <div className="llm-dashboard">
@@ -342,10 +349,9 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
             {monitors.map((label, index) => <div key={label}><span>{label}</span><motion.i initial={reduced ? false : { scaleX: .12 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.1, delay: index * .14, ease: [0.16, 1, 0.3, 1] }} /></div>)}
           </div>
           <div className="monitor-feed">
-            {["01", "02", "03", "04"].map((item, index) => <div key={item}><span>{item}</span><b /><motion.i animate={reduced ? undefined : { scaleX: [.24, .94, .52, .24] }} transition={reduced ? undefined : { duration: 4.6 + index * .45, delay: index * .18, repeat: Infinity, ease: "easeInOut" }} /></div>)}
+            {models.map((model, index) => <div key={model.name}><span className="llm-monitor-logo"><Image src={model.icon} alt="" width={18} height={18} /></span><b /><motion.i animate={reduced ? undefined : { scaleX: [.24, .94, .52, .24] }} transition={reduced ? undefined : { duration: 4.6 + index * .45, delay: index * .18, repeat: Infinity, ease: "easeInOut" }} /></div>)}
           </div>
         </div>
-        <motion.div className="dashboard-scan" animate={reduced ? undefined : { y: [0, 430, 0] }} transition={reduced ? undefined : { duration: 8, repeat: Infinity, ease: "easeInOut" }} />
       </div>
     );
   }

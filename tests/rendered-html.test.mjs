@@ -94,6 +94,11 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /Facebook/);
   assert.match(motion, /Instagram/);
   assert.match(motion, /Blog/);
+  assert.match(motion, /chatgpt\.svg/);
+  assert.match(motion, /claude\.svg/);
+  assert.match(motion, /gemini\.svg/);
+  assert.match(motion, /perplexity\.svg/);
+  assert.doesNotMatch(motion, /dashboard-scan/);
   assert.match(motion, /requestAnimationFrame/);
   assert.match(packageJson, /"motion":/);
   assert.match(layout, /og-v2\.png/);
