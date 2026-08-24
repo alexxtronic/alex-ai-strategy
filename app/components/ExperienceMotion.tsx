@@ -220,6 +220,115 @@ function SentimentLoop() {
   );
 }
 
+function ChannelLineChart({ values, delay, reduced }: { values: number[]; delay: number; reduced: boolean | null }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    let frame = 0;
+    let progress = reduced ? 1 : 0;
+    const started = performance.now() + delay;
+
+    const draw = (amount: number) => {
+      const bounds = canvas.getBoundingClientRect();
+      const width = Math.max(1, bounds.width);
+      const height = Math.max(1, bounds.height);
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+
+      const context = canvas.getContext("2d");
+      if (!context) return;
+      context.scale(ratio, ratio);
+      context.clearRect(0, 0, width, height);
+
+      const padding = { top: 7, right: 7, bottom: 11, left: 8 };
+      const chartWidth = width - padding.left - padding.right;
+      const chartHeight = height - padding.top - padding.bottom;
+      const maximum = Math.max(...values) * 1.16;
+      const points = values.map((value, index) => ({
+        x: padding.left + (index / (values.length - 1)) * chartWidth,
+        y: padding.top + chartHeight - (value / maximum) * chartHeight,
+      }));
+
+      context.lineWidth = 1;
+      context.strokeStyle = "rgba(17,17,15,.1)";
+      for (let index = 0; index <= 3; index += 1) {
+        const y = padding.top + (index / 3) * chartHeight;
+        context.beginPath();
+        context.moveTo(padding.left, y);
+        context.lineTo(width - padding.right, y);
+        context.stroke();
+      }
+
+      context.strokeStyle = "rgba(17,17,15,.2)";
+      context.beginPath();
+      context.moveTo(padding.left, padding.top);
+      context.lineTo(padding.left, height - padding.bottom);
+      context.lineTo(width - padding.right, height - padding.bottom);
+      context.stroke();
+
+      for (const point of points) {
+        context.beginPath();
+        context.moveTo(point.x, height - padding.bottom);
+        context.lineTo(point.x, height - padding.bottom + 3);
+        context.stroke();
+      }
+
+      const segmentProgress = amount * (points.length - 1);
+      const completeSegments = Math.floor(segmentProgress);
+      context.beginPath();
+      context.moveTo(points[0].x, points[0].y);
+      for (let index = 1; index <= completeSegments; index += 1) {
+        context.lineTo(points[index].x, points[index].y);
+      }
+      if (completeSegments < points.length - 1) {
+        const fraction = segmentProgress - completeSegments;
+        const start = points[completeSegments];
+        const end = points[completeSegments + 1];
+        context.lineTo(start.x + (end.x - start.x) * fraction, start.y + (end.y - start.y) * fraction);
+      }
+      context.lineWidth = 2;
+      context.lineJoin = "round";
+      context.lineCap = "round";
+      context.strokeStyle = "#b5942b";
+      context.stroke();
+
+      const visiblePoints = Math.min(points.length - 1, completeSegments);
+      for (let index = 0; index <= visiblePoints; index += 1) {
+        const point = points[index];
+        context.beginPath();
+        context.arc(point.x, point.y, 2.7, 0, Math.PI * 2);
+        context.fillStyle = "#11110f";
+        context.fill();
+        context.lineWidth = 1.2;
+        context.strokeStyle = "#faf8f3";
+        context.stroke();
+      }
+    };
+
+    const tick = (time: number) => {
+      const raw = Math.max(0, Math.min(1, (time - started) / 1100));
+      progress = reduced ? 1 : 1 - Math.pow(1 - raw, 3);
+      draw(progress);
+      if (raw < 1 && !reduced) frame = requestAnimationFrame(tick);
+    };
+
+    const observer = new ResizeObserver(() => draw(progress));
+    observer.observe(canvas);
+    frame = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [delay, reduced, values]);
+
+  return <canvas className="channel-line-chart" ref={canvasRef} />;
+}
+
 export function CaseStudyVisual({ variant }: { variant: "visibility" | "intelligence" }) {
   const reduced = useReducedMotion();
 
@@ -243,9 +352,9 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   }
 
   const channels = [
-    { name: "Facebook", value: 842, graph: [{ bottom: 18, rotate: -14 }, { bottom: 30, rotate: 9 }, { bottom: 24, rotate: -18 }, { bottom: 40, rotate: 7 }, { bottom: 36, rotate: -11 }] },
-    { name: "Instagram", value: 516, graph: [{ bottom: 36, rotate: 12 }, { bottom: 27, rotate: -17 }, { bottom: 41, rotate: 10 }, { bottom: 34, rotate: -20 }, { bottom: 51, rotate: 6 }] },
-    { name: "Blog", value: 227, graph: [{ bottom: 17, rotate: -9 }, { bottom: 24, rotate: 6 }, { bottom: 20, rotate: -13 }, { bottom: 31, rotate: 8 }, { bottom: 26, rotate: -16 }] },
+    { name: "Facebook", value: 842, graph: [42, 48, 45, 54, 58, 55, 64, 69] },
+    { name: "Instagram", value: 516, graph: [31, 38, 36, 43, 47, 45, 52, 56] },
+    { name: "Blog", value: 227, graph: [16, 19, 18, 23, 25, 24, 29, 33] },
   ];
   return (
     <div className="case-art case-art-intelligence report-frame" aria-hidden="true">
@@ -255,7 +364,7 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
           {channels.map((channel, index) => <div key={channel.name}>
             <span>{channel.name}</span>
             <div className="channel-sparkline">
-              {channel.graph.map((segment, segmentIndex) => <motion.i key={segmentIndex} style={{ left: `${segmentIndex * 19}%`, bottom: `${segment.bottom}%`, width: "23%", rotate: segment.rotate }} initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .7, delay: index * .16 + segmentIndex * .1, ease: [0.16, 1, 0.3, 1] }} />)}
+              <ChannelLineChart values={channel.graph} delay={index * 170} reduced={reduced} />
             </div>
             <div className="channel-total"><strong>{channel.value.toLocaleString("en-US")}</strong><small>Total mentions</small></div>
           </div>)}
