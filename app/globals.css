@@ -78,9 +78,9 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .client-track { width: max-content; display: flex; align-items: center; animation: client-marquee 52s linear infinite reverse; }
 .client-logo { position: relative; flex: 0 0 180px; width: 180px; height: 54px; margin: 0 36px; filter: grayscale(1); opacity: .58; transition: filter 300ms ease, opacity 300ms ease; }
 .client-logo:hover { filter: grayscale(0); opacity: 1; }
-.client-logo img { object-fit: contain; padding: 4px 7px; }
-.client-logo-global-citizen img { padding-block: 7px; }
-.client-logo-leman img { padding-inline: 11px; }
+.client-logo img { box-sizing: border-box; object-fit: contain; object-position: center; padding: 4px 7px; }
+.client-logo-global-citizen img { padding: 8px 14px; }
+.client-logo-leman img { padding: 8px 18px; }
 @keyframes client-marquee { to { transform: translateX(-50%); } }
 
 .section-light, .section-dark, .point-of-view, .work-section, .principles, .team-section { padding: 140px 4.5vw; }

@@ -40,7 +40,13 @@ export default function Home() {
         <div className="client-track">
           {[...clients, ...clients].map((client, index) => (
             <div className={`client-logo client-logo-${client.slug}`} aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
-              <Image src={client.image} alt={index < clients.length ? client.name : ""} fill sizes="190px" />
+              <Image
+                src={client.image}
+                alt={index < clients.length ? client.name : ""}
+                fill
+                sizes="190px"
+                style={{ objectFit: client.slug === "global-citizen" || client.slug === "leman" ? "contain" : "cover" }}
+              />
             </div>
           ))}
         </div>
