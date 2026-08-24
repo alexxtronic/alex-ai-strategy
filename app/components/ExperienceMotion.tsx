@@ -153,6 +153,37 @@ export function AnimatedStatistics() {
   );
 }
 
+const sentimentStates = [
+  { positive: 68, neutral: 22, negative: 10 },
+  { positive: 72, neutral: 20, negative: 8 },
+  { positive: 65, neutral: 24, negative: 11 },
+  { positive: 70, neutral: 21, negative: 9 },
+];
+
+function SentimentLoop() {
+  const reduced = useReducedMotion();
+  const [index, setIndex] = useState(0);
+  const sentiment = sentimentStates[index];
+
+  useEffect(() => {
+    if (reduced) return;
+    const interval = window.setInterval(() => setIndex((current) => (current + 1) % sentimentStates.length), 4200);
+    return () => window.clearInterval(interval);
+  }, [reduced]);
+
+  const values = [sentiment.positive, sentiment.neutral, sentiment.negative];
+
+  return (
+    <div className="sentiment-report">
+      <div><span>User sentiment</span><motion.strong key={sentiment.positive} initial={reduced ? false : { opacity: .45, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>{sentiment.positive}%</motion.strong><small>Positive</small></div>
+      <div className="sentiment-bars">
+        {values.map((value, itemIndex) => <motion.i key={itemIndex} animate={{ width: `${value}%` }} transition={{ duration: reduced ? 0 : 3.2, ease: [0.16, 1, 0.3, 1] }} />)}
+      </div>
+      <div className="sentiment-legend"><span>Positive {sentiment.positive}%</span><span>Neutral {sentiment.neutral}%</span><span>Negative {sentiment.negative}%</span></div>
+    </div>
+  );
+}
+
 export function CaseStudyVisual({ variant }: { variant: "visibility" | "intelligence" }) {
   const reduced = useReducedMotion();
 
@@ -176,24 +207,24 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   }
 
   const channels = [
-    { name: "Facebook", value: 842 },
-    { name: "Instagram", value: 516 },
-    { name: "Blogs", value: 227 },
+    { name: "Facebook", value: 842, graph: [{ bottom: 18, rotate: -14 }, { bottom: 30, rotate: 9 }, { bottom: 24, rotate: -18 }, { bottom: 40, rotate: 7 }, { bottom: 36, rotate: -11 }] },
+    { name: "Instagram", value: 516, graph: [{ bottom: 36, rotate: 12 }, { bottom: 27, rotate: -17 }, { bottom: 41, rotate: 10 }, { bottom: 34, rotate: -20 }, { bottom: 51, rotate: 6 }] },
+    { name: "Blog", value: 227, graph: [{ bottom: 17, rotate: -9 }, { bottom: 24, rotate: 6 }, { bottom: 20, rotate: -13 }, { bottom: 31, rotate: 8 }, { bottom: 26, rotate: -16 }] },
   ];
   return (
     <div className="case-art case-art-intelligence report-frame" aria-hidden="true">
       <div className="report-dashboard">
-        <div className="dashboard-header report-header"><span>Sample reporting view</span><span className="dashboard-live"><i />Live</span></div>
+        <div className="dashboard-header report-header"><span>Illustrative reporting view</span><span className="dashboard-live"><i />Monitoring</span></div>
         <div className="channel-totals">
-          {channels.map((channel, index) => <div key={channel.name}><span>{channel.name}</span><strong><CountUp value={channel.value} /></strong><small>Total mentions</small><motion.i initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .9, delay: index * .13, ease: [0.16, 1, 0.3, 1] }} /></div>)}
+          {channels.map((channel, index) => <div key={channel.name}>
+            <span>{channel.name}</span>
+            <div className="channel-sparkline">
+              {channel.graph.map((segment, segmentIndex) => <motion.i key={segmentIndex} style={{ left: `${segmentIndex * 19}%`, bottom: `${segment.bottom}%`, width: "23%", rotate: segment.rotate }} initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .7, delay: index * .16 + segmentIndex * .1, ease: [0.16, 1, 0.3, 1] }} />)}
+            </div>
+            <div className="channel-total"><strong>{channel.value.toLocaleString("en-US")}</strong><small>Total mentions</small></div>
+          </div>)}
         </div>
-        <div className="sentiment-report">
-          <div><span>User sentiment</span><strong><CountUp value={68} suffix="%" /></strong><small>Positive</small></div>
-          <div className="sentiment-bars">
-            {[68, 22, 10].map((value, index) => <motion.i key={value} initial={reduced ? false : { scaleX: 0 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.1, delay: .25 + index * .12, ease: [0.16, 1, 0.3, 1] }} style={{ width: `${value}%` }} />)}
-          </div>
-          <div className="sentiment-legend"><span>Positive 68%</span><span>Neutral 22%</span><span>Negative 10%</span></div>
-        </div>
+        <SentimentLoop />
       </div>
     </div>
   );

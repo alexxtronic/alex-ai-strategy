@@ -63,12 +63,12 @@ export default function Home() {
       </section>
 
       <section className="case-section section-light" id="work">
-        <div className="case-section-intro"><Reveal><h2>Useful AI, doing real work.</h2></Reveal><Reveal delay={0.1}><div><p>Selected systems built around a concrete business question, with the evidence kept close enough to trust.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
+        <div className="case-section-intro"><Reveal><h2>Useful AI, doing real work.</h2></Reveal><Reveal delay={0.1}><div><p>We’ve already helped multiple enterprise brands transition to the new era of AI.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
         <div className="case-grid">
           <Reveal>
             <article className="case-card">
               <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /></div>
-              <div className="case-result"><strong>3,449</strong><p>hours saved through automatic LLM monitoring</p></div>
+              <div className="case-deliverable"><strong>Custom GEO / AEO solution for Boligsiden</strong><p>Automatic LLM monitoring</p></div>
               <h3>Turning AI visibility into a benchmark for Boligsiden.</h3>
               <p className="case-summary">Boligsiden needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. Automatic monitoring turned that work into a repeatable GEO and AEO benchmark while saving 3,449 hours.</p>
               <p className="case-type">Boligsiden · Multi-model AI visibility</p>
@@ -77,7 +77,7 @@ export default function Home() {
           <Reveal delay={0.1}>
             <article className="case-card case-card-offset">
               <CaseStudyVisual variant="intelligence" />
-              <div className="case-result"><strong>Live</strong><p>source evidence kept beside every signal</p></div>
+              <div className="case-deliverable"><strong>Brand Sentiment Dashboard</strong><p>Custom Dashboard with MCP integrations</p></div>
               <h3>Making web sentiment easier to trust.</h3>
               <p className="case-summary">For a global enterprise brand, we helped create an AI-enabled report tracking total Facebook, Instagram, and blog mentions alongside user sentiment, while keeping the underlying evidence beside the model-assisted analysis.</p>
               <p className="case-type">Enterprise brand intelligence · Social and web sentiment</p>

@@ -28,6 +28,10 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /The opportunity is real/);
   assert.match(html, /Boligsiden/);
   assert.match(html, /3,449/);
+  assert.match(html, /Custom GEO \/ AEO solution for Boligsiden/);
+  assert.match(html, /Brand Sentiment Dashboard/);
+  assert.match(html, /Custom Dashboard with MCP integrations/);
+  assert.match(html, /We’ve already helped multiple enterprise brands transition to the new era of AI/);
   assert.match(html, /A team you can trust/);
   assert.match(html, /André Rosario/);
   assert.match(html, /Kristian Hansen/);
@@ -58,10 +62,12 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /CountUp value=\{81\}/);
   assert.match(motion, /CountUp value=\{88\}/);
   assert.match(motion, /CountUp value=\{47\}/);
-  assert.match(motion, /Sample reporting view/);
+  assert.match(motion, /Illustrative reporting view/);
+  assert.match(motion, /SentimentLoop/);
+  assert.match(motion, /channel-sparkline/);
   assert.match(motion, /Facebook/);
   assert.match(motion, /Instagram/);
-  assert.match(motion, /Blogs/);
+  assert.match(motion, /Blog/);
   assert.match(motion, /requestAnimationFrame/);
   assert.match(packageJson, /"motion":/);
   assert.match(layout, /og-v2\.png/);
