@@ -67,12 +67,15 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .hero-moon { position: absolute; inset: 0; }
 .hero-moon span { position: absolute; left: 11%; top: 38%; width: 23px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 6px var(--gold); }
 
-.hero-cloud { position: absolute; z-index: 1; inset: 3% 1% 0; overflow: hidden; opacity: .76; pointer-events: none; }
-.hero-cloud::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 26%, rgba(242,240,234,.2) 78%); }
-.cloud-shape { position: absolute; display: block; filter: blur(48px); mix-blend-mode: multiply; will-change: transform, border-radius; }
-.cloud-shape-one { width: 46%; height: 34%; left: 5%; top: 22%; background: rgba(226,201,86,.58); }
-.cloud-shape-two { width: 40%; height: 32%; right: 3%; top: 38%; background: rgba(181,148,43,.44); }
-.cloud-shape-three { width: 38%; height: 29%; left: 31%; bottom: 7%; background: rgba(113,105,79,.28); }
+.hero-cloud { position: absolute; z-index: 1; inset: -7% -5% -3%; overflow: hidden; opacity: .92; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 48%, #000 12%, rgba(0,0,0,.96) 46%, transparent 82%); mask-image: radial-gradient(ellipse 70% 68% at 50% 48%, #000 12%, rgba(0,0,0,.96) 46%, transparent 82%); }
+.hero-cloud::before { content: ""; position: absolute; width: 65%; height: 58%; left: 18%; top: 18%; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(246,227,133,.7) 0 8%, rgba(218,185,67,.38) 29%, rgba(181,148,43,.14) 54%, transparent 76%); filter: blur(26px); }
+.hero-cloud::after { content: ""; position: absolute; inset: 6%; background: radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(242,240,234,.08) 55%, rgba(242,240,234,.72) 91%); }
+.cloud-shape { position: absolute; display: block; filter: blur(62px); mix-blend-mode: multiply; will-change: transform, border-radius; }
+.cloud-shape-one { width: 54%; height: 43%; left: 1%; top: 17%; background: rgba(233,204,78,.72); }
+.cloud-shape-two { width: 50%; height: 42%; right: -1%; top: 29%; background: rgba(181,148,43,.6); }
+.cloud-shape-three { width: 48%; height: 35%; left: 25%; bottom: 3%; background: rgba(102,95,68,.36); }
+.cloud-shape-four { width: 29%; height: 55%; left: 36%; top: 8%; background: linear-gradient(155deg, rgba(255,242,172,.78), rgba(186,148,27,.4)); filter: blur(44px); mix-blend-mode: soft-light; }
+.cloud-core { position: absolute; left: 35%; top: 19%; width: 31%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 20deg, transparent 0 12%, rgba(255,238,155,.62) 23%, transparent 38% 58%, rgba(181,148,43,.42) 72%, transparent 88%); filter: blur(24px); opacity: .75; will-change: transform; }
 
 .client-strip { min-height: 118px; overflow: hidden; display: flex; align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-bright); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); }
 .client-track { width: max-content; display: flex; align-items: center; animation: client-marquee 52s linear infinite reverse; }
@@ -408,8 +411,8 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   h1 { font-size: clamp(58px, 15vw, 92px); line-height: .84; }
   .hero-lede { margin-top: 7vh; font-size: 20px; }
   .hero-orb { width: 116vw; bottom: -25vw; opacity: .94; }
-  .hero-cloud { inset: 8% -28% 2%; opacity: .64; }
-  .cloud-shape { filter: blur(42px); }
+  .hero-cloud { inset: 1% -38% -3%; opacity: .82; -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 43%, #000 12%, rgba(0,0,0,.94) 52%, transparent 88%); mask-image: radial-gradient(ellipse 60% 72% at 50% 43%, #000 12%, rgba(0,0,0,.94) 52%, transparent 88%); }
+  .cloud-shape { filter: blur(48px); }
   .client-strip { min-height: 92px; }
   .client-strip { -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); }
   .client-logo { flex-basis: 126px; width: 126px; height: 38px; margin: 0 25px; }
@@ -497,7 +500,7 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .hero-actions .button { min-width: 212px; }
   .hero-orb { width: 138vw; bottom: -30vw; }
-  .hero-cloud { inset: 10% -42% 4%; opacity: .58; }
+  .hero-cloud { inset: 3% -54% -2%; opacity: .76; }
   .hero-moon span { width: 18px; }
   .client-strip { min-height: 82px; }
   .client-logo { flex-basis: 108px; width: 108px; height: 34px; margin: 0 24px; }

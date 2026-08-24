@@ -74,6 +74,16 @@ export function HeroCloud() {
         animate={reduced ? undefined : { x: ["-4vw", "9vw", "-7vw", "-4vw"], y: ["5vh", "-4vh", "2vh", "5vh"], rotate: [-8, 10, -4, -8], scale: [.96, 1.13, .9, .96], borderRadius: morph }}
         transition={reduced ? undefined : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />
+      <motion.span
+        className="cloud-shape cloud-shape-four"
+        animate={reduced ? undefined : { x: ["2vw", "-5vw", "6vw", "2vw"], y: ["-2vh", "4vh", "-3vh", "-2vh"], rotate: [4, -6, 8, 4], scale: [.9, 1.12, .98, .9], borderRadius: [...morph].reverse() }}
+        transition={reduced ? undefined : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.span
+        className="cloud-core"
+        animate={reduced ? undefined : { rotate: 360, scale: [1, 1.08, 1] }}
+        transition={reduced ? undefined : { rotate: { duration: 34, repeat: Infinity, ease: "linear" }, scale: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
+      />
     </div>
   );
 }
