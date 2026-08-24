@@ -42,6 +42,7 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /enterprise operating systems/);
   assert.match(html, /leadership alignment/);
   assert.match(html, /Let’s Chat/);
+  assert.match(html, /href="\/insights"/);
   assert.match(html, /aria-controls="mobile-menu"/);
   assert.match(html, /Mobile navigation/);
   assert.match(html, /ROI calculator/);
@@ -100,9 +101,56 @@ test("server-renders the focused 30 minute contact page", async () => {
   assert.doesNotMatch(html, /What happens next/);
 });
 
+test("renders a crawlable Insights index and article pages", async () => {
+  const indexResponse = await render("/insights");
+  assert.equal(indexResponse.status, 200);
+  const indexHtml = await indexResponse.text();
+  assert.match(indexHtml, /Ideas for making AI operational/);
+  assert.match(indexHtml, /where-enterprise-ai-value-actually-lives/);
+  assert.match(indexHtml, /ai-business-case-finance-can-trust/);
+  assert.match(indexHtml, /from-ai-pilot-to-operating-system/);
+  assert.match(indexHtml, /application\/rss\+xml/);
+
+  const articles = [
+    ["/insights/where-enterprise-ai-value-actually-lives", "The AI opportunity is rarely where the demo is"],
+    ["/insights/ai-business-case-finance-can-trust", "How to build an AI business case that finance can trust"],
+    ["/insights/from-ai-pilot-to-operating-system", "From AI pilot to operating system"],
+  ];
+
+  for (const [pathname, title] of articles) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, new RegExp(title));
+    assert.match(html, /application\/ld\+json/);
+    assert.match(html, /BlogPosting/);
+    assert.match(html, /rel="canonical"/);
+    assert.doesNotMatch(html, /og-v2\.png/);
+  }
+});
+
+test("publishes discovery files for search and subscribers", async () => {
+  const sitemapResponse = await render("/sitemap.xml");
+  assert.equal(sitemapResponse.status, 200);
+  const sitemap = await sitemapResponse.text();
+  assert.match(sitemap, /<urlset/);
+  assert.match(sitemap, /\/insights\/ai-business-case-finance-can-trust/);
+
+  const robotsResponse = await render("/robots.txt");
+  assert.equal(robotsResponse.status, 200);
+  const robots = await robotsResponse.text();
+  assert.match(robots, /Allow: \//);
+  assert.match(robots, /Sitemap:/);
+
+  const feedResponse = await render("/feed.xml");
+  assert.equal(feedResponse.status, 200);
+  assert.match(feedResponse.headers.get("content-type") ?? "", /application\/rss\+xml/);
+  assert.match(await feedResponse.text(), /<rss version="2.0">/);
+});
+
 test("keeps em dashes out of every rendered route", async () => {
   const forbiddenPunctuation = new RegExp(String.fromCodePoint(0x2014));
-  for (const pathname of ["/", "/contact", "/privacy", "/ai-roi-calculator"]) {
+  for (const pathname of ["/", "/contact", "/privacy", "/ai-roi-calculator", "/insights", "/insights/where-enterprise-ai-value-actually-lives", "/insights/ai-business-case-finance-can-trust", "/insights/from-ai-pilot-to-operating-system"]) {
     const response = await render(pathname);
     assert.equal(response.status, 200);
     assert.doesNotMatch(await response.text(), forbiddenPunctuation, `${pathname} contains an em dash`);
