@@ -35,8 +35,12 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /Custom Dashboard with MCP integrations/);
   assert.match(html, /We’ve already helped multiple enterprise brands transition to the new era of AI/);
   assert.match(html, /A team you can trust/);
+  assert.match(html, /Senior specialists stay involved/);
   assert.match(html, /André Rosario/);
   assert.match(html, /Kristian Hansen/);
+  assert.match(html, /business-case development/);
+  assert.match(html, /enterprise operating systems/);
+  assert.match(html, /leadership alignment/);
   assert.match(html, /Let’s Chat/);
   assert.match(html, /aria-controls="mobile-menu"/);
   assert.match(html, /Mobile navigation/);
@@ -68,6 +72,7 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /useReducedMotion/);
   assert.match(motion, /export function HeroCloud/);
   assert.match(motion, /export function ProcessSystem/);
+  assert.doesNotMatch(motion, /opacity: active \? 1 : \.38/);
   assert.match(motion, /export function AnimatedStatistics/);
   assert.match(motion, /CountUp value=\{81\}/);
   assert.match(motion, /CountUp value=\{88\}/);

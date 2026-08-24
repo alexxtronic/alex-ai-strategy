@@ -126,7 +126,7 @@ export function ProcessSystem() {
           <motion.article
             key={step.number}
             aria-current={active ? "step" : undefined}
-            animate={reduced ? undefined : { opacity: active ? 1 : .38, y: active ? -9 : 0 }}
+            animate={reduced ? undefined : { opacity: 1, y: active ? -9 : 0 }}
             transition={{ duration: .5, ease: [0.22, 1, 0.36, 1] }}
           >
             <motion.span
