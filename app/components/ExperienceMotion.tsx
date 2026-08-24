@@ -88,10 +88,10 @@ export function HeroCloud() {
 }
 
 const processSteps = [
-  { number: "01", title: "Listen", text: "We learn how the work really happens, not how the slide deck says it happens." },
-  { number: "02", title: "Locate", text: "We find the moments where AI can create the biggest gain in time, quality, or growth." },
-  { number: "03", title: "Build", text: "We create and connect a solution around your systems, data, and people." },
-  { number: "04", title: "Improve", text: "We measure what changes, learn from use, and keep making the system more valuable." },
+  { number: "01", title: "Listen", text: "We map the workflow, economics, owners, data, and friction before recommending a tool." },
+  { number: "02", title: "Locate", text: "We rank opportunities by value, feasibility, risk, and readiness, then agree where to start." },
+  { number: "03", title: "Build", text: "We design and integrate the system across your existing data, tools, and controls." },
+  { number: "04", title: "Improve", text: "We track adoption and value, review outputs, and improve the system with your team." },
 ];
 
 export function ProcessSystem() {

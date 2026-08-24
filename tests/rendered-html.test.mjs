@@ -25,6 +25,8 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /AI Strategy Partner/);
   assert.match(html, /We find where AI can make or save the most money/);
   assert.match(html, /AI solutions as unique as your company/);
+  assert.match(html, /business case to working system/);
+  assert.match(html, /href="\/#team"/);
   assert.match(html, /The opportunity is real/);
   assert.match(html, /Boligsiden/);
   assert.match(html, /3,449/);
@@ -40,6 +42,11 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.doesNotMatch(html, /One connected client journey/i);
   assert.doesNotMatch(html, /↗/);
   assert.doesNotMatch(html, /<em\b/i);
+
+  const sectionLinks = [...html.matchAll(/href="\/#([a-z0-9-]+)"/gi)].map((match) => match[1]);
+  for (const section of sectionLinks) {
+    assert.match(html, new RegExp(`id="${section}"`), `Navigation target #${section} is missing`);
+  }
 });
 
 test("keeps the experience light, roman, and motion-aware", async () => {

@@ -53,7 +53,7 @@ export default function Home() {
       </section>
 
       <section className="process-section section-light" id="process">
-        <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can make the largest impact and turns that opportunity into something your team can use.</p></Reveal></div>
+        <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can create measurable advantage, then takes one priority from business case to working system.</p></Reveal></div>
         <ProcessSystem />
       </section>
 
