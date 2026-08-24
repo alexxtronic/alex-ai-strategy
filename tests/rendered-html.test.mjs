@@ -20,7 +20,7 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>VITRUS — Your next AI Strategy Partner<\/title>/i);
+  assert.match(html, /<title>VITRUS \| Your next AI Strategy Partner<\/title>/i);
   assert.match(html, /We’re your next/);
   assert.match(html, /AI Strategy Partner/);
   assert.match(html, /We find where AI can make or save the most money/);
@@ -77,4 +77,13 @@ test("server-renders the focused 30 minute contact page", async () => {
   assert.match(html, /Request a free 30 minute AI readiness call with one of our experts today\./);
   assert.match(html, /Request 30 minutes/);
   assert.doesNotMatch(html, /What happens next/);
+});
+
+test("keeps em dashes out of every rendered route", async () => {
+  const forbiddenPunctuation = new RegExp(String.fromCodePoint(0x2014));
+  for (const pathname of ["/", "/contact", "/privacy", "/ai-roi-calculator"]) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200);
+    assert.doesNotMatch(await response.text(), forbiddenPunctuation, `${pathname} contains an em dash`);
+  }
 });

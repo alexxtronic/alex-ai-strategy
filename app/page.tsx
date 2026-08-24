@@ -53,7 +53,7 @@ export default function Home() {
       </section>
 
       <section className="process-section section-light" id="process">
-        <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can make the largest impact—and turns that opportunity into something your team can use.</p></Reveal></div>
+        <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can make the largest impact and turns that opportunity into something your team can use.</p></Reveal></div>
         <ProcessSystem />
       </section>
 
@@ -91,7 +91,7 @@ export default function Home() {
         <div className="team-grid">{team.map((person, index) => <Reveal key={person.name} delay={index * 0.08}><article className="team-card"><div className="portrait-wrap"><Image src={person.image} alt={person.name} fill sizes="(max-width: 760px) 100vw, 33vw" /></div><h3>{person.name}</h3><p>{person.role}</p></article></Reveal>)}</div>
       </section>
 
-      <section className="final-cta section-dark"><Reveal><h2>Let’s find your highest-impact AI opportunity.</h2></Reveal><Reveal delay={0.12}><div><p>Give us 30 minutes with the business problem. One of our specialists will help you identify where AI could make the largest difference—and what a smart first step looks like.</p><a className="button button-gold" href="/contact"><span>Request 30 minutes</span></a></div></Reveal></section>
+      <section className="final-cta section-dark"><Reveal><h2>Let’s find your highest-impact AI opportunity.</h2></Reveal><Reveal delay={0.12}><div><p>Give us 30 minutes with the business problem. One of our specialists will help you identify where AI could make the largest difference and what a smart first step looks like.</p><a className="button button-gold" href="/contact"><span>Request 30 minutes</span></a></div></Reveal></section>
       <SiteFooter />
     </main>
   );

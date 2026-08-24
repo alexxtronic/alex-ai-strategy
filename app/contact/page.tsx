@@ -3,10 +3,10 @@ import { SiteHeader } from "../components/SiteHeader";
 import { ContactForm } from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Free 30 Minute AI Readiness Call — VITRUS",
+  title: "Free 30 Minute AI Readiness Call | VITRUS",
   description: "Request a free 30 minute AI readiness call with one of our experts today.",
-  openGraph: { title: "Free 30 Minute AI Readiness Call — VITRUS", description: "Request a free 30 minute AI readiness call with one of our experts today.", images: [] },
-  twitter: { title: "Free 30 Minute AI Readiness Call — VITRUS", description: "Request a free 30 minute AI readiness call with one of our experts today.", images: [] },
+  openGraph: { title: "Free 30 Minute AI Readiness Call | VITRUS", description: "Request a free 30 minute AI readiness call with one of our experts today.", images: [] },
+  twitter: { title: "Free 30 Minute AI Readiness Call | VITRUS", description: "Request a free 30 minute AI readiness call with one of our experts today.", images: [] },
 };
 
 export default function ContactPage() {
