@@ -5,7 +5,6 @@ import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSyste
 
 const clients = [
   { name: "Specsavers", slug: "specsavers", image: "/clients/specsavers.png" },
-  { name: "Boligsiden", slug: "boligsiden", image: "/clients/boligsiden.png" },
   { name: "Global Citizen", slug: "global-citizen", image: "/clients/global-citizen.png" },
   { name: "LEMAN", slug: "leman", image: "/clients/leman.png" },
   { name: "Empire State Realty Trust", slug: "empire-state", image: "/clients/empire-state-realty-trust.png" },
@@ -73,10 +72,10 @@ export default function Home() {
           <Reveal>
             <article className="case-card">
               <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /></div>
-              <div className="case-deliverable"><strong>Custom GEO / AEO solution for Boligsiden</strong><p>Automatic LLM monitoring</p></div>
-              <h3>Turning AI visibility into a benchmark for Boligsiden.</h3>
-              <p className="case-summary">Boligsiden needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. Automatic monitoring turned that work into a repeatable GEO and AEO benchmark while saving 3,449 hours.</p>
-              <p className="case-type">Boligsiden · Multi-model AI visibility</p>
+              <div className="case-deliverable"><strong>Custom GEO / AEO solution for a property platform</strong><p>Automatic LLM monitoring</p></div>
+              <h3>Turning AI visibility into a repeatable benchmark.</h3>
+              <p className="case-summary">A leading property platform needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. Automatic monitoring turned that work into a repeatable GEO and AEO benchmark while saving 3,449 hours.</p>
+              <p className="case-type">Property intelligence · Multi-model AI visibility</p>
             </article>
           </Reveal>
           <Reveal delay={0.1}>

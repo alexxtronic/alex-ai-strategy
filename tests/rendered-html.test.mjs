@@ -41,9 +41,9 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /href="\/#team"/);
   assert.match(html, /The opportunity is real/);
   assert.match(html, /The proof is in the prompt/);
-  assert.match(html, /Boligsiden/);
   assert.match(html, /3,449/);
-  assert.match(html, /Custom GEO \/ AEO solution for Boligsiden/);
+  assert.match(html, /Custom GEO \/ AEO solution for a property platform/);
+  assert.doesNotMatch(html, /Boligsiden/i);
   assert.match(html, /Brand Sentiment Dashboard/);
   assert.match(html, /Custom Dashboard with MCP integrations/);
   assert.match(html, /We’ve already helped multiple enterprise brands transition to the new era of AI/);
