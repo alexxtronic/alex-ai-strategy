@@ -57,25 +57,15 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .button-gold::before { background: var(--paper); }
 .text-link { padding-bottom: 5px; border-bottom: 1px solid currentColor; font-size: 13px; }
 
-.hero-future-field { position: absolute; z-index: 1; inset: 0; overflow: hidden; opacity: .78; pointer-events: none; }
-.hero-future-field::before { content: ""; position: absolute; width: min(32vw, 500px); aspect-ratio: 1; right: -9vw; top: -12vw; border-radius: 50%; background: radial-gradient(circle, rgba(181,148,43,.11), transparent 68%); filter: blur(26px); }
-.hero-future-field::after { content: ""; position: absolute; width: min(27vw, 420px); aspect-ratio: 1; left: -11vw; bottom: -12vw; border-radius: 50%; background: radial-gradient(circle, rgba(181,148,43,.07), transparent 70%); filter: blur(30px); }
-.future-orbit { position: absolute; border: 1px solid rgba(17,17,15,.13); border-radius: 50%; will-change: transform; }
-.future-orbit i { position: absolute; display: block; border: 1px solid rgba(17,17,15,.08); border-radius: 50%; }
-.future-orbit i:nth-child(1) { inset: 13%; }
-.future-orbit i:nth-child(2) { inset: 28%; border-color: rgba(181,148,43,.18); }
-.future-orbit i:nth-child(3) { inset: 42%; border-color: rgba(17,17,15,.07); }
-.future-orbit::before, .future-orbit::after { content: ""; position: absolute; z-index: 1; width: 7px; aspect-ratio: 1; border-radius: 50%; }
-.future-orbit::before { left: 12%; top: 15%; background: var(--gold); box-shadow: 0 0 0 7px rgba(181,148,43,.08); }
-.future-orbit::after { right: 9%; bottom: 23%; border: 1px solid rgba(17,17,15,.35); background: var(--paper); }
-.future-orbit-one { width: min(49vw, 720px); height: min(31vw, 450px); right: -12vw; top: -15vw; }
-.future-orbit-two { width: min(42vw, 610px); height: min(27vw, 390px); left: -14vw; bottom: -17vw; border-color: rgba(181,148,43,.17); }
-.future-vector { position: absolute; display: block; height: 1px; }
-.future-vector i { display: block; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(181,148,43,.56), transparent); will-change: transform, opacity; }
-.future-vector-one { width: min(24vw, 340px); right: 2vw; top: 20%; transform: rotate(-28deg); }
-.future-vector-one i { transform-origin: right center; }
-.future-vector-two { width: min(20vw, 280px); left: 1vw; bottom: 21%; transform: rotate(25deg); }
-.future-vector-two i { transform-origin: left center; }
+.hero-future-field { position: absolute; z-index: 1; inset: 0; overflow: hidden; opacity: .82; pointer-events: none; }
+.glass-lens { position: absolute; aspect-ratio: 1; border: 1px solid rgba(181,148,43,.28); border-radius: 50%; background: radial-gradient(circle at 31% 25%, rgba(255,255,255,.52) 0 4%, rgba(255,255,255,.08) 24%, transparent 47%), radial-gradient(circle at 70% 74%, rgba(181,148,43,.12), transparent 39%), conic-gradient(from 18deg, transparent 0 21%, rgba(181,148,43,.17) 27%, transparent 39% 67%, rgba(255,255,255,.42) 74%, transparent 83%); box-shadow: inset 18px 22px 48px rgba(255,255,255,.14), inset -14px -18px 44px rgba(181,148,43,.07), 0 22px 70px rgba(17,17,15,.035); backdrop-filter: blur(3px) saturate(1.08); will-change: transform; }
+.glass-lens::before, .glass-lens::after { content: ""; position: absolute; border-radius: 50%; }
+.glass-lens::before { inset: 7%; border: 1px solid rgba(17,17,15,.075); box-shadow: inset 0 0 30px rgba(255,255,255,.18); }
+.glass-lens::after { inset: 17%; border: 1px solid rgba(181,148,43,.11); }
+.glass-lens-rim { position: absolute; inset: -1px; border-radius: 50%; border-top: 1px solid rgba(255,255,255,.72); border-right: 1px solid rgba(181,148,43,.14); border-bottom: 1px solid rgba(17,17,15,.07); }
+.glass-lens-glint { position: absolute; width: 42%; height: 1px; right: 2%; top: 23%; background: linear-gradient(90deg, transparent, rgba(181,148,43,.43), transparent); transform: rotate(34deg); transform-origin: right center; }
+.glass-lens-one { width: min(36vw, 520px); right: -8vw; top: -10vw; }
+.glass-lens-two { width: min(20vw, 280px); left: -5vw; bottom: -7vw; opacity: .72; }
 
 .client-strip { min-height: 118px; overflow: hidden; display: flex; align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-bright); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); }
 .client-track { width: max-content; display: flex; align-items: center; animation: client-marquee 52s linear infinite reverse; }
@@ -483,11 +473,9 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   .hero { min-height: calc(100svh - 74px); padding: 10vh 22px 9vh; }
   h1 { font-size: clamp(58px, 15vw, 92px); line-height: .84; }
   .hero-lede { margin-top: 7vh; font-size: 20px; }
-  .hero-future-field { opacity: .68; }
-  .future-orbit-one { width: 92vw; height: 58vw; right: -52vw; top: -18vw; }
-  .future-orbit-two { width: 78vw; height: 50vw; left: -48vw; bottom: -20vw; }
-  .future-vector-one { width: 38vw; right: -2vw; top: 18%; }
-  .future-vector-two { width: 33vw; left: -2vw; bottom: 17%; }
+  .hero-future-field { opacity: .7; }
+  .glass-lens-one { width: 58vw; right: -27vw; top: -15vw; }
+  .glass-lens-two { width: 36vw; left: -17vw; bottom: -10vw; }
   .client-strip { min-height: 92px; }
   .client-strip { -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); }
   .client-logo { flex-basis: 126px; width: 126px; height: 38px; margin: 0 25px; }
@@ -601,9 +589,9 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   h1 { font-size: clamp(54px, 15.8vw, 76px); }
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .hero-actions .button { min-width: 212px; }
-  .hero-future-field { opacity: .62; }
-  .future-orbit-one { width: 112vw; height: 70vw; right: -69vw; top: -12vw; }
-  .future-orbit-two { width: 94vw; height: 60vw; left: -62vw; bottom: -15vw; }
+  .hero-future-field { opacity: .66; }
+  .glass-lens-one { width: 72vw; right: -39vw; top: -14vw; }
+  .glass-lens-two { width: 45vw; left: -24vw; bottom: -8vw; }
   .client-strip { min-height: 82px; }
   .client-logo { flex-basis: 108px; width: 108px; height: 34px; margin: 0 24px; }
   .value-sequence-head { grid-template-columns: 1fr; }

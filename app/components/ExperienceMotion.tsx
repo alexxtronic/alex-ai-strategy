@@ -54,35 +54,21 @@ export function HeroCloud() {
   return (
     <div className="hero-cloud hero-future-field" aria-hidden="true">
       <motion.div
-        className="future-orbit future-orbit-one"
+        className="glass-lens glass-lens-one"
         animate={reduced ? undefined : { rotate: 360 }}
-        transition={reduced ? undefined : { duration: 42, repeat: Infinity, ease: "linear" }}
+        transition={reduced ? undefined : { duration: 48, repeat: Infinity, ease: "linear" }}
       >
-        <i />
-        <i />
-        <i />
+        <span className="glass-lens-rim" />
+        <i className="glass-lens-glint" />
       </motion.div>
       <motion.div
-        className="future-orbit future-orbit-two"
+        className="glass-lens glass-lens-two"
         animate={reduced ? undefined : { rotate: -360 }}
-        transition={reduced ? undefined : { duration: 54, repeat: Infinity, ease: "linear" }}
+        transition={reduced ? undefined : { duration: 38, repeat: Infinity, ease: "linear" }}
       >
-        <i />
-        <i />
-        <i />
+        <span className="glass-lens-rim" />
+        <i className="glass-lens-glint" />
       </motion.div>
-      <span className="future-vector future-vector-one">
-        <motion.i
-          animate={reduced ? undefined : { opacity: [.12, .52, .12], scaleX: [.34, 1, .34] }}
-          transition={reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </span>
-      <span className="future-vector future-vector-two">
-        <motion.i
-          animate={reduced ? undefined : { opacity: [.38, .1, .38], scaleX: [1, .42, 1] }}
-          transition={reduced ? undefined : { duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </span>
     </div>
   );
 }
@@ -106,7 +92,7 @@ export function ProcessSystem() {
     const start = window.setTimeout(() => setActiveStep(0), 0);
     const interval = window.setInterval(() => {
       setActiveStep((current) => (current + 1) % processSteps.length);
-    }, 2500);
+    }, 2000);
 
     return () => {
       window.clearTimeout(start);
