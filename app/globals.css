@@ -79,6 +79,7 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .client-logo { position: relative; flex: 0 0 180px; width: 180px; height: 54px; margin: 0 36px; filter: grayscale(1); opacity: .58; transition: filter 300ms ease, opacity 300ms ease; }
 .client-logo:hover { filter: grayscale(0); opacity: 1; }
 .client-logo img { box-sizing: border-box; object-fit: contain; object-position: center; padding: 4px 7px; }
+.client-logo-specsavers img { padding: 0; }
 .client-logo-global-citizen img { padding: 8px 14px; }
 .client-logo-leman img { padding: 8px 18px; }
 @keyframes client-marquee { to { transform: translateX(-50%); } }

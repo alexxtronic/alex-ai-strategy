@@ -45,7 +45,7 @@ export default function Home() {
                 alt={index < clients.length ? client.name : ""}
                 fill
                 sizes="190px"
-                style={{ objectFit: client.slug === "global-citizen" || client.slug === "leman" ? "contain" : "cover" }}
+                style={{ objectFit: ["specsavers", "global-citizen", "leman"].includes(client.slug) ? "contain" : "cover" }}
               />
             </div>
           ))}
