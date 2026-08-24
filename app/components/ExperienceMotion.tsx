@@ -146,6 +146,126 @@ export function ProcessSystem() {
   );
 }
 
+const services = [
+  {
+    number: "01",
+    kind: "visibility",
+    title: "GEO/AEO monitoring and optimization",
+    text: "Track how leading AI models represent your brand, then turn the evidence into a practical visibility plan.",
+  },
+  {
+    number: "02",
+    kind: "agents",
+    title: "AI agentic automation",
+    text: "Build controlled agents that complete multi-step work across the tools your team already uses.",
+  },
+  {
+    number: "03",
+    kind: "dashboard",
+    title: "Custom dashboards and MCP integration",
+    text: "Connect live business data to decision-ready interfaces, with the source evidence kept close.",
+  },
+  {
+    number: "04",
+    kind: "local",
+    title: "Secure local LLM deployment",
+    text: "Deploy private AI environments around sensitive data, internal knowledge, and your security requirements.",
+  },
+  {
+    number: "05",
+    kind: "crm",
+    title: "Social advertising and CRM automation",
+    text: "Join campaign signals, customer data, and follow-up workflows into one measurable growth system.",
+  },
+];
+
+function ServiceVisual({ kind }: { kind: string }) {
+  const reduced = useReducedMotion();
+  const loop = reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" as const };
+
+  if (kind === "visibility") {
+    return (
+      <div className="service-visual service-visual-visibility" aria-hidden="true">
+        <motion.div className="service-orbit service-orbit-outer" animate={reduced ? undefined : { rotate: 360 }} transition={reduced ? undefined : { duration: 28, repeat: Infinity, ease: "linear" }}><i /><i /><i /></motion.div>
+        <motion.div className="service-orbit service-orbit-inner" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 21, repeat: Infinity, ease: "linear" }}><i /><i /></motion.div>
+        <motion.span className="service-scan" animate={reduced ? undefined : { rotate: [0, 360] }} transition={reduced ? undefined : { duration: 12, repeat: Infinity, ease: "linear" }} />
+        <span className="service-core">AI</span>
+      </div>
+    );
+  }
+
+  if (kind === "agents") {
+    return (
+      <div className="service-visual service-visual-agents" aria-hidden="true">
+        <svg viewBox="0 0 460 250" role="presentation">
+          <motion.path d="M38 64 H152 C185 64 181 124 214 124 H296 C327 124 322 190 356 190 H430" initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.6, repeat: reduced ? 0 : Infinity, ease: "easeInOut" }} />
+          <motion.path d="M152 64 V190 H236" initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 0, 1] }} transition={{ duration: 5.6, repeat: reduced ? 0 : Infinity, ease: "easeInOut" }} />
+        </svg>
+        {["source", "reason", "act", "review", "branch"].map((node, index) => (
+          <motion.i className={`agent-node agent-node-${node}`} key={node} animate={reduced ? undefined : { scale: [1, 1.35, 1], backgroundColor: ["#f2f0ea", "#b5942b", "#f2f0ea"] }} transition={{ duration: 2.4, repeat: Infinity, delay: index * .75, ease: "easeInOut" }} />
+        ))}
+      </div>
+    );
+  }
+
+  if (kind === "dashboard") {
+    return (
+      <div className="service-visual service-visual-dashboard" aria-hidden="true">
+        <div className="service-dashboard-frame">
+          <div className="service-dashboard-top"><span /><span /><span /></div>
+          <div className="service-bars">{[48, 74, 57, 88, 69].map((height, index) => <motion.i key={height} animate={reduced ? undefined : { height: [`${height - 18}%`, `${height}%`, `${height - 18}%`] }} transition={{ ...loop, delay: index * .22 }} />)}</div>
+          <svg viewBox="0 0 300 100" role="presentation"><motion.path d="M8 78 C48 71 55 35 92 50 S151 73 184 37 S241 18 292 27" initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.5, repeat: reduced ? 0 : Infinity, ease: "easeInOut" }} /></svg>
+        </div>
+        <div className="service-ports">{[0, 1, 2].map((port) => <motion.i key={port} animate={reduced ? undefined : { opacity: [.28, 1, .28] }} transition={{ duration: 2.6, repeat: Infinity, delay: port * .55 }} />)}</div>
+      </div>
+    );
+  }
+
+  if (kind === "local") {
+    return (
+      <div className="service-visual service-visual-local" aria-hidden="true">
+        <motion.div className="local-ring local-ring-outer" animate={reduced ? undefined : { rotate: 360 }} transition={reduced ? undefined : { duration: 34, repeat: Infinity, ease: "linear" }}><i /><i /></motion.div>
+        <motion.div className="local-ring local-ring-inner" animate={reduced ? undefined : { rotate: -360 }} transition={reduced ? undefined : { duration: 23, repeat: Infinity, ease: "linear" }}><i /><i /><i /></motion.div>
+        <motion.div className="local-core" animate={reduced ? undefined : { boxShadow: ["0 0 0 0 rgba(181,148,43,0)", "0 0 0 18px rgba(181,148,43,.08)", "0 0 0 0 rgba(181,148,43,0)"] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}><span>LLM</span></motion.div>
+        <span className="local-boundary">LOCAL</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="service-visual service-visual-crm" aria-hidden="true">
+      <svg viewBox="0 0 600 250" role="presentation">
+        {["M34 48 C172 48 174 126 315 126", "M34 126 H315", "M34 204 C172 204 174 126 315 126"].map((path, index) => (
+          <motion.path d={path} key={path} initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.5, repeat: reduced ? 0 : Infinity, delay: index * .55, ease: "easeInOut" }} />
+        ))}
+        <motion.path d="M315 126 H555" initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.5, repeat: reduced ? 0 : Infinity, delay: 1.4, ease: "easeInOut" }} />
+      </svg>
+      <div className="crm-sources"><i>AD</i><i>SOC</i><i>WEB</i></div>
+      <motion.div className="crm-hub" animate={reduced ? undefined : { boxShadow: ["0 0 0 0 rgba(181,148,43,0)", "0 0 0 14px rgba(181,148,43,.12)", "0 0 0 0 rgba(181,148,43,0)"] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}><span>CRM</span></motion.div>
+      <div className="crm-record"><span /><span /><span /></div>
+    </div>
+  );
+}
+
+export function ServicesGrid() {
+  return (
+    <div className="services-grid">
+      {services.map((service, index) => (
+        <Reveal className="service-card-reveal" delay={index * .06} key={service.number}>
+          <article className={`service-card service-card-${service.kind}`}>
+            <ServiceVisual kind={service.kind} />
+            <div className="service-card-copy">
+              <span>{service.number}</span>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+            </div>
+          </article>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
 function CountUp({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const visible = useInView(ref, { once: true, amount: .7 });

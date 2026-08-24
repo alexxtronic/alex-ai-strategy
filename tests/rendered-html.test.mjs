@@ -31,6 +31,13 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /We find where AI can make or save the most money/);
   assert.match(html, /AI solutions as unique as your company/);
   assert.match(html, /business case to working system/);
+  assert.match(html, /Five ways we make AI useful/);
+  assert.match(html, /GEO\/AEO monitoring and optimization/);
+  assert.match(html, /AI agentic automation/);
+  assert.match(html, /Custom dashboards and MCP integration/);
+  assert.match(html, /Secure local LLM deployment/);
+  assert.match(html, /Social advertising and CRM automation/);
+  assert.match(html, /href="\/#services"/);
   assert.match(html, /href="\/#team"/);
   assert.match(html, /The opportunity is real/);
   assert.match(html, /The proof is in the prompt/);
@@ -84,6 +91,12 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.doesNotMatch(motion, /glass-lens/);
   assert.doesNotMatch(motion, /future-orbit/);
   assert.match(motion, /export function ProcessSystem/);
+  assert.match(motion, /export function ServicesGrid/);
+  assert.match(motion, /service-visual-visibility/);
+  assert.match(motion, /service-visual-agents/);
+  assert.match(motion, /service-visual-dashboard/);
+  assert.match(motion, /service-visual-local/);
+  assert.match(motion, /service-visual-crm/);
   assert.match(motion, /}, 2000\);/);
   assert.doesNotMatch(motion, /opacity: active \? 1 : \.38/);
   assert.match(motion, /export function AnimatedStatistics/);
@@ -113,6 +126,7 @@ test("uses native header links so every navigation item works without the client
   assert.match(header, /<a href=\{item\.href\}/);
   assert.match(header, /href: "\/ai-roi-calculator"/);
   assert.match(header, /href: "\/#process"/);
+  assert.match(header, /href: "\/#services"/);
   assert.match(header, /href: "\/#work"/);
 });
 
@@ -126,6 +140,25 @@ test("server-renders the focused 30 minute contact page", async () => {
   assert.match(html, /Request a free 30 minute AI readiness call with one of our experts today\./);
   assert.match(html, /Request 30 minutes/);
   assert.doesNotMatch(html, /What happens next/);
+});
+
+test("server-renders the four-input AI savings calculator", async () => {
+  const response = await render("/ai-roi-calculator");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /What could AI save your business/);
+  assert.match(html, /AI can save you/);
+  assert.match(html, /€51,840/);
+  assert.match(html, /18 hrs \/ week/);
+  assert.match(html, /864 hrs \/ year/);
+  assert.match(html, /€86,400 \/ year/);
+  assert.match(html, /How is this calculated/);
+  assert.match(html, /not guaranteed payroll reduction/);
+  assert.match(html, /See what we could automate/);
+  assert.doesNotMatch(html, /Illustrative first-year net value/);
+  assert.doesNotMatch(html, /Potential capacity/);
+  assert.doesNotMatch(html, /Pressure-test the case/);
 });
 
 test("renders a crawlable Insights index and article pages", async () => {

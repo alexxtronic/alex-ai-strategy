@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal } from "./components/ExperienceMotion";
+import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
 
 const clients = [
   { name: "Specsavers", slug: "specsavers", image: "/clients/specsavers.png" },
@@ -55,6 +55,11 @@ export default function Home() {
       <section className="process-section section-light" id="process">
         <div className="section-intro process-intro"><Reveal><h2>AI solutions as unique as your company.</h2></Reveal><Reveal delay={0.1}><p>Our four-step system identifies where AI can create measurable advantage, then takes one priority from business case to working system.</p></Reveal></div>
         <ProcessSystem />
+      </section>
+
+      <section className="services-section section-light" id="services">
+        <div className="section-intro services-intro"><Reveal><h2>Five ways we make AI useful.</h2></Reveal><Reveal delay={0.1}><p>We select the right architecture for the business need, connect it cleanly, and stay accountable for what it changes.</p></Reveal></div>
+        <ServicesGrid />
       </section>
 
       <section className="statistics-section section-dark" id="proof">
