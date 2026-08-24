@@ -3,15 +3,20 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
-  const { default: worker } = await import(workerUrl.href);
+  const isFile = /\.[a-z0-9]+$/i.test(pathname);
+  const relativePath = pathname === "/"
+    ? "../out/index.html"
+    : isFile
+      ? `../out${pathname}`
+      : `../out${pathname}/index.html`;
+  const body = await readFile(new URL(relativePath, import.meta.url));
+  const contentType = pathname.endsWith(".xml")
+    ? pathname === "/feed.xml" ? "application/rss+xml; charset=utf-8" : "application/xml; charset=utf-8"
+    : pathname.endsWith(".txt")
+      ? "text/plain; charset=utf-8"
+      : "text/html; charset=utf-8";
 
-  return worker.fetch(
-    new Request(`http://localhost${pathname}`, { headers: { accept: "text/html" } }),
-    { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
-  );
+  return new Response(body, { status: 200, headers: { "content-type": contentType } });
 }
 
 test("server-renders the VITRUS strategy proposition", async () => {

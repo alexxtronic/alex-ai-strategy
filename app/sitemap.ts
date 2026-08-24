@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { insights } from "./insights/content";
 import { siteUrl } from "./lib/site";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const coreRoutes = ["", "/insights", "/ai-roi-calculator", "/contact", "/privacy"].map((path) => ({
     url: `${siteUrl}${path}`,

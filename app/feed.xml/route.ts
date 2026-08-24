@@ -1,6 +1,8 @@
 import { insights } from "../insights/content";
 import { siteUrl } from "../lib/site";
 
+export const dynamic = "force-static";
+
 function escapeXml(value: string) {
   return value.replace(/[<>&'"]/g, (character) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" })[character] ?? character);
 }
