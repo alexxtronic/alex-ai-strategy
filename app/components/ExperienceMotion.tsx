@@ -50,40 +50,39 @@ export function HeroTitle() {
 
 export function HeroCloud() {
   const reduced = useReducedMotion();
-  const morph = [
-    "46% 54% 58% 42% / 48% 42% 58% 52%",
-    "58% 42% 44% 56% / 40% 56% 44% 60%",
-    "42% 58% 52% 48% / 58% 44% 56% 42%",
-    "46% 54% 58% 42% / 48% 42% 58% 52%",
-  ];
 
   return (
-    <div className="hero-cloud" aria-hidden="true">
-      <motion.span
-        className="cloud-shape cloud-shape-one"
-        animate={reduced ? undefined : { x: ["-8vw", "8vw", "-3vw", "-8vw"], y: ["2vh", "-6vh", "5vh", "2vh"], rotate: [-5, 7, -2, -5], scale: [.92, 1.08, .98, .92], borderRadius: morph }}
-        transition={reduced ? undefined : { duration: 16, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="cloud-shape cloud-shape-two"
-        animate={reduced ? undefined : { x: ["7vw", "-9vw", "4vw", "7vw"], y: ["-3vh", "5vh", "-5vh", "-3vh"], rotate: [6, -8, 3, 6], scale: [1.06, .9, 1.04, 1.06], borderRadius: [...morph].reverse() }}
-        transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="cloud-shape cloud-shape-three"
-        animate={reduced ? undefined : { x: ["-4vw", "9vw", "-7vw", "-4vw"], y: ["5vh", "-4vh", "2vh", "5vh"], rotate: [-8, 10, -4, -8], scale: [.96, 1.13, .9, .96], borderRadius: morph }}
-        transition={reduced ? undefined : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="cloud-shape cloud-shape-four"
-        animate={reduced ? undefined : { x: ["2vw", "-5vw", "6vw", "2vw"], y: ["-2vh", "4vh", "-3vh", "-2vh"], rotate: [4, -6, 8, 4], scale: [.9, 1.12, .98, .9], borderRadius: [...morph].reverse() }}
-        transition={reduced ? undefined : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.span
-        className="cloud-core"
-        animate={reduced ? undefined : { rotate: 360, scale: [1, 1.08, 1] }}
-        transition={reduced ? undefined : { rotate: { duration: 34, repeat: Infinity, ease: "linear" }, scale: { duration: 8, repeat: Infinity, ease: "easeInOut" } }}
-      />
+    <div className="hero-cloud hero-future-field" aria-hidden="true">
+      <motion.div
+        className="future-orbit future-orbit-one"
+        animate={reduced ? undefined : { rotate: 360 }}
+        transition={reduced ? undefined : { duration: 42, repeat: Infinity, ease: "linear" }}
+      >
+        <i />
+        <i />
+        <i />
+      </motion.div>
+      <motion.div
+        className="future-orbit future-orbit-two"
+        animate={reduced ? undefined : { rotate: -360 }}
+        transition={reduced ? undefined : { duration: 54, repeat: Infinity, ease: "linear" }}
+      >
+        <i />
+        <i />
+        <i />
+      </motion.div>
+      <span className="future-vector future-vector-one">
+        <motion.i
+          animate={reduced ? undefined : { opacity: [.12, .52, .12], scaleX: [.34, 1, .34] }}
+          transition={reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </span>
+      <span className="future-vector future-vector-two">
+        <motion.i
+          animate={reduced ? undefined : { opacity: [.38, .1, .38], scaleX: [1, .42, 1] }}
+          transition={reduced ? undefined : { duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </span>
     </div>
   );
 }

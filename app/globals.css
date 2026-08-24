@@ -56,26 +56,25 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .button-gold::before { background: var(--paper); }
 .text-link { padding-bottom: 5px; border-bottom: 1px solid currentColor; font-size: 13px; }
 
-.hero-orb { position: absolute; z-index: 1; left: 50%; bottom: -19vw; width: min(68vw, 980px); aspect-ratio: 1; transform: translateX(-50%); pointer-events: none; }
-.hero-blob { position: absolute; inset: 17%; overflow: hidden; background: radial-gradient(circle at 34% 28%, #eddfa2 0 12%, transparent 31%), linear-gradient(135deg, var(--gold-pale), var(--gold) 58%, #8f7118); box-shadow: inset -45px -38px 80px rgba(17,17,15,.18), 0 35px 90px rgba(181,148,43,.2); }
-.hero-blob::before { content: ""; position: absolute; inset: 15%; border: 1px solid rgba(242,240,234,.44); border-radius: inherit; }
-.hero-blob span { position: absolute; width: 38%; aspect-ratio: 1; right: 7%; top: 9%; border-radius: 50%; background: rgba(242,240,234,.16); filter: blur(18px); }
-.hero-orbit { position: absolute; inset: 4%; border: 1px solid rgba(17,17,15,.2); border-radius: 50%; transform: rotate(-13deg) scaleY(.46); }
-.hero-orbit::after { content: ""; position: absolute; width: 9px; aspect-ratio: 1; top: calc(50% - 4px); left: -5px; border-radius: 50%; background: var(--ink); }
-.hero-orbit-two { inset: 11%; transform: rotate(20deg) scaleY(.58); border-color: rgba(181,148,43,.48); }
-.hero-orbit-two::after { left: auto; right: -5px; background: var(--gold); }
-.hero-moon { position: absolute; inset: 0; }
-.hero-moon span { position: absolute; left: 11%; top: 38%; width: 23px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); box-shadow: inset 0 0 0 6px var(--gold); }
-
-.hero-cloud { position: absolute; z-index: 1; inset: -7% -5% -3%; overflow: hidden; opacity: .92; pointer-events: none; -webkit-mask-image: radial-gradient(ellipse 70% 68% at 50% 48%, #000 12%, rgba(0,0,0,.96) 46%, transparent 82%); mask-image: radial-gradient(ellipse 70% 68% at 50% 48%, #000 12%, rgba(0,0,0,.96) 46%, transparent 82%); }
-.hero-cloud::before { content: ""; position: absolute; width: 65%; height: 58%; left: 18%; top: 18%; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(246,227,133,.7) 0 8%, rgba(218,185,67,.38) 29%, rgba(181,148,43,.14) 54%, transparent 76%); filter: blur(26px); }
-.hero-cloud::after { content: ""; position: absolute; inset: 6%; background: radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(242,240,234,.08) 55%, rgba(242,240,234,.72) 91%); }
-.cloud-shape { position: absolute; display: block; filter: blur(62px); mix-blend-mode: multiply; will-change: transform, border-radius; }
-.cloud-shape-one { width: 54%; height: 43%; left: 1%; top: 17%; background: rgba(233,204,78,.72); }
-.cloud-shape-two { width: 50%; height: 42%; right: -1%; top: 29%; background: rgba(181,148,43,.6); }
-.cloud-shape-three { width: 48%; height: 35%; left: 25%; bottom: 3%; background: rgba(102,95,68,.36); }
-.cloud-shape-four { width: 29%; height: 55%; left: 36%; top: 8%; background: linear-gradient(155deg, rgba(255,242,172,.78), rgba(186,148,27,.4)); filter: blur(44px); mix-blend-mode: soft-light; }
-.cloud-core { position: absolute; left: 35%; top: 19%; width: 31%; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(from 20deg, transparent 0 12%, rgba(255,238,155,.62) 23%, transparent 38% 58%, rgba(181,148,43,.42) 72%, transparent 88%); filter: blur(24px); opacity: .75; will-change: transform; }
+.hero-future-field { position: absolute; z-index: 1; inset: 0; overflow: hidden; opacity: .78; pointer-events: none; }
+.hero-future-field::before { content: ""; position: absolute; width: min(32vw, 500px); aspect-ratio: 1; right: -9vw; top: -12vw; border-radius: 50%; background: radial-gradient(circle, rgba(181,148,43,.11), transparent 68%); filter: blur(26px); }
+.hero-future-field::after { content: ""; position: absolute; width: min(27vw, 420px); aspect-ratio: 1; left: -11vw; bottom: -12vw; border-radius: 50%; background: radial-gradient(circle, rgba(181,148,43,.07), transparent 70%); filter: blur(30px); }
+.future-orbit { position: absolute; border: 1px solid rgba(17,17,15,.13); border-radius: 50%; will-change: transform; }
+.future-orbit i { position: absolute; display: block; border: 1px solid rgba(17,17,15,.08); border-radius: 50%; }
+.future-orbit i:nth-child(1) { inset: 13%; }
+.future-orbit i:nth-child(2) { inset: 28%; border-color: rgba(181,148,43,.18); }
+.future-orbit i:nth-child(3) { inset: 42%; border-color: rgba(17,17,15,.07); }
+.future-orbit::before, .future-orbit::after { content: ""; position: absolute; z-index: 1; width: 7px; aspect-ratio: 1; border-radius: 50%; }
+.future-orbit::before { left: 12%; top: 15%; background: var(--gold); box-shadow: 0 0 0 7px rgba(181,148,43,.08); }
+.future-orbit::after { right: 9%; bottom: 23%; border: 1px solid rgba(17,17,15,.35); background: var(--paper); }
+.future-orbit-one { width: min(49vw, 720px); height: min(31vw, 450px); right: -12vw; top: -15vw; }
+.future-orbit-two { width: min(42vw, 610px); height: min(27vw, 390px); left: -14vw; bottom: -17vw; border-color: rgba(181,148,43,.17); }
+.future-vector { position: absolute; display: block; height: 1px; }
+.future-vector i { display: block; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(181,148,43,.56), transparent); will-change: transform, opacity; }
+.future-vector-one { width: min(24vw, 340px); right: 2vw; top: 20%; transform: rotate(-28deg); }
+.future-vector-one i { transform-origin: right center; }
+.future-vector-two { width: min(20vw, 280px); left: 1vw; bottom: 21%; transform: rotate(25deg); }
+.future-vector-two i { transform-origin: left center; }
 
 .client-strip { min-height: 118px; overflow: hidden; display: flex; align-items: center; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-bright); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%); }
 .client-track { width: max-content; display: flex; align-items: center; animation: client-marquee 52s linear infinite reverse; }
@@ -409,9 +408,11 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   .hero { min-height: calc(100svh - 74px); padding: 10vh 22px 9vh; }
   h1 { font-size: clamp(58px, 15vw, 92px); line-height: .84; }
   .hero-lede { margin-top: 7vh; font-size: 20px; }
-  .hero-orb { width: 116vw; bottom: -25vw; opacity: .94; }
-  .hero-cloud { inset: 1% -38% -3%; opacity: .82; -webkit-mask-image: radial-gradient(ellipse 60% 72% at 50% 43%, #000 12%, rgba(0,0,0,.94) 52%, transparent 88%); mask-image: radial-gradient(ellipse 60% 72% at 50% 43%, #000 12%, rgba(0,0,0,.94) 52%, transparent 88%); }
-  .cloud-shape { filter: blur(48px); }
+  .hero-future-field { opacity: .68; }
+  .future-orbit-one { width: 92vw; height: 58vw; right: -52vw; top: -18vw; }
+  .future-orbit-two { width: 78vw; height: 50vw; left: -48vw; bottom: -20vw; }
+  .future-vector-one { width: 38vw; right: -2vw; top: 18%; }
+  .future-vector-two { width: 33vw; left: -2vw; bottom: 17%; }
   .client-strip { min-height: 92px; }
   .client-strip { -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, transparent 16%, #000 34%, #000 66%, transparent 84%, transparent 100%); }
   .client-logo { flex-basis: 126px; width: 126px; height: 38px; margin: 0 25px; }
@@ -498,9 +499,9 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   h1 { font-size: clamp(54px, 15.8vw, 76px); }
   .hero-actions { align-items: flex-start; flex-direction: column; }
   .hero-actions .button { min-width: 212px; }
-  .hero-orb { width: 138vw; bottom: -30vw; }
-  .hero-cloud { inset: 3% -54% -2%; opacity: .76; }
-  .hero-moon span { width: 18px; }
+  .hero-future-field { opacity: .62; }
+  .future-orbit-one { width: 112vw; height: 70vw; right: -69vw; top: -12vw; }
+  .future-orbit-two { width: 94vw; height: 60vw; left: -62vw; bottom: -15vw; }
   .client-strip { min-height: 82px; }
   .client-logo { flex-basis: 108px; width: 108px; height: 34px; margin: 0 24px; }
   .value-sequence-head { grid-template-columns: 1fr; }
