@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  actions: read
   contents: read
   pages: write
   id-token: write
@@ -27,6 +28,31 @@ jobs:
       - run: npm test
         env:
           NEXT_PUBLIC_SITE_URL: https://vitrus.org
+      - name: Preserve recent static assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/vitrus-pages-assets out/_next/static
+          gh run list \
+            --repo "${{ github.repository }}" \
+            --workflow "Deploy VITRUS to GitHub Pages" \
+            --status success \
+            --limit 5 \
+            --json databaseId \
+            --jq '.[].databaseId' | while read -r run_id; do
+              artifact_dir="/tmp/vitrus-pages-assets/${run_id}"
+              mkdir -p "${artifact_dir}/site"
+              gh run download "${run_id}" \
+                --repo "${{ github.repository }}" \
+                --name github-pages \
+                --dir "${artifact_dir}" || continue
+              if [ -f "${artifact_dir}/artifact.tar" ]; then
+                tar -xf "${artifact_dir}/artifact.tar" -C "${artifact_dir}/site"
+                if [ -d "${artifact_dir}/site/_next/static" ]; then
+                  rsync -a --ignore-existing "${artifact_dir}/site/_next/static/" out/_next/static/
+                fi
+              fi
+            done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
