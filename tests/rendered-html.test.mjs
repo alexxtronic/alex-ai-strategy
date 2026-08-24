@@ -89,6 +89,16 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(layout, /og-v2\.png/);
 });
 
+test("uses native header links so every navigation item works without the client router", async () => {
+  const header = await readFile(new URL("../app/components/SiteHeader.tsx", import.meta.url), "utf8");
+
+  assert.doesNotMatch(header, /from ["']next\/link["']/);
+  assert.match(header, /<a href=\{item\.href\}/);
+  assert.match(header, /href: "\/ai-roi-calculator"/);
+  assert.match(header, /href: "\/#process"/);
+  assert.match(header, /href: "\/#work"/);
+});
+
 test("server-renders the focused 30 minute contact page", async () => {
   const response = await render("/contact");
   assert.equal(response.status, 200);

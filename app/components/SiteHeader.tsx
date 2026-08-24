@@ -1,7 +1,8 @@
 "use client";
 
+/* eslint-disable @next/next/no-html-link-for-pages -- Native navigation avoids Vinext client-router interception failures. */
+
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const navigation = [
@@ -46,15 +47,15 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
 
   return (
     <header className={`site-header${compact ? " site-header-compact" : ""}`}>
-      <Link className="brand" href="/" aria-label="VITRUS home" onClick={closeMenu}>
+      <a className="brand" href="/" aria-label="VITRUS home" onClick={closeMenu}>
         <Image src="/vitrus-logo-black.png" alt="VITRUS" width={2172} height={724} priority />
-      </Link>
+      </a>
       <nav className="desktop-nav" aria-label="Primary navigation">
-        {navigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
-        <Link className="nav-cta" href="/contact">Talk to us</Link>
+        {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
+        <a className="nav-cta" href="/contact">Talk to us</a>
       </nav>
       <div className="mobile-nav-actions">
-        <Link className="nav-cta" href="/contact" onClick={closeMenu}>Talk to us</Link>
+        <a className="nav-cta" href="/contact" onClick={closeMenu}>Talk to us</a>
         <button
           ref={menuButton}
           className="menu-toggle"
@@ -69,9 +70,9 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
       <div className={`mobile-menu${menuOpen ? " is-open" : ""}`} id="mobile-menu" aria-hidden={!menuOpen}>
         <nav className="mobile-menu-nav" aria-label="Mobile navigation">
           {navigation.map((item, index) => (
-            <Link href={item.href} key={item.href} onClick={closeMenu} ref={index === 0 ? firstMenuLink : undefined}>{item.label}</Link>
+            <a href={item.href} key={item.href} onClick={closeMenu} ref={index === 0 ? firstMenuLink : undefined}>{item.label}</a>
           ))}
-          <Link className="mobile-menu-contact" href="/contact" onClick={closeMenu}>Let’s Chat</Link>
+          <a className="mobile-menu-contact" href="/contact" onClick={closeMenu}>Let’s Chat</a>
         </nav>
         <p>AI strategy and implementation for companies with real operational complexity.</p>
       </div>
