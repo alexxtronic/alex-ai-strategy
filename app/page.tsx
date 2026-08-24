@@ -63,7 +63,7 @@ export default function Home() {
       </section>
 
       <section className="case-section section-light" id="work">
-        <div className="case-section-intro"><Reveal><h2>Useful AI, doing real work.</h2></Reveal><Reveal delay={0.1}><div><p>We’ve already helped multiple enterprise brands transition to the new era of AI.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
+        <div className="case-section-intro"><Reveal><h2>The proof is in the prompt.</h2></Reveal><Reveal delay={0.1}><div><p>We’ve already helped multiple enterprise brands transition to the new era of AI.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
         <div className="case-grid">
           <Reveal>
             <article className="case-card">

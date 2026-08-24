@@ -33,6 +33,7 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /business case to working system/);
   assert.match(html, /href="\/#team"/);
   assert.match(html, /The opportunity is real/);
+  assert.match(html, /The proof is in the prompt/);
   assert.match(html, /Boligsiden/);
   assert.match(html, /3,449/);
   assert.match(html, /Custom GEO \/ AEO solution for Boligsiden/);
