@@ -89,10 +89,12 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /useReducedMotion/);
   assert.match(motion, /export function HeroCloud/);
   assert.match(motion, /hero-ambient-glow/);
-  assert.match(motion, /corner-signals-upper/);
-  assert.match(motion, /corner-signals-lower/);
-  assert.match(motion, /corner-signal-sweep/);
-  assert.match(motion, /corner-signal-node-secondary/);
+  assert.match(motion, /hero-organic-form-upper/);
+  assert.match(motion, /hero-organic-form-lower/);
+  assert.match(motion, /hero-organic-contour/);
+  assert.match(motion, /hero-organic-echo/);
+  assert.doesNotMatch(css, /\.hero::before/);
+  assert.doesNotMatch(motion, /corner-signal-sweep/);
   assert.doesNotMatch(motion, /glass-lens/);
   assert.doesNotMatch(motion, /future-orbit/);
   assert.match(motion, /export function ProcessSystem/);

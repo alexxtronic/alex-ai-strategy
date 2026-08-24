@@ -61,60 +61,26 @@ export function HeroCloud() {
       />
       <motion.div
         className="hero-ambient-glow hero-ambient-glow-lower"
-        animate={reduced ? undefined : { opacity: [.14, .3, .14], scale: [1.04, .94, 1.04] }}
+        animate={reduced ? undefined : { opacity: [.12, .24, .12], scale: [1.04, .96, 1.04] }}
         transition={reduced ? undefined : { duration: 15, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="corner-signals corner-signals-upper"
-        animate={reduced ? undefined : { rotate: [-4, 4, -4], scale: [1, 1.025, 1] }}
-        transition={reduced ? undefined : { duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="hero-organic-form hero-organic-form-upper"
+        animate={reduced ? undefined : { rotate: 360 }}
+        transition={reduced ? undefined : { duration: 38, repeat: Infinity, ease: "linear" }}
       >
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <motion.div
-          className="corner-signal-sweep"
-          animate={reduced ? undefined : { rotate: 360 }}
-          transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.i
-          className="corner-signal-node"
-          animate={reduced ? undefined : { rotate: 360 }}
-          transition={reduced ? undefined : { duration: 22, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.i
-          className="corner-signal-node corner-signal-node-secondary"
-          animate={reduced ? undefined : { rotate: -360 }}
-          transition={reduced ? undefined : { duration: 16, repeat: Infinity, ease: "linear" }}
-        />
+        <span className="hero-organic-contour" />
+        <span className="hero-organic-echo" />
+        <i className="hero-organic-node" />
       </motion.div>
       <motion.div
-        className="corner-signals corner-signals-lower"
-        animate={reduced ? undefined : { rotate: [3, -4, 3], scale: [1.02, .98, 1.02] }}
-        transition={reduced ? undefined : { duration: 21, repeat: Infinity, ease: "easeInOut" }}
+        className="hero-organic-form hero-organic-form-lower"
+        animate={reduced ? undefined : { rotate: -360 }}
+        transition={reduced ? undefined : { duration: 46, repeat: Infinity, ease: "linear" }}
       >
-        <span />
-        <span />
-        <span />
-        <span />
-        <span />
-        <motion.div
-          className="corner-signal-sweep corner-signal-sweep-reverse"
-          animate={reduced ? undefined : { rotate: -360 }}
-          transition={reduced ? undefined : { duration: 23, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.i
-          className="corner-signal-node"
-          animate={reduced ? undefined : { rotate: -360 }}
-          transition={reduced ? undefined : { duration: 27, repeat: Infinity, ease: "linear" }}
-        />
-        <motion.i
-          className="corner-signal-node corner-signal-node-secondary"
-          animate={reduced ? undefined : { rotate: 360 }}
-          transition={reduced ? undefined : { duration: 19, repeat: Infinity, ease: "linear" }}
-        />
+        <span className="hero-organic-contour" />
+        <span className="hero-organic-echo" />
+        <i className="hero-organic-node" />
       </motion.div>
     </div>
   );
