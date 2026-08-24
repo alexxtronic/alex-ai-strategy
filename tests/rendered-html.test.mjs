@@ -57,6 +57,8 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /leadership alignment/);
   assert.match(html, /Let’s Chat/);
   assert.match(html, /href="\/insights"/);
+  assert.match(html, />Articles</);
+  assert.doesNotMatch(html, />Insights</);
   assert.match(html, /aria-controls="mobile-menu"/);
   assert.match(html, /Mobile navigation/);
   assert.match(html, /ROI calculator/);
@@ -161,10 +163,12 @@ test("server-renders the four-input AI savings calculator", async () => {
   assert.doesNotMatch(html, /Pressure-test the case/);
 });
 
-test("renders a crawlable Insights index and article pages", async () => {
+test("renders a crawlable Articles index and article pages", async () => {
   const indexResponse = await render("/insights");
   assert.equal(indexResponse.status, 200);
   const indexHtml = await indexResponse.text();
+  assert.match(indexHtml, /Articles on enterprise AI strategy and implementation/);
+  assert.match(indexHtml, /Read the article/);
   assert.match(indexHtml, /Ideas for making AI operational/);
   assert.match(indexHtml, /where-enterprise-ai-value-actually-lives/);
   assert.match(indexHtml, /ai-business-case-finance-can-trust/);

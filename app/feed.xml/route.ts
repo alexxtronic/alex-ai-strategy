@@ -20,7 +20,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8" ?>
     <rss version="2.0">
       <channel>
-        <title>VITRUS Insights</title>
+        <title>VITRUS Articles</title>
         <link>${siteUrl}/insights</link>
         <description>Practical thinking on enterprise AI strategy and implementation.</description>
         ${items}

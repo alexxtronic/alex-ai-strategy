@@ -1,4 +1,4 @@
-# Adding a VITRUS insight
+# Adding a VITRUS article
 
 Posts live in `app/insights/content.ts`.
 
@@ -9,6 +9,6 @@ Posts live in `app/insights/content.ts`.
 5. Add the opening, article sections, optional point lists, and closing.
 6. Keep claims accurate, concrete, and useful to an enterprise reader.
 
-The Insights index, individual article page, canonical metadata, Article structured data, sitemap, and RSS feed are generated from this single entry.
+The Articles index, individual article page, canonical metadata, Article structured data, sitemap, and RSS feed are generated from this single entry.
 
 Before publishing, run the project tests. They verify that every article renders, includes its search metadata, and contains no em dashes.

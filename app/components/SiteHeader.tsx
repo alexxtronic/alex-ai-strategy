@@ -11,7 +11,7 @@ const navigation = [
   { label: "Proof", href: "/#proof" },
   { label: "Case studies", href: "/#work" },
   { label: "Team", href: "/#team" },
-  { label: "Insights", href: "/insights" },
+  { label: "Articles", href: "/insights" },
   { label: "ROI calculator", href: "/ai-roi-calculator" },
 ];
 

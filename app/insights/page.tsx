@@ -5,7 +5,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { formatInsightDate, insights } from "./content";
 import { siteUrl } from "../lib/site";
 
-const title = "Insights on enterprise AI strategy and implementation | VITRUS";
+const title = "Articles on enterprise AI strategy and implementation | VITRUS";
 const description = "Practical thinking on AI opportunity selection, business cases, system design, and enterprise implementation from VITRUS.";
 
 export const metadata: Metadata = {
@@ -27,12 +27,12 @@ export default function InsightsPage() {
         <h1>Ideas for making AI operational.</h1>
         <p>Practical thinking on where AI creates value, how to prove the case, and what it takes to build systems companies can trust.</p>
       </section>
-      <section className="insights-index" aria-label="VITRUS insights">
+      <section className="insights-index" aria-label="VITRUS articles">
         <article className="insight-featured">
           <div className="insight-card-meta"><span>{featured.category}</span><time dateTime={featured.publishedAt}>{formatInsightDate(featured.publishedAt)}</time><span>{featured.readingTime}</span></div>
           <h2><Link href={`/insights/${featured.slug}`}>{featured.title}</Link></h2>
           <p>{featured.description}</p>
-          <Link className="insight-read-link" href={`/insights/${featured.slug}`}>Read the insight</Link>
+          <Link className="insight-read-link" href={`/insights/${featured.slug}`}>Read the article</Link>
         </article>
         <div className="insights-grid">
           {moreInsights.map((insight) => (

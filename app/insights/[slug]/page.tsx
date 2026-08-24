@@ -15,7 +15,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: InsightPageProps): Promise<Metadata> {
   const { slug } = await params;
   const insight = getInsight(slug);
-  if (!insight) return { title: "Insight not found | VITRUS", robots: { index: false, follow: false } };
+  if (!insight) return { title: "Article not found | VITRUS", robots: { index: false, follow: false } };
 
   const title = `${insight.title} | VITRUS`;
   const url = `${siteUrl}/insights/${insight.slug}`;
@@ -53,7 +53,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
       <article className="insight-article">
         <header className="insight-article-header">
-          <Link className="insight-back" href="/insights">All insights</Link>
+          <Link className="insight-back" href="/insights">All articles</Link>
           <div className="insight-article-meta"><span>{insight.category}</span><time dateTime={insight.publishedAt}>{formatInsightDate(insight.publishedAt)}</time><span>{insight.readingTime}</span></div>
           <h1>{insight.title}</h1>
           <p>{insight.description}</p>
@@ -75,7 +75,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
       </article>
       <section className="related-insights">
         <h2>Continue reading.</h2>
-        <div>{related.map((item) => <article key={item.slug}><span>{item.category}</span><h3><Link href={`/insights/${item.slug}`}>{item.title}</Link></h3><Link href={`/insights/${item.slug}`}>Read insight</Link></article>)}</div>
+        <div>{related.map((item) => <article key={item.slug}><span>{item.category}</span><h3><Link href={`/insights/${item.slug}`}>{item.title}</Link></h3><Link href={`/insights/${item.slug}`}>Read article</Link></article>)}</div>
       </section>
       <section className="insight-cta"><h2>Have an AI opportunity worth examining?</h2><Link className="button button-gold" href="/contact"><span>Let’s Chat</span></Link></section>
       <SiteFooter />
