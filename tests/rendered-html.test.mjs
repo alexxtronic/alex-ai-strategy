@@ -40,6 +40,7 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.match(html, /Custom Dashboard with MCP integrations/);
   assert.match(html, /We’ve already helped multiple enterprise brands transition to the new era of AI/);
   assert.match(html, /A team you can trust/);
+  assert.match(html, /portrait-image-crop-corners/);
   assert.match(html, /Senior specialists stay involved/);
   assert.match(html, /André Rosario/);
   assert.match(html, /Kristian Hansen/);
