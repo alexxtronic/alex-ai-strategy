@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
+import { AnimatedStatistics, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
 
 const team = [
   { name: "Alexander D'Amore", role: "Founder & CEO", image: "/alexander-damore.jpg", portraitClass: "portrait-image-crop-corners", focus: "Leads AI strategy, business-case development, solution design, and delivery." },
@@ -41,25 +41,13 @@ export default function Home() {
       </section>
 
       <section className="case-section section-light" id="work">
-        <div className="case-section-intro"><Reveal><h2>The proof is in the prompt.</h2></Reveal><Reveal delay={0.1}><div><p>We’ve already helped multiple enterprise brands transition to the new era of AI.</p><a className="case-intro-link" href="/contact">Bring us your challenge</a></div></Reveal></div>
-        <div className="case-grid">
-          <Reveal>
-            <article className="case-card">
-              <div className="case-art-wrap"><CaseStudyVisual variant="visibility" /></div>
-              <div className="case-deliverable"><strong>Custom GEO / AEO solution for a property platform</strong><p>Automatic LLM monitoring</p></div>
-              <h3>Turning AI visibility into a repeatable benchmark.</h3>
-              <p className="case-summary">A leading property platform needed more than anecdotal spot checks. We co-developed an n8n-orchestrated evaluation pipeline using edge functions, controlled prompt variations, and an analysis agent that classified brand mentions across model responses. Automatic monitoring turned that work into a repeatable GEO and AEO benchmark while saving 3,449 hours.</p>
-              <p className="case-type">Property intelligence · Multi-model AI visibility</p>
-            </article>
-          </Reveal>
+        <div className="case-section-intro">
+          <Reveal><h2>Enterprise experience.</h2></Reveal>
           <Reveal delay={0.1}>
-            <article className="case-card case-card-offset">
-              <CaseStudyVisual variant="intelligence" />
-              <div className="case-deliverable"><strong>Brand Sentiment Dashboard</strong><p>Custom Dashboard with MCP integrations</p></div>
-              <h3>Making web sentiment easier to trust.</h3>
-              <p className="case-summary">For a global enterprise brand, we helped create an AI-enabled report tracking total Facebook, Instagram, and blog mentions alongside user sentiment, while keeping the underlying evidence beside the model-assisted analysis.</p>
-              <p className="case-type">Enterprise brand intelligence · Social and web sentiment</p>
-            </article>
+            <div>
+              <p>We’ve already worked with multiple enterprise companies.</p>
+              <a className="case-intro-link" href="/contact">Bring us your challenge</a>
+            </div>
           </Reveal>
         </div>
       </section>
