@@ -47,7 +47,16 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.doesNotMatch(html, /Custom GEO \/ AEO solution for a property platform/);
   assert.doesNotMatch(html, /Brand Sentiment Dashboard/);
   assert.doesNotMatch(html, /Custom Dashboard with MCP integrations/);
-  assert.doesNotMatch(html, /Selected past clients/);
+  assert.match(html, /Selected past clients/);
+  assert.match(html, /Empire State Building/);
+  assert.match(html, /Humana/);
+  assert.match(html, /Global Citizen/);
+  assert.match(html, /DFIN/);
+  assert.match(html, /STATE Grill (?:&amp;|&) Bar/);
+  assert.doesNotMatch(html, /Specsavers/);
+  assert.doesNotMatch(html, /LEMAN/);
+  assert.doesNotMatch(html, /Scaleup Finance/);
+  assert.doesNotMatch(html, /Candy King/);
   assert.match(html, /A team you can trust/);
   assert.match(html, /portrait-image-crop-corners/);
   assert.match(html, /Senior specialists stay involved/);
