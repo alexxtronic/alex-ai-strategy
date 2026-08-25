@@ -3,16 +3,6 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
 
-const clients = [
-  { name: "Specsavers", slug: "specsavers", image: "/clients/specsavers.png" },
-  { name: "Global Citizen", slug: "global-citizen", image: "/clients/global-citizen.png" },
-  { name: "LEMAN", slug: "leman", image: "/clients/leman.png" },
-  { name: "Empire State Realty Trust", slug: "empire-state", image: "/clients/empire-state-realty-trust.png" },
-  { name: "Scaleup Finance", slug: "scaleup-finance", image: "/clients/scaleup-finance.webp" },
-  { name: "Humana", slug: "humana", image: "/clients/humana.png" },
-  { name: "Candy King", slug: "candy-king", image: "/clients/candy-king.png" },
-];
-
 const team = [
   { name: "Alexander D'Amore", role: "Founder & CEO", image: "/alexander-damore.jpg", portraitClass: "portrait-image-crop-corners", focus: "Leads AI strategy, business-case development, solution design, and delivery." },
   { name: "André Rosario", role: "Senior Consultant, AI & CRM", image: "/andre-dimmer.jpg", focus: "Connects AI with CRM, customer journeys, and enterprise operating systems." },
@@ -32,22 +22,6 @@ export default function Home() {
             <p className="hero-lede">We find where AI can make or save the most money, quantify the opportunity, and stay to build and improve what matters.</p>
           </Reveal>
           <div className="hero-actions"><a className="button button-dark" href="/contact"><span>Let’s Chat</span></a></div>
-        </div>
-      </section>
-
-      <section className="client-strip" aria-label="Selected past clients">
-        <div className="client-track">
-          {[...clients, ...clients].map((client, index) => (
-            <div className={`client-logo client-logo-${client.slug}`} aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
-              <Image
-                src={client.image}
-                alt={index < clients.length ? client.name : ""}
-                fill
-                sizes="190px"
-                style={{ objectFit: ["specsavers", "global-citizen", "leman"].includes(client.slug) ? "contain" : "cover" }}
-              />
-            </div>
-          ))}
         </div>
       </section>
 
