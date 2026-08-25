@@ -3,6 +3,14 @@ import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
 import { AnimatedStatistics, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
 
+const clients = [
+  { name: "Empire State Building", slug: "empire-state", image: "/clients/empire-state-realty-trust.png" },
+  { name: "Humana", slug: "humana", image: "/clients/humana.png" },
+  { name: "Global Citizen", slug: "global-citizen", image: "/clients/global-citizen.png" },
+  { name: "DFIN", slug: "dfin" },
+  { name: "STATE Grill & Bar", slug: "state-grill" },
+];
+
 const team = [
   { name: "Alexander D'Amore", role: "Founder & CEO", image: "/alexander-damore.jpg", portraitClass: "portrait-image-crop-corners", focus: "Leads AI strategy, business-case development, solution design, and delivery." },
   { name: "André Rosario", role: "Senior Consultant, AI & CRM", image: "/andre-dimmer.jpg", focus: "Connects AI with CRM, customer journeys, and enterprise operating systems." },
@@ -22,6 +30,22 @@ export default function Home() {
             <p className="hero-lede">We find where AI can make or save the most money, quantify the opportunity, and stay to build and improve what matters.</p>
           </Reveal>
           <div className="hero-actions"><a className="button button-dark" href="/contact"><span>Let’s Chat</span></a></div>
+        </div>
+      </section>
+
+      <section className="client-strip" aria-label="Selected past clients">
+        <div className="client-track">
+          {[...clients, ...clients].map((client, index) => (
+            <div className={`client-logo client-logo-${client.slug}`} aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
+              {client.image ? (
+                <Image src={client.image} alt={index < clients.length ? client.name : ""} fill sizes="190px" />
+              ) : (
+                <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", textAlign: "center", fontFamily: "var(--font-sans), Arial, sans-serif", fontSize: client.slug === "dfin" ? "28px" : "17px", letterSpacing: client.slug === "dfin" ? ".08em" : ".02em", lineHeight: 1.1 }}>
+                  {client.name}
+                </span>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
