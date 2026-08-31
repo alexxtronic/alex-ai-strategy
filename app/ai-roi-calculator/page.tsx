@@ -5,9 +5,9 @@ import { RoiCalculator } from "./RoiCalculator";
 
 export const metadata: Metadata = {
   title: "AI ROI Calculator | VITRUS",
-  description: "Estimate the annual value of automating one repetitive workflow with VITRUS.",
-  openGraph: { title: "AI ROI Calculator | VITRUS", description: "Estimate the annual value of automating one repetitive workflow with VITRUS.", images: [] },
-  twitter: { title: "AI ROI Calculator | VITRUS", description: "Estimate the annual value of automating one repetitive workflow with VITRUS.", images: [] },
+  description: "Estimate what repetitive work costs and how much capacity a responsible AI system could return.",
+  openGraph: { title: "AI ROI Calculator | VITRUS", description: "Estimate what repetitive work costs and how much capacity a responsible AI system could return.", images: [] },
+  twitter: { title: "AI ROI Calculator | VITRUS", description: "Estimate what repetitive work costs and how much capacity a responsible AI system could return.", images: [] },
 };
 
 export default function RoiPage() {

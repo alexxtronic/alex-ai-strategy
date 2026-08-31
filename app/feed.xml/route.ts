@@ -22,7 +22,7 @@ export async function GET() {
       <channel>
         <title>VITRUS Articles</title>
         <link>${siteUrl}/insights</link>
-        <description>Practical thinking on enterprise AI strategy and implementation.</description>
+        <description>Clear thinking on finding, governing, and building AI systems that work.</description>
         ${items}
       </channel>
     </rss>`;

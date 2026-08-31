@@ -19,34 +19,35 @@ async function render(pathname = "/") {
   return new Response(body, { status: 200, headers: { "content-type": contentType } });
 }
 
-test("server-renders the VITRUS strategy proposition", async () => {
+test("server-renders the VITRUS mission-driven proposition", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>VITRUS \| Your next AI Strategy Partner<\/title>/i);
-  assert.match(html, /We’re your next/);
-  assert.match(html, /AI Strategy Partner/);
-  assert.match(html, /We find where AI can make or save the most money/);
-  assert.match(html, /AI solutions as unique as your company/);
-  assert.match(html, /business case to working system/);
-  assert.match(html, /Five ways we make AI useful/);
-  assert.match(html, /GEO\/AEO monitoring and optimization/);
-  assert.match(html, /AI agentic automation/);
-  assert.match(html, /Custom dashboards and MCP integration/);
-  assert.match(html, /Secure local LLM deployment/);
-  assert.match(html, /Social advertising and CRM automation/);
+  assert.match(html, /<title>VITRUS \| AI Systems for Missions That Matter<\/title>/i);
+  assert.match(html, /AI systems for/);
+  assert.match(html, /missions that matter/);
+  assert.match(html, /high-friction work into governed AI systems/);
+  assert.match(html, /From friction to working system/);
+  assert.match(html, /Where AI can return capacity/);
+  assert.match(html, /Funder and partner intelligence/);
+  assert.match(html, /Grant and reporting automation/);
+  assert.match(html, /Live listening and decision dashboards/);
+  assert.match(html, /Secure knowledge systems/);
+  assert.match(html, /Workflow and CRM integration/);
   assert.match(html, /href="\/#services"/);
   assert.match(html, /href="\/#team"/);
-  assert.match(html, /The opportunity is real/);
-  assert.match(html, /Enterprise experience/);
-  assert.match(html, /We’ve already worked with multiple enterprise companies/);
+  assert.match(html, /More capacity/);
+  assert.match(html, /More impact/);
+  assert.match(html, /Proof, not prototypes/);
+  assert.match(html, /Live social intelligence for Global Citizen/);
+  assert.match(html, /social listening sources through MCP integrations/);
+  assert.match(html, /Grant drafting, grounded in evidence/);
+  assert.match(html, /human review before submission/);
   assert.doesNotMatch(html, /The proof is in the prompt/);
   assert.doesNotMatch(html, /3,449/);
   assert.doesNotMatch(html, /Custom GEO \/ AEO solution for a property platform/);
-  assert.doesNotMatch(html, /Brand Sentiment Dashboard/);
-  assert.doesNotMatch(html, /Custom Dashboard with MCP integrations/);
   assert.match(html, /Selected past clients/);
   assert.match(html, /Empire State Building/);
   assert.match(html, /Humana/);
@@ -57,15 +58,15 @@ test("server-renders the VITRUS strategy proposition", async () => {
   assert.doesNotMatch(html, /LEMAN/);
   assert.doesNotMatch(html, /Scaleup Finance/);
   assert.doesNotMatch(html, /Candy King/);
-  assert.match(html, /A team you can trust/);
+  assert.match(html, /Senior people, start to finish/);
   assert.match(html, /portrait-image-crop-corners/);
-  assert.match(html, /Senior specialists stay involved/);
+  assert.match(html, /specialists who shape the strategy stay close/);
   assert.match(html, /André Rosario/);
   assert.match(html, /Kristian Hansen/);
   assert.match(html, /business-case development/);
   assert.match(html, /enterprise operating systems/);
   assert.match(html, /leadership alignment/);
-  assert.match(html, /Let’s Chat/);
+  assert.match(html, /Book a free intro call/);
   assert.match(html, /href="\/insights"/);
   assert.match(html, />Articles</);
   assert.doesNotMatch(html, />Insights</);
@@ -120,16 +121,12 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /CountUp value=\{81\}/);
   assert.match(motion, /CountUp value=\{88\}/);
   assert.match(motion, /CountUp value=\{47\}/);
-  assert.match(motion, /Illustrative reporting view/);
+  assert.match(motion, /Global Citizen social intelligence/);
+  assert.match(motion, /Grant application workspace/);
+  assert.match(motion, /Live sentiment view/);
   assert.match(motion, /SentimentLoop/);
   assert.match(motion, /channel-sparkline/);
-  assert.match(motion, /Facebook/);
-  assert.match(motion, /Instagram/);
-  assert.match(motion, /Blog/);
-  assert.match(motion, /chatgpt\.svg/);
-  assert.match(motion, /claude\.svg/);
-  assert.match(motion, /gemini\.svg/);
-  assert.match(motion, /perplexity\.svg/);
+  assert.doesNotMatch(motion, /3449/);
   assert.doesNotMatch(motion, /dashboard-scan/);
   assert.match(motion, /requestAnimationFrame/);
   assert.match(packageJson, /"motion":/);
@@ -152,10 +149,10 @@ test("server-renders the focused 30 minute contact page", async () => {
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /We’re yours for/);
-  assert.match(html, /30 minutes/);
-  assert.match(html, /Request a free 30 minute AI readiness call with one of our experts today\./);
-  assert.match(html, /Request 30 minutes/);
+  assert.match(html, /Show us where/);
+  assert.match(html, /the work gets stuck/);
+  assert.match(html, /Book a free 30 minute call to find where responsible AI could return the most capacity to your team\./);
+  assert.match(html, /Book intro call/);
   assert.doesNotMatch(html, /What happens next/);
 });
 
@@ -164,15 +161,15 @@ test("server-renders the four-input AI savings calculator", async () => {
   assert.equal(response.status, 200);
 
   const html = await response.text();
-  assert.match(html, /What could AI save your business/);
-  assert.match(html, /AI can save you/);
+  assert.match(html, /What is repetitive work costing your mission/);
+  assert.match(html, /AI could return/);
   assert.match(html, /€51,840/);
   assert.match(html, /18 hrs \/ week/);
   assert.match(html, /864 hrs \/ year/);
   assert.match(html, /€86,400 \/ year/);
   assert.match(html, /How is this calculated/);
   assert.match(html, /not guaranteed payroll reduction/);
-  assert.match(html, /See what we could automate/);
+  assert.match(html, /Find the workflow behind the number/);
   assert.doesNotMatch(html, /Illustrative first-year net value/);
   assert.doesNotMatch(html, /Potential capacity/);
   assert.doesNotMatch(html, /Pressure-test the case/);
@@ -182,9 +179,10 @@ test("renders a crawlable Articles index and article pages", async () => {
   const indexResponse = await render("/insights");
   assert.equal(indexResponse.status, 200);
   const indexHtml = await indexResponse.text();
-  assert.match(indexHtml, /Articles on enterprise AI strategy and implementation/);
+  assert.match(indexHtml, /Clear thinking on applied AI/);
+  assert.match(indexHtml, /build systems teams can trust/);
   assert.match(indexHtml, /Read the article/);
-  assert.match(indexHtml, /Ideas for making AI operational/);
+  assert.match(indexHtml, /Clear thinking on applied AI/);
   assert.match(indexHtml, /where-enterprise-ai-value-actually-lives/);
   assert.match(indexHtml, /ai-business-case-finance-can-trust/);
   assert.match(indexHtml, /from-ai-pilot-to-operating-system/);

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 
@@ -30,7 +29,7 @@ export function Reveal({
 
 export function HeroTitle() {
   const reduced = useReducedMotion();
-  const lines = ["We’re your next", "AI Strategy Partner"];
+  const lines = ["AI systems for", "missions that matter."];
 
   return (
     <h1 id="hero-title">
@@ -87,10 +86,10 @@ export function HeroCloud() {
 }
 
 const processSteps = [
-  { number: "01", title: "Listen", text: "We map the workflow, economics, owners, data, and friction before recommending a tool." },
-  { number: "02", title: "Locate", text: "We rank opportunities by value, feasibility, risk, and readiness, then agree where to start." },
-  { number: "03", title: "Build", text: "We design and integrate the system across your existing data, tools, and controls." },
-  { number: "04", title: "Improve", text: "We track adoption and value, review outputs, and improve the system with your team." },
+  { number: "01", title: "Investigate", text: "We map the work, the people, the evidence, and the friction." },
+  { number: "02", title: "Prioritize", text: "We rank each opportunity by mission value, capacity, feasibility, and risk." },
+  { number: "03", title: "Build", text: "We connect your approved data, tools, and controls into one working system." },
+  { number: "04", title: "Improve", text: "We measure adoption, value, and quality, then refine what matters." },
 ];
 
 export function ProcessSystem() {
@@ -148,32 +147,32 @@ const services = [
   {
     number: "01",
     kind: "visibility",
-    title: "GEO/AEO monitoring and optimization",
-    text: "Track how leading AI models represent your brand, then turn the evidence into a practical visibility plan.",
+    title: "Funder and partner intelligence",
+    text: "Bring funder research, relationship context, and approved evidence into one clear view.",
   },
   {
     number: "02",
     kind: "agents",
-    title: "AI agentic automation",
-    text: "Build controlled agents that complete multi-step work across the tools your team already uses.",
+    title: "Grant and reporting automation",
+    text: "Turn requirements and approved evidence into structured, review-ready drafts.",
   },
   {
     number: "03",
     kind: "dashboard",
-    title: "Custom dashboards and MCP integration",
-    text: "Connect live business data to decision-ready interfaces, with the source evidence kept close.",
+    title: "Live listening and decision dashboards",
+    text: "Connect live signals to clear dashboards while keeping every source close.",
   },
   {
     number: "04",
     kind: "local",
-    title: "Secure local LLM deployment",
-    text: "Deploy private AI environments around sensitive data, internal knowledge, and your security requirements.",
+    title: "Secure knowledge systems",
+    text: "Give teams fast, secure access to approved policies, programs, evidence, and prior work.",
   },
   {
     number: "05",
     kind: "crm",
-    title: "Social advertising and CRM automation",
-    text: "Join campaign signals, customer data, and follow-up workflows into one measurable growth system.",
+    title: "Workflow and CRM integration",
+    text: "Connect fundraising, partnership, campaign, and operational work without removing human judgment.",
   },
 ];
 
@@ -293,47 +292,30 @@ export function AnimatedStatistics() {
     <div className="statistics-grid">
       <article className="metric-card metric-card-hours">
         <div className="metric-visual metric-workflow" aria-hidden="true">{[.36, .68, .48, .82, .57, .94].map((scale, index) => <motion.i key={index} animate={{ scaleX: [scale, 1, scale] }} transition={{ duration: 4.2 + index * .35, repeat: Infinity, ease: "easeInOut", delay: index * .16 }} />)}</div>
-        <strong><CountUp value={81} /></strong><p>average employee hours saved each week by automations we’ve built</p><span>VITRUS workflow averages</span>
+        <strong><CountUp value={81} /></strong><p>employee hours saved each week across VITRUS workflows</p><span>VITRUS workflow average</span>
       </article>
       <article className="metric-card metric-card-adoption">
         <div className="metric-visual metric-network" aria-hidden="true"><motion.div animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => <i key={item} />)}</motion.div></div>
-        <strong><CountUp value={88} suffix="%" /></strong><p>of organizations report regular AI use in at least one business function</p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai/" target="_blank" rel="noreferrer">McKinsey, State of AI 2025</a>
+        <strong><CountUp value={88} suffix="%" /></strong><p>of organizations use AI in at least one business function</p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai/" target="_blank" rel="noreferrer">McKinsey, State of AI 2025</a>
       </article>
       <article className="metric-card metric-card-time">
         <div className="metric-visual metric-time-rings" aria-hidden="true"><motion.i animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} /><motion.i animate={{ rotate: -360 }} transition={{ duration: 19, repeat: Infinity, ease: "linear" }} /></div>
-        <strong><CountUp value={47} suffix="%" /></strong><p>of surveyed GenAI users save at least six hours every week</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a>
+        <strong><CountUp value={47} suffix="%" /></strong><p>of surveyed GenAI users save six or more hours each week</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a>
       </article>
     </div>
   );
 }
 
-const sentimentStates = [
-  { positive: 68, neutral: 22, negative: 10 },
-  { positive: 72, neutral: 20, negative: 8 },
-  { positive: 65, neutral: 24, negative: 11 },
-  { positive: 70, neutral: 21, negative: 9 },
-];
-
 function SentimentLoop() {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
-  const sentiment = sentimentStates[index];
-
-  useEffect(() => {
-    if (reduced) return;
-    const interval = window.setInterval(() => setIndex((current) => (current + 1) % sentimentStates.length), 4200);
-    return () => window.clearInterval(interval);
-  }, [reduced]);
-
-  const values = [sentiment.positive, sentiment.neutral, sentiment.negative];
 
   return (
     <div className="sentiment-report">
-      <div><span>User sentiment</span><motion.strong key={sentiment.positive} initial={reduced ? false : { opacity: .45, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>{sentiment.positive}%</motion.strong><small>Positive</small></div>
+      <div><span>Live sentiment view</span><small>Evidence retained</small></div>
       <div className="sentiment-bars">
-        {values.map((value, itemIndex) => <motion.i key={itemIndex} animate={{ width: `${value}%` }} transition={{ duration: reduced ? 0 : 3.2, ease: [0.16, 1, 0.3, 1] }} />)}
+        {["58%", "25%", "17%"].map((value, itemIndex) => <motion.i key={itemIndex} initial={reduced ? false : { width: "8%" }} whileInView={reduced ? undefined : { width: value }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.2, delay: itemIndex * .15, ease: [0.16, 1, 0.3, 1] }} />)}
       </div>
-      <div className="sentiment-legend"><span>Positive {sentiment.positive}%</span><span>Neutral {sentiment.neutral}%</span><span>Negative {sentiment.negative}%</span></div>
+      <div className="sentiment-legend"><span>Positive</span><span>Neutral</span><span>Negative</span></div>
     </div>
   );
 }
@@ -451,23 +433,18 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   const reduced = useReducedMotion();
 
   if (variant === "visibility") {
-    const monitors = ["Model coverage", "Prompt groups", "Mention analysis", "Evidence log"];
-    const models = [
-      { name: "ChatGPT", icon: "/llm/chatgpt.svg" },
-      { name: "Claude", icon: "/llm/claude.svg" },
-      { name: "Gemini", icon: "/llm/gemini.svg" },
-      { name: "Perplexity", icon: "/llm/perplexity.svg" },
-    ];
+    const monitors = ["Fund criteria", "Impact evidence", "Prior context", "Human review"];
+    const stages = ["Requirements", "Evidence", "Draft", "Review"];
     return (
       <div className="case-art case-art-visibility dashboard-frame" aria-hidden="true">
         <div className="llm-dashboard">
-          <div className="dashboard-header"><span>AI visibility monitor</span><span className="dashboard-live"><i />Automatic</span></div>
-          <div className="dashboard-impact"><strong><CountUp value={3449} /></strong><p>hours saved through automatic LLM monitoring</p></div>
+          <div className="dashboard-header"><span>Grant application workspace</span><span className="dashboard-live"><i />Human review</span></div>
+          <div className="dashboard-impact"><strong>01</strong><p>From fund requirements to an evidence-grounded, review-ready proposal draft.</p></div>
           <div className="monitor-grid">
             {monitors.map((label, index) => <div key={label}><span>{label}</span><motion.i initial={reduced ? false : { scaleX: .12 }} whileInView={reduced ? undefined : { scaleX: 1 }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.1, delay: index * .14, ease: [0.16, 1, 0.3, 1] }} /></div>)}
           </div>
           <div className="monitor-feed">
-            {models.map((model, index) => <div key={model.name}><span className="llm-monitor-logo"><Image src={model.icon} alt="" width={18} height={18} /></span><b /><motion.i animate={reduced ? undefined : { scaleX: [.24, .94, .52, .24] }} transition={reduced ? undefined : { duration: 4.6 + index * .45, delay: index * .18, repeat: Infinity, ease: "easeInOut" }} /></div>)}
+            {stages.map((stage, index) => <div key={stage}><span>{String(index + 1).padStart(2, "0")}</span><b /><motion.i animate={reduced ? undefined : { scaleX: [.24, .94, .52, .24] }} transition={reduced ? undefined : { duration: 4.6 + index * .45, delay: index * .18, repeat: Infinity, ease: "easeInOut" }} /></div>)}
           </div>
         </div>
       </div>
@@ -475,21 +452,21 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   }
 
   const channels = [
-    { name: "Facebook", value: 842, graph: [42, 48, 45, 54, 58, 55, 64, 69] },
-    { name: "Instagram", value: 516, graph: [31, 38, 36, 43, 47, 45, 52, 56] },
-    { name: "Blog", value: 227, graph: [16, 19, 18, 23, 25, 24, 29, 33] },
+    { name: "Conversation", status: "Live", graph: [42, 48, 45, 54, 58, 55, 64, 69] },
+    { name: "Sentiment", status: "Tracked", graph: [31, 38, 36, 43, 47, 45, 52, 56] },
+    { name: "Evidence", status: "Reviewable", graph: [16, 19, 18, 23, 25, 24, 29, 33] },
   ];
   return (
     <div className="case-art case-art-intelligence report-frame" aria-hidden="true">
       <div className="report-dashboard">
-        <div className="dashboard-header report-header"><span>Illustrative reporting view</span><span className="dashboard-live"><i />Monitoring</span></div>
+        <div className="dashboard-header report-header"><span>Global Citizen social intelligence</span><span className="dashboard-live"><i />Live listening</span></div>
         <div className="channel-totals">
           {channels.map((channel, index) => <div key={channel.name}>
             <span>{channel.name}</span>
             <div className="channel-sparkline">
               <ChannelLineChart values={channel.graph} delay={index * 170} reduced={reduced} />
             </div>
-            <div className="channel-total"><strong>{channel.value.toLocaleString("en-US")}</strong><small>Total mentions</small></div>
+            <div className="channel-total"><strong>{channel.status}</strong><small>Connected view</small></div>
           </div>)}
         </div>
         <SentimentLoop />

@@ -53,10 +53,10 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
       </a>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navigation.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
-        <a className="nav-cta" href="/contact">Talk to us</a>
+        <a className="nav-cta" href="/contact">Free intro call</a>
       </nav>
       <div className="mobile-nav-actions">
-        <a className="nav-cta" href="/contact" onClick={closeMenu}>Talk to us</a>
+        <a className="nav-cta" href="/contact" onClick={closeMenu}>Free intro call</a>
         <button
           ref={menuButton}
           className="menu-toggle"
@@ -73,9 +73,9 @@ export function SiteHeader({ compact = false }: { compact?: boolean }) {
           {navigation.map((item, index) => (
             <a href={item.href} key={item.href} onClick={closeMenu} ref={index === 0 ? firstMenuLink : undefined}>{item.label}</a>
           ))}
-          <a className="mobile-menu-contact" href="/contact" onClick={closeMenu}>Let’s Chat</a>
+          <a className="mobile-menu-contact" href="/contact" onClick={closeMenu}>Book a free intro call</a>
         </nav>
-        <p>AI strategy and implementation for companies with real operational complexity.</p>
+        <p>Responsible AI systems for ambitious missions and complex work.</p>
       </div>
     </header>
   );

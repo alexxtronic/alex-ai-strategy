@@ -5,8 +5,8 @@ import { SiteHeader } from "../components/SiteHeader";
 import { formatInsightDate, insights } from "./content";
 import { siteUrl } from "../lib/site";
 
-const title = "Articles on enterprise AI strategy and implementation | VITRUS";
-const description = "Practical thinking on AI opportunity selection, business cases, system design, and enterprise implementation from VITRUS.";
+const title = "Clear thinking on applied AI | VITRUS";
+const description = "How to find the right AI opportunity, prove the case, govern the work, and build systems teams can trust.";
 
 export const metadata: Metadata = {
   title,
@@ -24,8 +24,8 @@ export default function InsightsPage() {
       <SiteHeader compact />
       <section className="insights-hero">
         <div className="insights-orbit" aria-hidden="true"><i /><i /><i /></div>
-        <h1>Ideas for making AI operational.</h1>
-        <p>Practical thinking on where AI creates value, how to prove the case, and what it takes to build systems companies can trust.</p>
+        <h1>Clear thinking on applied AI.</h1>
+        <p>How to find the right opportunity, prove the case, govern the work, and build systems teams can trust.</p>
       </section>
       <section className="insights-index" aria-label="VITRUS articles">
         <article className="insight-featured">

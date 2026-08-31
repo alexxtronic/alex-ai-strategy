@@ -76,8 +76,8 @@ export function RoiCalculator() {
     <section className="roi-tool" aria-labelledby="roi-title">
       <div className="roi-tool-inputs">
         <div className="roi-tool-heading">
-          <h1 id="roi-title">What could AI save your business?</h1>
-          <p>Estimate the annual value of automating one repetitive workflow.</p>
+          <h1 id="roi-title">What is repetitive work costing your mission?</h1>
+          <p>Estimate the annual capacity a responsible AI system could return.</p>
         </div>
 
         <div className="roi-fields">
@@ -118,11 +118,11 @@ export function RoiCalculator() {
       </div>
 
       <div className="roi-tool-result" aria-live="polite">
-        <p className="roi-result-label">Estimated annual savings</p>
+        <p className="roi-result-label">Potential annual capacity</p>
         <div className="roi-result-statement">
-          <span>AI can save you</span>
+          <span>AI could return</span>
           <strong><AnimatedNumber value={result.annualSavings} format={(value) => money.format(Math.round(value))} /></strong>
-          <span>per year</span>
+          <span>in capacity value each year</span>
         </div>
 
         <div className="roi-supporting-metrics">
@@ -139,8 +139,8 @@ export function RoiCalculator() {
         </details>
 
         <div className="roi-cta">
-          <div><strong>See what we could automate</strong><p>We can identify the workflows behind the number and build the business case with you.</p></div>
-          <a href="/contact">Start a conversation</a>
+          <div><strong>Find the workflow behind the number</strong><p>We will test the assumptions, assess the risk, and define a responsible first system.</p></div>
+          <a href="/contact">Book a free intro call</a>
         </div>
       </div>
     </section>
