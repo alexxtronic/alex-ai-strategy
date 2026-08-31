@@ -53,10 +53,12 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /Humana/);
   assert.match(html, /Global Citizen/);
   assert.match(html, /DFIN/);
+  assert.match(html, /\/clients\/dfin\.png/);
+  assert.match(html, /Scaleup Finance/);
+  assert.match(html, /\/clients\/scaleup-finance\.webp/);
   assert.match(html, /STATE Grill (?:&amp;|&) Bar/);
   assert.doesNotMatch(html, /Specsavers/);
   assert.doesNotMatch(html, /LEMAN/);
-  assert.doesNotMatch(html, /Scaleup Finance/);
   assert.doesNotMatch(html, /Candy King/);
   assert.match(html, /Senior people, start to finish/);
   assert.match(html, /portrait-image-crop-corners/);

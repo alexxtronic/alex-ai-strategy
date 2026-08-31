@@ -79,6 +79,8 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .client-logo-specsavers img { padding: 0; }
 .client-logo-global-citizen img { padding: 8px 14px; }
 .client-logo-leman img { padding: 8px 18px; }
+.client-logo-dfin img { padding: 9px 12px; }
+.client-logo-scaleup-finance img { padding: 6px 0; }
 @keyframes client-marquee { to { transform: translateX(-50%); } }
 
 .section-light, .section-dark, .point-of-view, .work-section, .principles, .team-section { padding: 140px 4.5vw; }

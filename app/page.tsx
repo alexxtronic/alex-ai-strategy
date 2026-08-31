@@ -7,7 +7,8 @@ const clients = [
   { name: "Empire State Building", slug: "empire-state", image: "/clients/empire-state-realty-trust.png" },
   { name: "Humana", slug: "humana", image: "/clients/humana.png" },
   { name: "Global Citizen", slug: "global-citizen", image: "/clients/global-citizen.png" },
-  { name: "DFIN", slug: "dfin" },
+  { name: "DFIN", slug: "dfin", image: "/clients/dfin.png" },
+  { name: "Scaleup Finance", slug: "scaleup-finance", image: "/clients/scaleup-finance.webp" },
   { name: "STATE Grill & Bar", slug: "state-grill" },
 ];
 
