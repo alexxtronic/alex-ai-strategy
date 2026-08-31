@@ -315,7 +315,7 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
 .channel-totals span, .channel-totals small { color: var(--muted); font-size: 10px; }
 .channel-sparkline { position: relative; height: 72px; margin: 15px 0 13px; overflow: hidden; }
 .channel-line-chart { width: 100%; height: 100%; display: block; }
-.channel-total { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.channel-total { margin-top: auto; min-width: 0; }
 .channel-totals .channel-total strong { margin: 0; font-family: var(--font-sans), Arial, sans-serif; font-size: clamp(23px, 2.1vw, 32px); font-variant-numeric: tabular-nums; line-height: .9; letter-spacing: -.02em; }
 .sentiment-report { padding: 22px; }
 .sentiment-report > div:first-child { display: grid; grid-template-columns: 1fr auto; align-items: end; }

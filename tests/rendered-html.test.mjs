@@ -125,7 +125,9 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /CountUp value=\{47\}/);
   assert.match(motion, /Global Citizen social intelligence/);
   assert.match(motion, /Grant application workspace/);
-  assert.match(motion, /Live sentiment view/);
+  assert.match(motion, /Sources linked/);
+  assert.match(motion, /status: "Reviewed"/);
+  assert.doesNotMatch(motion, /Connected view/);
   assert.match(motion, /SentimentLoop/);
   assert.match(motion, /channel-sparkline/);
   assert.doesNotMatch(motion, /3449/);

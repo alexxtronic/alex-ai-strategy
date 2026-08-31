@@ -311,7 +311,7 @@ function SentimentLoop() {
 
   return (
     <div className="sentiment-report">
-      <div><span>Live sentiment view</span><small>Evidence retained</small></div>
+      <div><span>Sentiment</span><small>Sources linked</small></div>
       <div className="sentiment-bars">
         {["58%", "25%", "17%"].map((value, itemIndex) => <motion.i key={itemIndex} initial={reduced ? false : { width: "8%" }} whileInView={reduced ? undefined : { width: value }} viewport={{ once: true, amount: .5 }} transition={{ duration: 1.2, delay: itemIndex * .15, ease: [0.16, 1, 0.3, 1] }} />)}
       </div>
@@ -454,7 +454,7 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
   const channels = [
     { name: "Conversation", status: "Live", graph: [42, 48, 45, 54, 58, 55, 64, 69] },
     { name: "Sentiment", status: "Tracked", graph: [31, 38, 36, 43, 47, 45, 52, 56] },
-    { name: "Evidence", status: "Reviewable", graph: [16, 19, 18, 23, 25, 24, 29, 33] },
+    { name: "Evidence", status: "Reviewed", graph: [16, 19, 18, 23, 25, 24, 29, 33] },
   ];
   return (
     <div className="case-art case-art-intelligence report-frame" aria-hidden="true">
@@ -466,7 +466,7 @@ export function CaseStudyVisual({ variant }: { variant: "visibility" | "intellig
             <div className="channel-sparkline">
               <ChannelLineChart values={channel.graph} delay={index * 170} reduced={reduced} />
             </div>
-            <div className="channel-total"><strong>{channel.status}</strong><small>Connected view</small></div>
+            <div className="channel-total"><strong>{channel.status}</strong></div>
           </div>)}
         </div>
         <SentimentLoop />
