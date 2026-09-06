@@ -12,15 +12,15 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: `${siteUrl}/insights`, types: { "application/rss+xml": `${siteUrl}/feed.xml` } },
-  openGraph: { title, description, type: "website", url: `${siteUrl}/insights` },
-  twitter: { card: "summary_large_image", title, description },
+  openGraph: { title, description, type: "website", url: `${siteUrl}/insights/`, images: [{ url: `${siteUrl}/og-v2.png`, width: 1731, height: 909, alt: "VITRUS. Responsible AI for mission-driven organizations." }] },
+  twitter: { card: "summary_large_image", title, description, images: [`${siteUrl}/og-v2.png`] },
 };
 
 export default function InsightsPage() {
   const [featured, ...moreInsights] = insights;
 
   return (
-    <main>
+    <main data-page-type="articles">
       <SiteHeader compact />
       <section className="insights-hero">
         <div className="insights-orbit" aria-hidden="true"><i /><i /><i /></div>

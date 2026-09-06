@@ -18,13 +18,13 @@ export async function generateMetadata({ params }: InsightPageProps): Promise<Me
   if (!insight) return { title: "Article not found | VITRUS", robots: { index: false, follow: false } };
 
   const title = `${insight.title} | VITRUS`;
-  const url = `${siteUrl}/insights/${insight.slug}`;
+  const url = `${siteUrl}/insights/${insight.slug}/`;
   return {
     title,
     description: insight.description,
     alternates: { canonical: url },
-    openGraph: { title, description: insight.description, type: "article", url, publishedTime: insight.publishedAt, authors: [insight.author], images: [] },
-    twitter: { card: "summary", title, description: insight.description, images: [] },
+    openGraph: { title, description: insight.description, type: "article", url, publishedTime: insight.publishedAt, authors: [insight.author], images: [{ url: `${siteUrl}/og-v2.png`, width: 1731, height: 909, alt: "VITRUS. Responsible AI for mission-driven organizations." }] },
+    twitter: { card: "summary_large_image", title, description: insight.description, images: [`${siteUrl}/og-v2.png`] },
   };
 }
 
@@ -33,7 +33,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
   const insight = getInsight(slug);
   if (!insight) notFound();
 
-  const url = `${siteUrl}/insights/${insight.slug}`;
+  const url = `${siteUrl}/insights/${insight.slug}/`;
   const related = insights.filter((item) => item.slug !== insight.slug).slice(0, 2);
   const articleSchema = {
     "@context": "https://schema.org",
@@ -48,7 +48,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
   };
 
   return (
-    <main>
+    <main data-page-type="article">
       <SiteHeader compact />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }} />
       <article className="insight-article">
@@ -77,7 +77,7 @@ export default async function InsightPage({ params }: InsightPageProps) {
         <h2>Continue reading.</h2>
         <div>{related.map((item) => <article key={item.slug}><span>{item.category}</span><h3><Link href={`/insights/${item.slug}`}>{item.title}</Link></h3><Link href={`/insights/${item.slug}`}>Read article</Link></article>)}</div>
       </section>
-      <section className="insight-cta"><h2>Have an AI opportunity worth examining?</h2><Link className="button button-gold" href="/contact"><span>Let’s Chat</span></Link></section>
+      <section className="insight-cta"><h2>Have an AI opportunity worth examining?</h2><Link className="button button-gold" href="/contact" data-analytics-event="cta_click" data-analytics-cta-id="article_intro" data-analytics-placement="article_footer"><span>Request a free intro call</span></Link></section>
       <SiteFooter />
     </main>
   );

@@ -28,23 +28,26 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /<title>VITRUS \| AI Systems for Missions That Matter<\/title>/i);
   assert.match(html, /AI systems for/);
   assert.match(html, /missions that matter/);
-  assert.match(html, /high-friction work into governed AI systems/);
+  assert.match(html, /governed AI systems that return capacity to established nonprofits, NGOs, foundations, and associations/);
   assert.match(html, /From friction to working system/);
   assert.match(html, /Where AI can return capacity/);
-  assert.match(html, /Funder and partner intelligence/);
+  assert.match(html, /Fundraising and partner intelligence/);
   assert.match(html, /Grant and reporting automation/);
   assert.match(html, /Live listening and decision dashboards/);
-  assert.match(html, /Secure knowledge systems/);
-  assert.match(html, /Workflow and CRM integration/);
-  assert.match(html, /href="\/#services"/);
-  assert.match(html, /href="\/#team"/);
+  assert.match(html, /Secure organizational knowledge/);
+  assert.doesNotMatch(html, /Workflow and CRM integration/);
+  assert.match(html, /href="\/solutions\/grant-reporting-automation"/);
+  assert.match(html, /href="\/solutions\/funder-partner-intelligence"/);
+  assert.match(html, /href="\/solutions\/listening-decision-dashboards"/);
+  assert.match(html, /href="\/solutions\/secure-knowledge-systems"/);
   assert.match(html, /More capacity/);
   assert.match(html, /More impact/);
   assert.match(html, /Proof, not prototypes/);
   assert.match(html, /Live social intelligence for Global Citizen/);
-  assert.match(html, /social listening sources through MCP integrations/);
+  assert.match(html, /Secure connectors and MCP integrations brought the signals together/);
   assert.match(html, /Grant drafting, grounded in evidence/);
-  assert.match(html, /human review before submission/);
+  assert.match(html, /Every proposal is reviewed before submission/);
+  assert.match(html, />Quantify</);
   assert.doesNotMatch(html, /The proof is in the prompt/);
   assert.doesNotMatch(html, /3,449/);
   assert.doesNotMatch(html, /Custom GEO \/ AEO solution for a property platform/);
@@ -56,25 +59,30 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /\/clients\/dfin\.png/);
   assert.match(html, /Scaleup Finance/);
   assert.match(html, /\/clients\/scaleup-finance\.webp/);
-  assert.match(html, /STATE Grill (?:&amp;|&) Bar/);
+  assert.doesNotMatch(html, /STATE Grill (?:&amp;|&) Bar/);
   assert.doesNotMatch(html, /Specsavers/);
   assert.doesNotMatch(html, /LEMAN/);
   assert.doesNotMatch(html, /Candy King/);
   assert.match(html, /Senior people, start to finish/);
   assert.match(html, /portrait-image-crop-corners/);
   assert.match(html, /specialists who shape the strategy stay close/);
-  assert.match(html, /André Rosario/);
-  assert.match(html, /Kristian Hansen/);
+  assert.match(html, /André Dimmer/);
+  assert.match(html, /Kristian Hampsted/);
+  assert.match(html, /Director of Integration/);
+  assert.match(html, /Deliverables Lead/);
   assert.match(html, /business-case development/);
-  assert.match(html, /enterprise operating systems/);
-  assert.match(html, /leadership alignment/);
-  assert.match(html, /Book a free intro call/);
+  assert.match(html, /CRM, MarTech, data/);
+  assert.match(html, /Request a free intro call/);
   assert.match(html, /href="\/insights"/);
   assert.match(html, />Articles</);
   assert.doesNotMatch(html, />Insights</);
   assert.match(html, /aria-controls="mobile-menu"/);
   assert.match(html, /Mobile navigation/);
   assert.match(html, /ROI calculator/);
+  assert.match(html, /aria-controls="solutions-menu"/);
+  assert.match(html, /aria-expanded="false"/);
+  assert.match(html, /data-analytics-event="cta_click"/);
+  assert.match(html, /data-analytics-view="case_study_engaged"/);
   assert.doesNotMatch(html, /Find it/);
   assert.doesNotMatch(html, /One connected client journey/i);
   assert.doesNotMatch(html, /↗/);
@@ -116,11 +124,11 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /service-visual-agents/);
   assert.match(motion, /service-visual-dashboard/);
   assert.match(motion, /service-visual-local/);
-  assert.match(motion, /service-visual-crm/);
+  assert.doesNotMatch(motion, /title: "Workflow and CRM integration"/);
   assert.match(motion, /}, 2000\);/);
   assert.doesNotMatch(motion, /opacity: active \? 1 : \.38/);
   assert.match(motion, /export function AnimatedStatistics/);
-  assert.match(motion, /CountUp value=\{81\}/);
+  assert.match(motion, /CountUp value=\{1\}/);
   assert.match(motion, /CountUp value=\{88\}/);
   assert.match(motion, /CountUp value=\{47\}/);
   assert.match(motion, /Global Citizen social intelligence/);
@@ -144,8 +152,11 @@ test("uses native header links so every navigation item works without the client
   assert.match(header, /<a href=\{item\.href\}/);
   assert.match(header, /href: "\/ai-roi-calculator"/);
   assert.match(header, /href: "\/#process"/);
-  assert.match(header, /href: "\/#services"/);
   assert.match(header, /href: "\/#work"/);
+  assert.match(header, /aria-expanded=\{solutionsOpen\}/);
+  assert.match(header, /aria-controls="solutions-menu"/);
+  assert.match(header, /solutionLinks\.map/);
+  assert.doesNotMatch(header, /label: "Team"/);
 });
 
 test("server-renders the focused 30 minute contact page", async () => {
@@ -155,8 +166,11 @@ test("server-renders the focused 30 minute contact page", async () => {
   const html = await response.text();
   assert.match(html, /Show us where/);
   assert.match(html, /the work gets stuck/);
-  assert.match(html, /Book a free 30 minute call to find where responsible AI could return the most capacity to your team\./);
-  assert.match(html, /Book intro call/);
+  assert.match(html, /Request a free 30 minute call to find where responsible AI could return the most capacity to your team\./);
+  assert.match(html, /Request a free intro call/);
+  assert.match(html, /Phone/);
+  assert.match(html, /Phone <b[^>]*>\*/);
+  assert.doesNotMatch(html, /Optional/);
   assert.doesNotMatch(html, /What happens next/);
 });
 
@@ -194,7 +208,7 @@ test("renders a crawlable Articles index and article pages", async () => {
 
   const articles = [
     ["/insights/where-enterprise-ai-value-actually-lives", "The AI opportunity is rarely where the demo is"],
-    ["/insights/ai-business-case-finance-can-trust", "How to build an AI business case that finance can trust"],
+    ["/insights/ai-business-case-finance-can-trust", "How to build an AI business case leaders can trust"],
     ["/insights/from-ai-pilot-to-operating-system", "From AI pilot to operating system"],
   ];
 
@@ -206,7 +220,35 @@ test("renders a crawlable Articles index and article pages", async () => {
     assert.match(html, /application\/ld\+json/);
     assert.match(html, /BlogPosting/);
     assert.match(html, /rel="canonical"/);
-    assert.doesNotMatch(html, /og-v2\.png/);
+    assert.match(html, /og-v2\.png/);
+  }
+});
+
+test("renders four focused solution articles with metadata, systems, and controls", async () => {
+  const solutionRoutes = [
+    ["/solutions/grant-reporting-automation", "Grant and reporting automation, grounded in your evidence"],
+    ["/solutions/funder-partner-intelligence", "Know who to approach, why now, and what matters to them"],
+    ["/solutions/listening-decision-dashboards", "Turn a noisy public conversation into a usable signal"],
+    ["/solutions/secure-knowledge-systems", "Make trusted knowledge easier to find and safer to use"],
+  ];
+
+  for (const [pathname, headline] of solutionRoutes) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, new RegExp(headline));
+    assert.match(html, /application\/ld\+json/);
+    assert.match(html, /schema\.org/);
+    assert.match(html, /Service/);
+    assert.match(html, /BreadcrumbList/);
+    assert.match(html, /rel="canonical"/);
+    assert.match(html, /VITRUS SYSTEM/);
+    assert.match(html, /AI/);
+    assert.match(html, /CRM/);
+    assert.match(html, /MARTECH/);
+    assert.match(html, /Human approval|Human review|Human escalation/i);
+    assert.match(html, /Request a free intro call/);
+    assert.match(html, /og-v2\.png/);
   }
 });
 
@@ -216,6 +258,11 @@ test("publishes discovery files for search and subscribers", async () => {
   const sitemap = await sitemapResponse.text();
   assert.match(sitemap, /<urlset/);
   assert.match(sitemap, /\/insights\/ai-business-case-finance-can-trust/);
+  assert.match(sitemap, /\/solutions\/grant-reporting-automation/);
+  assert.match(sitemap, /\/solutions\/funder-partner-intelligence/);
+  assert.match(sitemap, /\/solutions\/listening-decision-dashboards/);
+  assert.match(sitemap, /\/solutions\/secure-knowledge-systems/);
+  assert.match(sitemap, /\/solutions\/secure-knowledge-systems\//);
 
   const robotsResponse = await render("/robots.txt");
   assert.equal(robotsResponse.status, 200);
@@ -231,9 +278,39 @@ test("publishes discovery files for search and subscribers", async () => {
 
 test("keeps em dashes out of every rendered route", async () => {
   const forbiddenPunctuation = new RegExp(String.fromCodePoint(0x2014));
-  for (const pathname of ["/", "/contact", "/privacy", "/ai-roi-calculator", "/insights", "/insights/where-enterprise-ai-value-actually-lives", "/insights/ai-business-case-finance-can-trust", "/insights/from-ai-pilot-to-operating-system"]) {
+  for (const pathname of ["/", "/contact", "/privacy", "/ai-roi-calculator", "/insights", "/insights/where-enterprise-ai-value-actually-lives", "/insights/ai-business-case-finance-can-trust", "/insights/from-ai-pilot-to-operating-system", "/solutions/grant-reporting-automation", "/solutions/funder-partner-intelligence", "/solutions/listening-decision-dashboards", "/solutions/secure-knowledge-systems"]) {
     const response = await render(pathname);
     assert.equal(response.status, 200);
     assert.doesNotMatch(await response.text(), forbiddenPunctuation, `${pathname} contains an em dash`);
   }
+});
+
+test("instruments a privacy-conscious conversion funnel without form PII", async () => {
+  const [analytics, provider, form, calculator, layout] = await Promise.all([
+    readFile(new URL("../app/lib/analytics.ts", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/AnalyticsProvider.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/contact/ContactForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/ai-roi-calculator/RoiCalculator.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(layout, /AnalyticsProvider/);
+  assert.match(provider, /campaign_landing/);
+  assert.match(provider, /case_study_engaged/);
+  assert.match(provider, /solution_page_complete/);
+  assert.match(form, /contact_form_start/);
+  assert.match(form, /contact_form_submit/);
+  assert.match(form, /contact_form_response_loaded/);
+  assert.match(form, /Interested in:/);
+  assert.match(calculator, /calculatorBands/);
+  assert.match(calculator, /roi_calculator_update/);
+  assert.match(calculator, /IntersectionObserver/);
+  assert.match(analytics, /allowedPropertyKeys/);
+  assert.match(provider, /usePathname/);
+  assert.match(provider, /isApprovedCampaignValue/);
+  assert.doesNotMatch(provider, /link\.href\s*=/);
+  assert.doesNotMatch(provider, /NEXT_PUBLIC_GA_MEASUREMENT_ID|googletagmanager|gtag/);
+  assert.doesNotMatch(analytics, /gtag|generate_lead/);
+  assert.doesNotMatch(analytics, /\| "name"|\| "email"|\| "phone"|\| "company"|\| "message"/);
+  assert.doesNotMatch(form, /trackEvent\([^\n]+entry\./);
 });

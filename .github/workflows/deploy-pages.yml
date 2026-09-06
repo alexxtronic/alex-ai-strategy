@@ -28,6 +28,8 @@ jobs:
       - run: npm test
         env:
           NEXT_PUBLIC_SITE_URL: https://vitrus.org
+          NEXT_PUBLIC_ANALYTICS_PROVIDER: ${{ vars.NEXT_PUBLIC_ANALYTICS_PROVIDER }}
+          NEXT_PUBLIC_PLAUSIBLE_SCRIPT_SRC: ${{ vars.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_SRC }}
       - name: Preserve recent static assets
         env:
           GH_TOKEN: ${{ github.token }}

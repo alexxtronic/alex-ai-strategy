@@ -7,7 +7,7 @@ Posts live in `app/insights/content.ts`.
 3. Write a search-friendly `title` and a specific `description`.
 4. Set `publishedAt` in `YYYY-MM-DD` format.
 5. Add the opening, article sections, optional point lists, and closing.
-6. Keep claims accurate, concrete, and useful to an enterprise reader.
+6. Keep claims accurate, concrete, and useful to established mission-driven organizations.
 
 The Articles index, individual article page, canonical metadata, Article structured data, sitemap, and RSS feed are generated from this single entry.
 

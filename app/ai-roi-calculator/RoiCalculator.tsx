@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
+import { calculatorBands, trackEvent } from "../lib/analytics";
 
 const WORKING_WEEKS = 48;
 
@@ -59,6 +60,9 @@ export function RoiCalculator() {
   const [employees, setEmployees] = useState(6);
   const [hoursPerEmployee, setHoursPerEmployee] = useState(5);
   const [hourlyCost, setHourlyCost] = useState(60);
+  const started = useRef(false);
+  const resultViewed = useRef(false);
+  const resultPanel = useRef<HTMLDivElement>(null);
 
   const result = useMemo(() => {
     const workflow = workflows.find((item) => item.name === workflowName) ?? workflows[0];
@@ -72,6 +76,35 @@ export function RoiCalculator() {
     return { annualSavings, realizedWeeklyHours, annualHoursRecovered, currentAnnualCost };
   }, [employees, hourlyCost, hoursPerEmployee, workflowName]);
 
+  const analyticsProperties = useMemo(() => ({
+    workflow: workflowName.toLowerCase().replaceAll(" ", "_").replaceAll("&", "and"),
+    ...calculatorBands({ employees, hours: hoursPerEmployee, cost: hourlyCost, annualValue: result.annualSavings }),
+  }), [employees, hourlyCost, hoursPerEmployee, result.annualSavings, workflowName]);
+
+  function markStarted(selectedWorkflow: string = workflowName) {
+    if (started.current) return;
+    started.current = true;
+    trackEvent("roi_calculator_start", { workflow: selectedWorkflow.toLowerCase().replaceAll(" ", "_").replaceAll("&", "and") });
+  }
+
+  useEffect(() => {
+    if (!started.current) return;
+    const updateTimer = window.setTimeout(() => trackEvent("roi_calculator_update", analyticsProperties), 750);
+    return () => window.clearTimeout(updateTimer);
+  }, [analyticsProperties]);
+
+  useEffect(() => {
+    if (!resultPanel.current) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (!started.current || resultViewed.current || !entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.6)) return;
+      resultViewed.current = true;
+      trackEvent("roi_result_view", analyticsProperties);
+      observer.disconnect();
+    }, { threshold: [0.6] });
+    observer.observe(resultPanel.current);
+    return () => observer.disconnect();
+  }, [analyticsProperties]);
+
   return (
     <section className="roi-tool" aria-labelledby="roi-title">
       <div className="roi-tool-inputs">
@@ -84,7 +117,7 @@ export function RoiCalculator() {
           <label className="roi-field">
             <span className="roi-field-number">01</span>
             <span className="roi-field-copy"><b>What do you want to automate?</b><small>Choose one recurring workflow</small></span>
-            <select value={workflowName} onChange={(event) => setWorkflowName(event.target.value as (typeof workflows)[number]["name"])}>
+            <select value={workflowName} onChange={(event) => { markStarted(event.target.value); setWorkflowName(event.target.value as (typeof workflows)[number]["name"]); }}>
               {workflows.map((workflow) => <option key={workflow.name}>{workflow.name}</option>)}
             </select>
           </label>
@@ -92,20 +125,20 @@ export function RoiCalculator() {
           <label className="roi-field">
             <span className="roi-field-number">02</span>
             <span className="roi-field-copy"><b>Employees doing this work</b><small>People who regularly complete this task</small></span>
-            <span className="roi-number-input"><input aria-label="Employees doing this work" type="number" min="1" max="500" value={employees} onChange={(event) => setEmployees(Math.min(500, Math.max(1, Number(event.target.value) || 1)))} /><i>people</i></span>
+            <span className="roi-number-input"><input aria-label="Employees doing this work" type="number" min="1" max="500" value={employees} onChange={(event) => { markStarted(); setEmployees(Math.min(500, Math.max(1, Number(event.target.value) || 1))); }} /><i>people</i></span>
           </label>
 
           <label className="roi-field roi-field-slider">
             <span className="roi-field-number">03</span>
             <span className="roi-field-copy"><b>Hours each employee spends per week</b><small>Per employee, not the whole team</small></span>
             <output>{hoursPerEmployee} {hoursPerEmployee === 1 ? "hour" : "hours"} / week</output>
-            <input aria-label="Hours each employee spends per week" type="range" min="1" max="40" step="1" value={hoursPerEmployee} onChange={(event) => setHoursPerEmployee(Number(event.target.value))} />
+            <input aria-label="Hours each employee spends per week" type="range" min="1" max="40" step="1" value={hoursPerEmployee} onChange={(event) => { markStarted(); setHoursPerEmployee(Number(event.target.value)); }} />
           </label>
 
           <label className="roi-field">
             <span className="roi-field-number">04</span>
             <span className="roi-field-copy"><b>Average employee cost</b><small>Salary, benefits, and overhead per hour</small></span>
-            <select value={hourlyCost} onChange={(event) => setHourlyCost(Number(event.target.value))}>
+            <select value={hourlyCost} onChange={(event) => { markStarted(); setHourlyCost(Number(event.target.value)); }}>
               <option value="30">€30 / hour</option>
               <option value="50">€50 / hour</option>
               <option value="60">€60 / hour</option>
@@ -117,7 +150,7 @@ export function RoiCalculator() {
         </div>
       </div>
 
-      <div className="roi-tool-result" aria-live="polite">
+      <div className="roi-tool-result" aria-live="polite" ref={resultPanel}>
         <p className="roi-result-label">Potential annual capacity</p>
         <div className="roi-result-statement">
           <span>AI could return</span>
@@ -133,14 +166,14 @@ export function RoiCalculator() {
 
         <p className="roi-context">Based on {employees} {employees === 1 ? "employee" : "employees"} spending {hoursPerEmployee} {hoursPerEmployee === 1 ? "hour" : "hours"} per week on {workflowName.toLowerCase()}.</p>
 
-        <details className="roi-methodology">
+        <details className="roi-methodology" onToggle={(event) => event.currentTarget.open && trackEvent("roi_methodology_open", { workflow: analyticsProperties.workflow })}>
           <summary>How is this calculated?</summary>
           <p>We estimate the portion of the workflow that can realistically be automated, calculate the employee capacity this releases, and apply a conservative realization factor. The result is an estimate of economic value or productive capacity released, not guaranteed payroll reduction.</p>
         </details>
 
         <div className="roi-cta">
           <div><strong>Find the workflow behind the number</strong><p>We will test the assumptions, assess the risk, and define a responsible first system.</p></div>
-          <a href="/contact">Book a free intro call</a>
+          <a href="/contact" data-analytics-event="cta_click" data-analytics-cta-id="roi_intro" data-analytics-placement="roi_result">Request a free intro call</a>
         </div>
       </div>
     </section>

@@ -87,7 +87,7 @@ export function HeroCloud() {
 
 const processSteps = [
   { number: "01", title: "Investigate", text: "We map the work, the people, the evidence, and the friction." },
-  { number: "02", title: "Prioritize", text: "We rank each opportunity by mission value, capacity, feasibility, and risk." },
+  { number: "02", title: "Quantify", text: "We rank each opportunity by mission value, capacity, feasibility, and risk." },
   { number: "03", title: "Build", text: "We connect your approved data, tools, and controls into one working system." },
   { number: "04", title: "Improve", text: "We measure adoption, value, and quality, then refine what matters." },
 ];
@@ -147,36 +147,36 @@ const services = [
   {
     number: "01",
     kind: "visibility",
-    title: "Funder and partner intelligence",
-    text: "Bring funder research, relationship context, and approved evidence into one clear view.",
+    title: "Fundraising and partner intelligence",
+    text: "Bring relationship context, research, and live signals into one reviewable view.",
+    href: "/solutions/funder-partner-intelligence",
   },
   {
     number: "02",
     kind: "agents",
     title: "Grant and reporting automation",
     text: "Turn requirements and approved evidence into structured, review-ready drafts.",
+    href: "/solutions/grant-reporting-automation",
   },
   {
     number: "03",
     kind: "dashboard",
     title: "Live listening and decision dashboards",
     text: "Connect live signals to clear dashboards while keeping every source close.",
+    href: "/solutions/listening-decision-dashboards",
   },
   {
     number: "04",
     kind: "local",
-    title: "Secure knowledge systems",
+    title: "Secure organizational knowledge",
     text: "Give teams fast, secure access to approved policies, programs, evidence, and prior work.",
-  },
-  {
-    number: "05",
-    kind: "crm",
-    title: "Workflow and CRM integration",
-    text: "Connect fundraising, partnership, campaign, and operational work without removing human judgment.",
+    href: "/solutions/secure-knowledge-systems",
   },
 ];
 
-function ServiceVisual({ kind }: { kind: string }) {
+type ServiceKind = "visibility" | "agents" | "dashboard" | "local";
+
+function ServiceVisual({ kind }: { kind: ServiceKind }) {
   const reduced = useReducedMotion();
   const loop = reduced ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" as const };
 
@@ -229,19 +229,7 @@ function ServiceVisual({ kind }: { kind: string }) {
     );
   }
 
-  return (
-    <div className="service-visual service-visual-crm" aria-hidden="true">
-      <svg viewBox="0 0 600 250" role="presentation">
-        {["M34 48 C172 48 174 126 315 126", "M34 126 H315", "M34 204 C172 204 174 126 315 126"].map((path, index) => (
-          <motion.path d={path} key={path} initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.5, repeat: reduced ? 0 : Infinity, delay: index * .55, ease: "easeInOut" }} />
-        ))}
-        <motion.path d="M315 126 H555" initial={reduced ? false : { pathLength: 0 }} animate={reduced ? undefined : { pathLength: [0, 1, 1] }} transition={{ duration: 5.5, repeat: reduced ? 0 : Infinity, delay: 1.4, ease: "easeInOut" }} />
-      </svg>
-      <div className="crm-sources"><i>AD</i><i>SOC</i><i>WEB</i></div>
-      <motion.div className="crm-hub" animate={reduced ? undefined : { boxShadow: ["0 0 0 0 rgba(181,148,43,0)", "0 0 0 14px rgba(181,148,43,.12)", "0 0 0 0 rgba(181,148,43,0)"] }} transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}><span>CRM</span></motion.div>
-      <div className="crm-record"><span /><span /><span /></div>
-    </div>
-  );
+  return null;
 }
 
 export function ServicesGrid() {
@@ -249,14 +237,14 @@ export function ServicesGrid() {
     <div className="services-grid">
       {services.map((service, index) => (
         <Reveal className="service-card-reveal" delay={index * .06} key={service.number}>
-          <article className={`service-card service-card-${service.kind}`}>
-            <ServiceVisual kind={service.kind} />
+          <a className={`service-card service-card-${service.kind}`} href={service.href} data-analytics-event="solution_select" data-analytics-solution-slug={service.href.split("/").at(-1)} data-analytics-placement="homepage_grid">
+            <ServiceVisual kind={service.kind as ServiceKind} />
             <div className="service-card-copy">
               <span>{service.number}</span>
               <h3>{service.title}</h3>
-              <p>{service.text}</p>
+              <p>{service.text}<b>Explore solution</b></p>
             </div>
-          </article>
+          </a>
         </Reveal>
       ))}
     </div>
@@ -292,7 +280,7 @@ export function AnimatedStatistics() {
     <div className="statistics-grid">
       <article className="metric-card metric-card-hours">
         <div className="metric-visual metric-workflow" aria-hidden="true">{[.36, .68, .48, .82, .57, .94].map((scale, index) => <motion.i key={index} animate={{ scaleX: [scale, 1, scale] }} transition={{ duration: 4.2 + index * .35, repeat: Infinity, ease: "easeInOut", delay: index * .16 }} />)}</div>
-        <strong><CountUp value={81} /></strong><p>employee hours saved each week across VITRUS workflows</p><span>VITRUS workflow average</span>
+        <strong><CountUp value={1} /></strong><p>focused system before wider rollout</p><span>VITRUS delivery principle</span>
       </article>
       <article className="metric-card metric-card-adoption">
         <div className="metric-visual metric-network" aria-hidden="true"><motion.div animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => <i key={item} />)}</motion.div></div>

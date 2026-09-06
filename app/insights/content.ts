@@ -23,17 +23,17 @@ export const insights: Insight[] = [
   {
     slug: "where-enterprise-ai-value-actually-lives",
     title: "The AI opportunity is rarely where the demo is",
-    description: "A practical way to find enterprise AI opportunities by examining workflow economics, operating friction, and the systems around the work.",
+    description: "A practical way for mission-driven organizations to find AI opportunities by examining workflow economics, operating friction, and the systems around the work.",
     category: "AI strategy",
     publishedAt: "2026-08-24",
     readingTime: "6 min read",
     author: "VITRUS",
-    opening: "The most persuasive AI demo is not always where the economic value lives. A demo shows what a model can do in isolation. An enterprise opportunity depends on what changes when that capability meets a real workflow, real data, and real accountability.",
+    opening: "The most persuasive AI demo is not always where the value lives. A demo shows what a model can do in isolation. A useful opportunity depends on what changes when that capability meets a real workflow, real data, and real accountability.",
     sections: [
       {
         heading: "Start with operating friction",
         paragraphs: [
-          "Strong AI opportunities often begin as ordinary business complaints. Reporting takes too long. Customer history is scattered across systems. Experts answer the same questions repeatedly. Teams cannot see why a metric changed until the moment has passed.",
+          "Strong AI opportunities often begin as ordinary operating complaints. Reporting takes too long. Funder and partner history is scattered across systems. Experts answer the same questions repeatedly. Teams cannot see why a signal changed until the moment has passed.",
           "These are not AI problems yet. They are operating problems with a measurable cost. The useful question is whether AI can change the economics, speed, quality, or reach of the workflow without introducing more risk than value.",
         ],
       },
@@ -65,17 +65,17 @@ export const insights: Insight[] = [
         ],
       },
     ],
-    closing: "The best enterprise AI opportunities are often unglamorous at first glance. Their advantage comes from being close to the work, economically meaningful, and designed to survive contact with the business.",
+    closing: "The best AI opportunities are often unglamorous at first glance. Their advantage comes from being close to the work, meaningful to the mission, and designed to survive contact with daily operations.",
   },
   {
     slug: "ai-business-case-finance-can-trust",
-    title: "How to build an AI business case that finance can trust",
-    description: "A disciplined framework for separating capacity, cash savings, revenue upside, and implementation cost in an enterprise AI business case.",
+    title: "How to build an AI business case leaders can trust",
+    description: "A disciplined framework for separating capacity, avoided cost, mission value, and implementation cost in an AI business case.",
     category: "Business case",
     publishedAt: "2026-08-24",
     readingTime: "7 min read",
     author: "VITRUS",
-    opening: "AI business cases become unreliable when every saved hour is treated as cash. A stronger case separates the value created by the system from the value the company can realistically capture.",
+    opening: "AI business cases become unreliable when every saved hour is treated as cash. A stronger case separates the capacity created by the system from the value the organization can realistically put to work.",
     sections: [
       {
         heading: "Model the current workflow first",
@@ -92,14 +92,14 @@ export const insights: Insight[] = [
         points: [
           "Hard savings are costs that will actually disappear",
           "Capacity created is time that can be redirected into more valuable work",
-          "Revenue upside should be measured as contribution, not top-line revenue alone",
+          "Funding or income upside should be tied to credible changes in conversion, retention, or reach",
           "Avoided cost covers hiring, vendor spend, rework, errors, or delay that can credibly be prevented",
         ],
       },
       {
         heading: "Use a realization factor",
         paragraphs: [
-          "A system may create ten hours of weekly capacity while the company captures only six. Adoption may take time. Some work remains necessary. Demand may not be available to absorb every recovered hour.",
+          "A system may create ten hours of weekly capacity while the organization puts only six to useful work. Adoption may take time. Some work remains necessary. Priority work may not be ready to absorb every recovered hour.",
           "A realization factor makes that uncertainty visible. It converts theoretical capacity into a more defensible estimate of economic value and gives the implementation team a target it can influence through workflow design and adoption.",
         ],
       },
@@ -116,7 +116,7 @@ export const insights: Insight[] = [
   {
     slug: "from-ai-pilot-to-operating-system",
     title: "From AI pilot to operating system",
-    description: "Four decisions that help enterprise AI move from a promising prototype into dependable daily operation.",
+    description: "Four decisions that help AI move from a promising prototype into dependable daily operation.",
     category: "Implementation",
     publishedAt: "2026-08-24",
     readingTime: "6 min read",
@@ -127,7 +127,7 @@ export const insights: Insight[] = [
         heading: "Decide who owns the outcome",
         paragraphs: [
           "A prototype can survive with an enthusiastic sponsor. A working system needs an operating owner who is accountable for performance, exceptions, adoption, and change. Technical ownership matters too, but it is not a substitute for business ownership.",
-          "The owner should have authority over the workflow and a reason to improve it. Without that connection, the system becomes an additional tool rather than a better way of working.",
+          "The owner should have authority over the workflow and a reason to improve it. Without that connection, the system becomes another tool rather than a better way of working.",
         ],
       },
       {
