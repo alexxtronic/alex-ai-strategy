@@ -70,6 +70,7 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /specialists who shape the strategy stay close/);
   assert.match(html, /Thomas Heiberg/);
   assert.match(html, /Michael Guldborg/);
+  assert.match(html, /Co-Founder (?:&amp;|&) CEO/);
   assert.match(html, /Co-Founder (?:&amp;|&) CTO/);
   assert.match(html, /Tech Lead/);
   assert.match(html, /\/thomas-heiberg\.jpg/);
