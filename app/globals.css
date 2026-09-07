@@ -875,7 +875,7 @@ h1 { margin: 0 auto; font-size: clamp(76px, 10.2vw, 156px); line-height: .81; le
   .mobile-menu { padding-top: 4vh; }
   .mobile-menu-nav > a:not(.mobile-solution-link) { font-size: 34px; }
   h1 { font-size: clamp(54px, 15.8vw, 76px); }
-  .hero-actions { align-items: flex-start; flex-direction: column; }
+  .hero-actions { align-items: center; flex-direction: column; }
   .hero-actions .button { min-width: 212px; }
   .hero-future-field { opacity: .72; }
   .hero-organic-form-upper { width: 118vw; right: -70vw; top: -38vw; }

@@ -113,6 +113,7 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(css, /em, i \{ font-style: normal; \}/);
   assert.doesNotMatch(css, /font-weight:\s*[5-9]00/);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /\.hero-actions \{ align-items: center; flex-direction: column; \}/);
   assert.match(motion, /from "motion\/react"/);
   assert.match(motion, /useReducedMotion/);
   assert.match(motion, /export function HeroCloud/);
