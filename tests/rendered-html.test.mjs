@@ -25,6 +25,7 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
+  const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(html, /<title>VITRUS \| AI Systems for Missions That Matter<\/title>/i);
   assert.match(html, /AI systems for/);
   assert.match(html, /missions that matter/);
@@ -52,6 +53,7 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.doesNotMatch(html, /3,449/);
   assert.doesNotMatch(html, /Custom GEO \/ AEO solution for a property platform/);
   assert.match(html, /Selected past clients/);
+  assert.match(page, /Array\.from\(\{ length: 4 \}, \(\) => clients\)\.flat\(\)/);
   assert.match(html, /Empire State Building/);
   assert.match(html, /Humana/);
   assert.match(html, /Global Citizen/);
@@ -128,9 +130,12 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /}, 2000\);/);
   assert.doesNotMatch(motion, /opacity: active \? 1 : \.38/);
   assert.match(motion, /export function AnimatedStatistics/);
-  assert.match(motion, /CountUp value=\{60\}/);
-  assert.match(motion, /CountUp value=\{45\}/);
-  assert.match(motion, /CountUp value=\{31\}/);
+  assert.match(motion, /CountUp value=\{68\}/);
+  assert.match(motion, /CountUp value=\{48\}/);
+  assert.match(motion, /CountUp value=\{11\}/);
+  assert.match(motion, /Google for Nonprofits 2025/);
+  assert.match(motion, /European Nonprofit Pulse 2025/);
+  assert.match(motion, /Center for Effective Philanthropy 2025/);
   assert.match(motion, /Global Citizen social intelligence/);
   assert.match(motion, /Grant application workspace/);
   assert.match(motion, /Sources linked/);

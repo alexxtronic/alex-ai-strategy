@@ -48,7 +48,7 @@ export default function Home() {
 
       <section className="client-strip" aria-label="Selected past clients">
         <div className="client-track">
-          {[...clients, ...clients].map((client, index) => (
+          {Array.from({ length: 4 }, () => clients).flat().map((client, index) => (
             <div className={`client-logo client-logo-${client.slug}`} aria-hidden={index >= clients.length} key={`${client.name}-${index}`}>
               {client.image ? (
                 <Image src={client.image} alt={index < clients.length ? client.name : ""} fill sizes="190px" />

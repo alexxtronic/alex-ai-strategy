@@ -280,15 +280,15 @@ export function AnimatedStatistics() {
     <div className="statistics-grid">
       <article className="metric-card metric-card-hours">
         <div className="metric-visual metric-workflow" aria-hidden="true">{[.36, .68, .48, .82, .57, .94].map((scale, index) => <motion.i key={index} animate={{ scaleX: [scale, 1, scale] }} transition={{ duration: 4.2 + index * .35, repeat: Infinity, ease: "easeInOut", delay: index * .16 }} />)}</div>
-        <strong><CountUp value={60} suffix="%" /></strong><p>of surveyed UK charities use AI for everyday tasks, including meeting notes and emails</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
+        <strong><CountUp value={68} suffix="%" /></strong><p>of nonprofit respondents say someone in their organization uses generative AI</p><a href="https://services.google.com/fh/files/misc/google_for_nonprofits_survey_results_report_2025.pdf" target="_blank" rel="noreferrer">Google for Nonprofits 2025</a>
       </article>
       <article className="metric-card metric-card-adoption">
         <div className="metric-visual metric-network" aria-hidden="true"><motion.div animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => <i key={item} />)}</motion.div></div>
-        <strong><CountUp value={45} suffix="%" /></strong><p>of surveyed UK charities use AI for grant fundraising</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
+        <strong><CountUp value={48} suffix="%" /></strong><p>of surveyed European nonprofits now use AI, up from 13% the year before</p><a href="https://www.salesforce.com/en-eu/wp-content/uploads/sites/11/documents/PDF/European-Nonprofit-Pulse-2025-report_final.pdf" target="_blank" rel="noreferrer">European Nonprofit Pulse 2025</a>
       </article>
       <article className="metric-card metric-card-time">
         <div className="metric-visual metric-time-rings" aria-hidden="true"><motion.i animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} /><motion.i animate={{ rotate: -360 }} transition={{ duration: 19, repeat: Infinity, ease: "linear" }} /></div>
-        <strong><CountUp value={31} suffix="%" /></strong><p>of surveyed UK charities use AI for monitoring and evaluation</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
+        <strong><CountUp value={11} suffix="%" /></strong><p>of surveyed funders provide any support for nonprofit AI implementation</p><a href="https://cep.org/news/press-releases/as-ai-use-proliferates-in-the-social-sector-new-study-reveals-lagging-support-for-equitable-ai/" target="_blank" rel="noreferrer">Center for Effective Philanthropy 2025</a>
       </article>
     </div>
   );
