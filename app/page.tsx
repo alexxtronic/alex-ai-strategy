@@ -62,6 +62,16 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="process-section section-light" id="process">
+        <div className="section-intro process-intro"><Reveal><h2>From friction to working system.</h2></Reveal><Reveal delay={0.1}><p>We find the right problem, quantify the value, build one governed system, and improve it with your team.</p></Reveal></div>
+        <ProcessSystem />
+      </section>
+
+      <section className="services-section section-light" id="services" aria-label="VITRUS solutions">
+        <div className="section-intro services-intro"><Reveal><h2>Where AI can return capacity.</h2></Reveal><Reveal delay={0.1}><p>Focused systems for the recurring work behind fundraising, reporting, knowledge, and operations.</p></Reveal></div>
+        <ServicesGrid />
+      </section>
+
       <section className="case-section section-light" id="work">
         <div className="case-editorial-intro">
           <Reveal><h2>Our work speaks for itself.</h2></Reveal>
@@ -72,7 +82,7 @@ export default function Home() {
               <CaseStudyDiagram variant="listening" />
               <p className="case-client-name">Global Citizen</p>
               <h3>A clearer view of<br />the conversation.</h3>
-              <p className="case-summary">Live sentiment, connected sources, and evidence your team can review.</p>
+              <p className="case-summary">We connected Global Citizen’s listening sources through MCP integrations to create one live sentiment dashboard. AI brings emerging themes and shifts in conversation into focus, with the source evidence close at hand. The result is a shared view of what matters, ready for the team to review and act on.</p>
               <Link className="case-approach-link" href="/solutions/listening-decision-dashboards/" data-analytics-event="solution_select" data-analytics-solution-slug="listening-decision-dashboards" data-analytics-placement="case_study">Explore the approach <span aria-hidden="true">&#8594;</span></Link>
             </article>
           </Reveal>
@@ -81,21 +91,11 @@ export default function Home() {
               <CaseStudyDiagram variant="grants" />
               <p className="case-client-name">DFIN</p>
               <h3>Stronger proposals.<br />Less preparation.</h3>
-              <p className="case-summary">Approved evidence and past applications, brought into one review-ready draft.</p>
+              <p className="case-summary">We built a proposal workflow for DFIN that brings requirements, approved evidence, and past applications into one place. AI assembles that material into a structured, review-ready draft, with approval kept in the team’s hands. It gives specialists a reusable starting point for each application and more room to focus on the case they want to make.</p>
               <Link className="case-approach-link" href="/solutions/grant-reporting-automation/" data-analytics-event="solution_select" data-analytics-solution-slug="grant-reporting-automation" data-analytics-placement="case_study">Explore the approach <span aria-hidden="true">&#8594;</span></Link>
             </article>
           </Reveal>
         </div>
-      </section>
-
-      <section className="process-section section-light" id="process">
-        <div className="section-intro process-intro"><Reveal><h2>From friction to working system.</h2></Reveal><Reveal delay={0.1}><p>We find the right problem, quantify the value, build one governed system, and improve it with your team.</p></Reveal></div>
-        <ProcessSystem />
-      </section>
-
-      <section className="services-section section-light" id="services" aria-label="VITRUS solutions">
-        <div className="section-intro services-intro"><Reveal><h2>Where AI can return capacity.</h2></Reveal><Reveal delay={0.1}><p>Focused systems for the recurring work behind fundraising, reporting, knowledge, and operations.</p></Reveal></div>
-        <ServicesGrid />
       </section>
 
       <section className="statistics-section section-dark" id="proof">

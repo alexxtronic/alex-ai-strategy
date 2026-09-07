@@ -44,7 +44,7 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /More impact/);
   assert.match(html, /Our work speaks for itself/);
   assert.match(html, /A clearer view of/);
-  assert.match(html, /Live sentiment, connected sources/);
+  assert.match(html, /listening sources through MCP integrations/);
   assert.match(html, /Stronger proposals/);
   assert.match(html, /review-ready draft/);
   assert.match(html, />Quantify</);
