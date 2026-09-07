@@ -16,7 +16,7 @@ const clients = [
 
 const team = [
   { name: "Alexander D'Amore", role: "Founder & CEO", image: "/alexander-damore.jpg", portraitClass: "portrait-image-crop-corners", focus: "Leads AI strategy, business-case development, solution design, and delivery." },
-  { name: "Thomas Bjarke", role: "CTO", image: "/thomas-bjarke.jpg", focus: "Shapes the technical architecture, security, and systems behind every implementation." },
+  { name: "Thomas Heiberg", role: "Co-Founder & CTO", image: "/thomas-heiberg.jpg", focus: "Shapes the technical architecture, security, and systems behind every implementation." },
   { name: "Michael Guldborg", role: "Tech Lead", image: "/michael-guldborg.jpg", focus: "Leads the build, integration, and reliable delivery of each working AI system." },
 ];
 

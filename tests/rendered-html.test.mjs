@@ -68,14 +68,15 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /Senior people, start to finish/);
   assert.match(html, /portrait-image-crop-corners/);
   assert.match(html, /specialists who shape the strategy stay close/);
-  assert.match(html, /Thomas Bjarke/);
+  assert.match(html, /Thomas Heiberg/);
   assert.match(html, /Michael Guldborg/);
-  assert.match(html, />CTO</);
+  assert.match(html, /Co-Founder (?:&amp;|&) CTO/);
   assert.match(html, /Tech Lead/);
-  assert.match(html, /\/thomas-bjarke\.jpg/);
+  assert.match(html, /\/thomas-heiberg\.jpg/);
   assert.match(html, /\/michael-guldborg\.jpg/);
   assert.doesNotMatch(html, /André Dimmer/);
   assert.doesNotMatch(html, /Kristina Hampsted/);
+  assert.doesNotMatch(html, /Thomas Bjarke/);
   assert.match(html, /business-case development/);
   assert.match(html, /technical architecture, security/);
   assert.match(html, /reliable delivery of each working AI system/);
