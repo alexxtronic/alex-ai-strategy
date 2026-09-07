@@ -99,7 +99,7 @@ export default function Home() {
       </section>
 
       <section className="statistics-section section-dark" id="proof">
-        <div className="statistics-intro"><Reveal><h2>More capacity.<br />More impact.</h2></Reveal><Reveal delay={0.1}><p>You do not need another AI experiment. You need a working system your team can trust.</p></Reveal></div>
+        <div className="statistics-intro"><Reveal><h2>More capacity.<br />More impact.</h2></Reveal><Reveal delay={0.1}><p>Non-Profits and NGOs can truly benefit from emerging tech</p></Reveal></div>
         <AnimatedStatistics />
       </section>
 

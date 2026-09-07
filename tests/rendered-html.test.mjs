@@ -128,9 +128,9 @@ test("keeps the experience light, roman, and motion-aware", async () => {
   assert.match(motion, /}, 2000\);/);
   assert.doesNotMatch(motion, /opacity: active \? 1 : \.38/);
   assert.match(motion, /export function AnimatedStatistics/);
-  assert.match(motion, /CountUp value=\{1\}/);
-  assert.match(motion, /CountUp value=\{88\}/);
-  assert.match(motion, /CountUp value=\{47\}/);
+  assert.match(motion, /CountUp value=\{60\}/);
+  assert.match(motion, /CountUp value=\{45\}/);
+  assert.match(motion, /CountUp value=\{31\}/);
   assert.match(motion, /Global Citizen social intelligence/);
   assert.match(motion, /Grant application workspace/);
   assert.match(motion, /Sources linked/);

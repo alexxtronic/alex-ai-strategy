@@ -280,15 +280,15 @@ export function AnimatedStatistics() {
     <div className="statistics-grid">
       <article className="metric-card metric-card-hours">
         <div className="metric-visual metric-workflow" aria-hidden="true">{[.36, .68, .48, .82, .57, .94].map((scale, index) => <motion.i key={index} animate={{ scaleX: [scale, 1, scale] }} transition={{ duration: 4.2 + index * .35, repeat: Infinity, ease: "easeInOut", delay: index * .16 }} />)}</div>
-        <strong><CountUp value={1} /></strong><p>focused system before wider rollout</p><span>VITRUS delivery principle</span>
+        <strong><CountUp value={60} suffix="%" /></strong><p>of surveyed UK charities use AI for everyday tasks, including meeting notes and emails</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
       </article>
       <article className="metric-card metric-card-adoption">
         <div className="metric-visual metric-network" aria-hidden="true"><motion.div animate={{ rotate: 360 }} transition={{ duration: 22, repeat: Infinity, ease: "linear" }}>{[0, 1, 2, 3, 4, 5, 6, 7].map((item) => <i key={item} />)}</motion.div></div>
-        <strong><CountUp value={88} suffix="%" /></strong><p>of organizations use AI in at least one business function</p><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai/" target="_blank" rel="noreferrer">McKinsey, State of AI 2025</a>
+        <strong><CountUp value={45} suffix="%" /></strong><p>of surveyed UK charities use AI for grant fundraising</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
       </article>
       <article className="metric-card metric-card-time">
         <div className="metric-visual metric-time-rings" aria-hidden="true"><motion.i animate={{ rotate: 360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} /><motion.i animate={{ rotate: -360 }} transition={{ duration: 19, repeat: Infinity, ease: "linear" }} /></div>
-        <strong><CountUp value={47} suffix="%" /></strong><p>of surveyed GenAI users save six or more hours each week</p><a href="https://www.bcg.com/publications/2025/ai-at-work-momentum-builds-but-gaps-remain" target="_blank" rel="noreferrer">BCG, AI at Work 2025</a>
+        <strong><CountUp value={31} suffix="%" /></strong><p>of surveyed UK charities use AI for monitoring and evaluation</p><a href="https://charitydigitalskills.co.uk/report/detailed-findings/artificial-intelligence/" target="_blank" rel="noreferrer">Charity Digital Skills Report 2026</a>
       </article>
     </div>
   );
