@@ -42,11 +42,11 @@ test("server-renders the VITRUS mission-driven proposition", async () => {
   assert.match(html, /href="\/solutions\/secure-knowledge-systems"/);
   assert.match(html, /More capacity/);
   assert.match(html, /More impact/);
-  assert.match(html, /Proof, not prototypes/);
-  assert.match(html, /Live social intelligence for Global Citizen/);
-  assert.match(html, /Secure connectors and MCP integrations brought the signals together/);
-  assert.match(html, /Grant drafting, grounded in evidence/);
-  assert.match(html, /Every proposal is reviewed before submission/);
+  assert.match(html, /Our work speaks for itself/);
+  assert.match(html, /A clearer view of/);
+  assert.match(html, /Live sentiment, connected sources/);
+  assert.match(html, /Stronger proposals/);
+  assert.match(html, /review-ready draft/);
   assert.match(html, />Quantify</);
   assert.doesNotMatch(html, /The proof is in the prompt/);
   assert.doesNotMatch(html, /3,449/);

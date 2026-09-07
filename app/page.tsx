@@ -1,7 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { AnimatedStatistics, CaseStudyVisual, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
+import { AnimatedStatistics, HeroCloud, HeroTitle, ProcessSystem, Reveal, ServicesGrid } from "./components/ExperienceMotion";
+import { CaseStudyDiagram } from "./components/CaseStudyDiagram";
 import { siteUrl } from "./lib/site";
 
 const clients = [
@@ -61,40 +63,26 @@ export default function Home() {
       </section>
 
       <section className="case-section section-light" id="work">
-        <div className="case-section-intro">
-          <Reveal><h2>Proof, not prototypes.</h2></Reveal>
-          <Reveal delay={0.1}>
-            <div>
-              <p>Two governed systems built for mission-driven teams and real operating work.</p>
-              <a className="case-intro-link" href="/contact" data-analytics-event="cta_click" data-analytics-cta-id="proof_intro" data-analytics-placement="proof">Bring us your hardest workflow</a>
-            </div>
-          </Reveal>
+        <div className="case-editorial-intro">
+          <Reveal><h2>Our work speaks for itself.</h2></Reveal>
         </div>
         <div className="case-grid">
           <Reveal>
             <article className="case-card" data-analytics-view="case_study_engaged" data-analytics-content-id="global_citizen_listening">
-              <CaseStudyVisual variant="intelligence" />
-              <h3>Live social intelligence for Global Citizen.</h3>
-              <p className="case-summary">Connected listening sources created one live sentiment dashboard, with every signal available for human review.</p>
-              <dl className="case-proof-list">
-                <div><dt>Challenge</dt><dd>Conversation and sentiment signals spread across listening sources.</dd></div>
-                <div><dt>System</dt><dd>Secure connectors and MCP integrations brought the signals together.</dd></div>
-                <div><dt>Operating value</dt><dd>One source-linked view of emerging narratives and sentiment.</dd></div>
-                <div><dt>Human control</dt><dd>Source evidence remains available for review.</dd></div>
-              </dl>
+              <CaseStudyDiagram variant="listening" />
+              <p className="case-client-name">Global Citizen</p>
+              <h3>A clearer view of<br />the conversation.</h3>
+              <p className="case-summary">Live sentiment, connected sources, and evidence your team can review.</p>
+              <Link className="case-approach-link" href="/solutions/listening-decision-dashboards/" data-analytics-event="solution_select" data-analytics-solution-slug="listening-decision-dashboards" data-analytics-placement="case_study">Explore the approach <span aria-hidden="true">&#8594;</span></Link>
             </article>
           </Reveal>
           <Reveal delay={0.1}>
             <article className="case-card case-card-offset" data-analytics-view="case_study_engaged" data-analytics-content-id="grant_drafting_workflow">
-              <CaseStudyVisual variant="visibility" />
-              <h3>Grant drafting, grounded in evidence.</h3>
-              <p className="case-summary">For a mission-driven organization, one structured workflow brought funder requirements, approved evidence, and prior applications into a review-ready draft.</p>
-              <dl className="case-proof-list">
-                <div><dt>Challenge</dt><dd>Requirements, evidence, and prior applications lived in separate places.</dd></div>
-                <div><dt>System</dt><dd>A structured path from requirement to draft.</dd></div>
-                <div><dt>Operating value</dt><dd>A reusable, evidence-grounded path from requirements to reviewed draft.</dd></div>
-                <div><dt>Human control</dt><dd>Every proposal is reviewed before submission.</dd></div>
-              </dl>
+              <CaseStudyDiagram variant="grants" />
+              <p className="case-client-name">DFIN</p>
+              <h3>Stronger proposals.<br />Less preparation.</h3>
+              <p className="case-summary">Approved evidence and past applications, brought into one review-ready draft.</p>
+              <Link className="case-approach-link" href="/solutions/grant-reporting-automation/" data-analytics-event="solution_select" data-analytics-solution-slug="grant-reporting-automation" data-analytics-placement="case_study">Explore the approach <span aria-hidden="true">&#8594;</span></Link>
             </article>
           </Reveal>
         </div>

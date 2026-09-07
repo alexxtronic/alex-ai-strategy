@@ -60,8 +60,8 @@ export const solutions: Solution[] = [
     value: "Reduce repetitive preparation, improve consistency, preserve institutional knowledge, and give specialists more time for funder strategy and relationship building.",
     proof: {
       title: "A repeatable grant workflow.",
-      text: "For a mission-driven organization, we brought funder requirements, approved evidence, and prior applications into one structured drafting workflow, with human review before submission.",
-      client: "Anonymous mission-driven organization",
+      text: "For DFIN, we brought requirements, approved evidence, and prior applications into one structured drafting workflow, with human review before submission.",
+      client: "DFIN",
     },
     ctaTitle: "Bring us one recurring funding or reporting workflow.",
     ctaText: "We will identify where AI and automation can return the most useful capacity.",
